@@ -30,3 +30,5 @@ func ChoixPersonnage() character.Personnage {
 	}
 	return character.Personnage{"Tonton", 80, 20}
 }
+
+import 
