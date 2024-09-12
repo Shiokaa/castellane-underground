@@ -6,15 +6,8 @@ import (
 )
 
 type Inventory struct {
-	Weapon []object.Weapon
-	Drink  []object.Drink
-}
-
-func (inv *Inventory) AjouterWeapon(object.Weapon) {
-	inv.Weapon = append(inv.Weapon, object.Weapon)
-}
-func (inv *Inventory) AjouterDrink(object.drink) {
-	inv.Drink = append(inv.Drink, object.Drink)
+	SacocheCp []object.Object
+	Limite    int
 }
 
 func test() {
