@@ -1,9 +1,9 @@
 package main
 
-import "projet-red/game"
+import (
+	"projet-red/trader"
+)
 
 func main() {
-	game.HistoireDebut()
-	game.ChoixPersonnage()
-
+	trader.Telegram()
 }
