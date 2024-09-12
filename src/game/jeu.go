@@ -2,11 +2,13 @@ package game
 
 import (
 	"fmt"
+	"math/rand"
 	"projet-red/character"
 	"time"
 )
 
-func HistoireDebut(str string) {
+func HistoireDebut() {
+	str := "L'histoire commence dans la cour d'un HLM avec un daron, le tonton ainsi qu'une daronne, La discution porte autour des resaux au sein du quartier, les trois en ont marre et decident de se révolter ! "
 	for _, char := range str {
 		fmt.Printf("%c", char)
 		time.Sleep(20 * time.Millisecond)
@@ -15,8 +17,7 @@ func HistoireDebut(str string) {
 
 func ChoixPersonnage() character.Personnage {
 	time.Sleep(3 * time.Second)
-	fmt.Println("\n\nBienvenue dans le menu du choix des personnages. Qui allez-vous choisir pour renverser les réseaux du quartier ?! \n\nTapez 1 pour sélectionner le Daron. \nTapez 2 pour sélectionner la Daronne. \nTapez 3 pour sélectionner le Tonton.")
-
+	fmt.Println("\n\nChoisi un Personnage :\n\nDARON : 55 ans fumeur, passe son temps au PMU supporte l'OM plus que sa femme. 100kg au compteur, se bat avec une ceinture. (Beaucoup de vie, dégats faibles, spawn avec 3 ricards, 10€, un briquet et 1 sandwich)  TAPEZ 1\n\nDARONNE : 44 ans, femme de ménage, regarde les marseillais et TPMP tout les soirs, brune, 60 kg, lance des claquettes pour attaquer. ( Dégats élevés, peu de point de vie, spawn avec 1 ricard, 10€, un briquet et 1 sandwich) TAPEZ 2\n\nTONTON : Tonton cool, il aime les femmes, la plage, les paris sportifs et la pétanque par-dessus tout, gagne sa vie au black et avec l'achat revente de T-MAX volés, rêve d'une carriere de bouliste et ne se bat QU'AVEC SES BOULES UNIQUEMENT, il est mauvais mais avec un peu de chance il peut infliger des dégats enormes) (Points de vie moyen, degats aléatoire, spawn avec 2 ricards, entre 5 et 50€, un briquet et 1 sandwitch) TAPEZ 3")
 	var choix_perso int
 	fmt.Scan(&choix_perso)
 
@@ -28,18 +29,36 @@ func ChoixPersonnage() character.Personnage {
 	var perso character.Personnage
 	switch choix_perso {
 	case 1:
-		perso = character.Personnage{"Daron", 120, 20}
-		fmt.Printf("Voici les stats du %v \nPoints de vie : %v\n", perso.Name, perso.Hp)
+		perso = character.Personnage{"Daron", 120, 10, 20}
+		fmt.Printf("Voici les stats du %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.Hp, perso.Gold)
 	case 2:
-		perso = character.Personnage{"Daronne", 80, 20}
-		fmt.Printf("Voici les stats de la %v \nPoints de vie : %v\n", perso.Name, perso.Hp)
+		perso = character.Personnage{"Daronne", 80, 10, 35}
+		fmt.Printf("Voici les stats de la %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.Hp, perso.Gold)
 	case 3:
-		perso = character.Personnage{"Tonton", 80, 20}
-		fmt.Printf("Voici les stats du %v \nPoints de vie : %v\n", perso.Name, perso.Hp)
+		rand.Seed(time.Now().UnixNano())
+		argentrandom := rand.Intn(46) + 5
+		perso = character.Personnage{"Tonton", 100, argentrandom, 20}
+		fmt.Printf("Voici les stats du %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.Hp, perso.Gold)
 	default:
-		perso = character.Personnage{"Tonton", 80, 20}
+		perso = character.Personnage{"Tonton", 100, 20, 20}
 
 	}
 	return perso
 
+}
+
+func CombatTestGuetteur(perso character.Personnage) {
+	pvMechant := 100
+	degat := 10
+	for pvMechant > 0 || perso.Hp > 0 {
+		fmt.Printf("Vous avez %v pv, votre ennemi a %v pv.\n", perso.Hp, pvMechant)
+		fmt.Fprintln("inventaire : 1, attaque : 2 ")
+		var atkOuHeal int
+		fmt.Scan(atkOuHeal)
+		switch atkOuHeal {
+		case 2:
+			pvMechant -= perso.Damage
+
+		}
+	}
 }
