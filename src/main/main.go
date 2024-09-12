@@ -1,10 +1,7 @@
 package main
 
-import "fmt"
+import "projet-red/game"
 
 func main() {
-	fmt.Println("Valeur ?")
-	var input string
-	fmt.Scan(&input)
-	fmt.Printf("Votre valeur %s", input)
+	game.ChoixPersonnage()
 }
