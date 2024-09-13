@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
+	game.HistoireDebut()
 	game.ChoixPersonnage()
 	//trader.Telegram()
 }
