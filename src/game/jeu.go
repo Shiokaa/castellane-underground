@@ -8,7 +8,7 @@ import (
 )
 
 func HistoireDebut() {
-	str := "L'histoire commence dans la cour d'un HLM avec un daron, le tonton ainsi qu'une daronne, La discution porte autour des resaux au sein du quartier, les trois en ont marre et decident de se révolter ! "
+	str := "L’histoire commence dans la cour d’un HLM avec un daron, un tonton ainsi qu’une daronne. La discussion porte autour des réseaux au sein du quartier, les trois en ont marre et décident de se révolter ! Choisis ton personnage !"
 	for _, char := range str {
 		fmt.Printf("%c", char)
 		time.Sleep(20 * time.Millisecond)
@@ -17,7 +17,7 @@ func HistoireDebut() {
 
 func ChoixPersonnage() character.Personnage {
 	time.Sleep(3 * time.Second)
-	fmt.Println("\n\nChoisi un Personnage :\n\nDARON : 55 ans fumeur, passe son temps au PMU supporte l'OM plus que sa femme. 100kg au compteur, se bat avec une ceinture. (Beaucoup de vie, dégats faibles, spawn avec 3 ricards, 10€, un briquet et 1 sandwich)  TAPEZ 1\n\nDARONNE : 44 ans, femme de ménage, regarde les marseillais et TPMP tout les soirs, brune, 60 kg, lance des claquettes pour attaquer. ( Dégats élevés, peu de point de vie, spawn avec 1 ricard, 10€, un briquet et 1 sandwich) TAPEZ 2\n\nTONTON : Tonton cool, il aime les femmes, la plage, les paris sportifs et la pétanque par-dessus tout, gagne sa vie au black et avec l'achat revente de T-MAX volés, rêve d'une carriere de bouliste et ne se bat QU'AVEC SES BOULES UNIQUEMENT, il est mauvais mais avec un peu de chance il peut infliger des dégats enormes) (Points de vie moyen, degats aléatoire, spawn avec 2 ricards, entre 5 et 50€, un briquet et 1 sandwitch) TAPEZ 3")
+	fmt.Println("\n\nDARON : 55 ans fumeur, passe son temps au PMU supporte l'OM plus que sa femme. 100kg au compteur, se bat avec une ceinture. (Beaucoup de vie, dégats faibles)  TAPEZ 1\n\nDARONNE : 44 ans, femme de ménage, regarde les marseillais et TPMP tout les soirs, brune, 60 kg, lance des claquettes pour attaquer. ( Dégats élevés, peu de point de vie) TAPEZ 2\n\nTONTON : Tonton cool, il aime les femmes, la plage, les paris sportifs et la pétanque par-dessus tout, gagne sa vie au black et avec l'achat revente de T-MAX volés, rêve d'une carriere de bouliste et ne se bat QU'AVEC SES BOULES UNIQUEMENT, il est mauvais mais avec un peu de chance il peut infliger des dégats enormes) (Points de vie moyen, degats aléatoire) TAPEZ 3")
 	var choix_perso int
 	fmt.Scan(&choix_perso)
 
@@ -36,7 +36,7 @@ func ChoixPersonnage() character.Personnage {
 			fmt.Scan(&nameuser)
 		}
 		perso = character.Personnage{"Daron", nameuser, 120, 10, 20}
-		fmt.Printf("Voici les stats du %v ( %v )\nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
+		fmt.Printf("Voici les stats du %v %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	case 2:
 		fmt.Println("\nChoisisez un pseudo pour votre personnage \n")
 		fmt.Scan(&nameuser)
@@ -45,7 +45,7 @@ func ChoixPersonnage() character.Personnage {
 			fmt.Scan(&nameuser)
 		}
 		perso = character.Personnage{"Daronne", nameuser, 80, 10, 35}
-		fmt.Printf("Voici les stats de la %v ( %v )\nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
+		fmt.Printf("Voici les stats de la %v %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	case 3:
 		fmt.Println("\nChoisisez un pseudo pour votre personnage \n")
 		fmt.Scan(&nameuser)
@@ -56,7 +56,7 @@ func ChoixPersonnage() character.Personnage {
 		rand.Seed(time.Now().UnixNano())
 		argentrandom := rand.Intn(46) + 5
 		perso = character.Personnage{"Tonton", nameuser, 100, argentrandom, 20}
-		fmt.Printf("Voici les stats du %v ( %v )\nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
+		fmt.Printf("Voici les stats du %v %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	default:
 		perso = character.Personnage{"Tonton", "azebi", 100, 20, 20}
 
@@ -68,7 +68,7 @@ func ChoixPersonnage() character.Personnage {
 func Firstfight(perso character.Personnage) {
 	attack := 0
 	guetteur := character.Enemy{"Guetteur", 100, 10}
-	fmt.Println("\nVous rencontrez un guetteur et décidez de lui arracher la gueule")
+	fmt.Println("\nTrès bien ! La discussion prend fin et tu décides de te rendre à l’entrée du quartier afin de rencontrer le guetteur pour récolter des informations sur ses supérieurs, mais celui-ci n’est pas ouvert au débat. Le combat commence !")
 	fmt.Println(`
    O                         O
   /|\                       /|\
