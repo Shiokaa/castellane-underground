@@ -2,9 +2,10 @@ package main
 
 import (
 	"projet-red/game"
-	"projet-red/game"
 )
 
 func main() {
-	game.Testcombat()
+game.HistoireDebut()
+perso := game.ChoixPersonnage()
+game.Firstfight(perso)
 }

@@ -9,7 +9,7 @@ import (
 func Testcombat() {
 	attack := 0
 	guetteur := character.Enemy{"Guetteur", 100, 10}
-	perso := character.Personnage{"Daron", 120, 15, 20}
+	perso := character.Personnage{"Daron", "oui", 120, 15, 20}
 	fmt.Println("\nVous rencontrez un guetteur et décidez de lui arracher la gueule")
 	fmt.Println(`
    O                         O
