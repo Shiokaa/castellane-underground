@@ -2,11 +2,13 @@ package trader
 
 import (
 	"fmt"
+	"projet-red/character"
 	"projet-red/inventory"
+	"projet-red/menu"
 	"projet-red/object"
 )
 
-func Telegram() {
+func Telegram(perso character.Personnage) {
 	matraque := object.ObjectStats{"Matraque ", "Arme", 80}
 	lacrimogène := object.ObjectStats{"Lacrimogène", "Arme", 15}
 	mortier := object.ObjectStats{"Mortier", "Arme", 200}
@@ -14,6 +16,8 @@ func Telegram() {
 	ricard := object.ObjectStats{"Ricard", "Soin", 10}
 	flash := object.ObjectStats{"Flash", "Soin", 25}
 	redbull := object.ObjectStats{"Redbull", "Consumable", 20}
+	casque := object.ObjectStats{"Casque Arai", "Armure", 50}
+	niketech := object.ObjectStats{"Ensemble Nike Tech", "Armure", 20}
 
 	inv := inventory.Inventory{SacocheCp: []object.ObjectStats{}, Limite: 5}
 	achat := 0
@@ -36,8 +40,14 @@ func Telegram() {
 	if len(inv.SacocheCp) < inv.Limite {
 		switch achat {
 		case 1:
-			inv.SacocheCp = append(inv.SacocheCp, lacrimogène)
-			fmt.Println("Une lacrimogène a été ajoutée à l'inventaire")
+			if perso.Gold >= 30 {
+				perso.Gold -= 30
+				inv.SacocheCp = append(inv.SacocheCp, lacrimogène)
+				fmt.Println("Une lacrimogène a été ajoutée à l'inventaire")
+			} else {
+				fmt.Println("Vous êtes trop pauvre !")
+				Telegram(character.Personnage{})
+			}
 		case 2:
 			inv.SacocheCp = append(inv.SacocheCp, matraque)
 			fmt.Print("La matraque a été ajoutée à l'inventaire")
@@ -57,9 +67,16 @@ func Telegram() {
 			inv.SacocheCp = append(inv.SacocheCp, redbull)
 			fmt.Print("Une redbull a été ajoutée à l'inventaire")
 		case 8:
-			inv.SacocheCp = append(inv.SacocheCp)
-
+			inv.SacocheCp = append(inv.SacocheCp, casque)
+			fmt.Print("Vous équipez votre casque")
+		case 9:
+			inv.SacocheCp = append(inv.SacocheCp, niketech)
+			fmt.Print("Vous équipez votre ensemble")
+		case 10:
+			inv.Limite += 5
 			fmt.Println("Vous avez acheté la sacoche lv vous gagnez 10 emplacement")
+		case 11:
+			menu.Menu(character.Personnage{})
 		default:
 		}
 	}

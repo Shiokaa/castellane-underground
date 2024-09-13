@@ -10,16 +10,9 @@ import (
 )
 
 func Menu(perso character.Personnage) {
-	matraque := object.ObjectStats{"Matraque ", "Arme", 80}
-	lacrimogène := object.ObjectStats{"Lacrimogène", "Arme", 15}
-	mortier := object.ObjectStats{"Mortier", "Arme", 200}
-	taser := object.ObjectStats{"Taser", "Arme", 100}
-	ricard := object.ObjectStats{"Ricard", "Soin", 10}
-	flash := object.ObjectStats{"Flash", "Soin", 25}
-	redbull := object.ObjectStats{"Redbull", "Consumable", 20}
 
 	choix := 0
-	inv := inventory.Inventory{SacocheCp: []object.ObjectStats{matraque, lacrimogène, mortier, taser, ricard, flash, redbull}, Limite: 10}
+	inv := inventory.Inventory{SacocheCp: []object.ObjectStats{}, Limite: 10}
 
 	fmt.Println("\nTapez 1 pour aller au combat		Tapez 2 pour accéder à l'inventaire")
 	fmt.Println("Tapez 3 pour aller au O'Tacos		Tapez 4 pour accéder au telegram")
