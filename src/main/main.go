@@ -5,7 +5,9 @@ import (
 )
 
 func main() {
+
 	game.HistoireDebut()
-	game.ChoixPersonnage()
-	//trader.Telegram()
+	perso := game.ChoixPersonnage()
+	game.Firstfight(perso)
+
 }

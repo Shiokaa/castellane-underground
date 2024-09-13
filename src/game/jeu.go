@@ -8,17 +8,14 @@ import (
 )
 
 func HistoireDebut() {
-	fmt.Println(`
-                                                                                                                          
-   (                 )      (   (                                     (                                             (     
-   )\\      )      ( /(   (  )\\  )\\    )           (       (           )\\ )   (   (    (  (  (           (           )\\ )  
- (((_)  ( /(  (   )\\()) ))\\((_)((_)( /(   (      ))\\      )\\   (     (()/(  ))\\  )(   )\\))( )(    (    ))\\   (     (()/(  
- )\\___  )(_)) )\\ (_))/ /((_)_   _  )(_))  )\\ )  /((_)  _ ((_)  )\\ )   ((_))/((_)(()\\ ((_))\\(()\\   )\\  /((_)  )\\ )   ((_)) 
-((/ __|((_)_ ((_)| |_ (_)) | | | |((_)_  _(_/( (_))   | | | | _(_/(   _| |(_))   ((_) (()(_)((_) ((_)(_))(  _(_/(   _| |  
- | (__ / _` |(_-<|  _|/ -_)| | | |/ _` || ' \\))/ -_)  | |_| || ' \\))/ _` |/ -_) | '_|/ _` || '_|/ _ \\| || || ' \\))/ _` |  
-  \\___|\\__,_|/__/ \\__|\\___||_| |_|\\__,_||_||_| \\___|   \\___/ |_||_| \\__,_|\\___| |_|  \\__, ||_|  \\___/ \\_,_||_||_| \\__,_|  
-                                                                                     |___/                                
-`)
+	fmt.Println("   _____          _       _ _                     _    _           _                                          _ ")
+	fmt.Println("  / ____|        | |     | | |                   | |  | |         | |                                        | |")
+	fmt.Println(" | |     __ _ ___| |_ ___| | | __ _ _ __   ___   | |  | |_ __   __| | ___ _ __ __ _ _ __ ___  _   _ _ __   __| |")
+	fmt.Println(" | |    / _` / __| __/ _ | | |/ _` | '_ \\ / _ \\  | |  | | '_ \\ / _` |/ _ | '__/ _` | '__/ _ \\| | | | '_ \\ / _` |")
+	fmt.Println(" | |___| (_| \\__ | ||  __| | | (_| | | | |  __/  | |__| | | | | (_| |  __| | | (_| | | | (_) | |_| | | | | (_| |")
+	fmt.Println(" \\_____\\__,_|___/\\__\\___|_|_|\\__,_|_| |_| \\___|  \\____/|_| |_|\\__,_|\\___|_|  \\__, |_|  \\___/ \\__,_|_| |_|\\__,_|")
+	fmt.Println("                                                                              __/ |                            ")
+	fmt.Println("                                                                             |___/                             ")
 	str := "L'histoire commence dans la cour d'un HLM avec un daron, le tonton ainsi qu'une daronne, La discution porte autour des resaux au sein du quartier, les trois en ont marre et decident de se révolter ! "
 	for _, char := range str {
 		fmt.Printf("%c", char)
@@ -76,18 +73,48 @@ func ChoixPersonnage() character.Personnage {
 
 }
 
-func CombatTestGuetteur(perso character.Personnage) {
-	pvMechant := 100
-	degat := 10
-	for pvMechant > 0 || perso.Hp > 0 {
-		fmt.Printf("Vous avez %v pv, votre ennemi a %v pv.\n", perso.Hp, pvMechant)
-		fmt.Println("inventaire : 1, attaque : 2 ")
-		var atkOuHeal int
-		fmt.Scan(atkOuHeal)
-		switch atkOuHeal {
-		case 2:
-			pvMechant -= degat
+func Firstfight(perso character.Personnage) {
+	attack := 0
+	guetteur := character.Enemy{"Guetteur", 100, 10}
+	fmt.Println("\nVous rencontrez un guetteur et décidez de lui arracher la gueule")
+	fmt.Println(`
+   O                         O
+  /|\                       /|\
+  / \                       / \
+`)
+	for guetteur.Hp > 0 && perso.Hp > 0 {
 
+		fmt.Println("\n", perso.NameUser, "a", perso.Hp, "point de vie et ", guetteur.Name, "a", guetteur.Hp, "point de vie")
+		fmt.Println("\nAppuyez sur 1 pour lui peter la gueule")
+		fmt.Scan(&attack)
+		for attack != 1 {
+			fmt.Println("Entrez une valeur valide\n")
+			fmt.Scan(&attack)
 		}
+		switch attack {
+
+		case 1:
+			if guetteur.Hp > 21 {
+				guetteur.Hp -= perso.Damage
+				fmt.Println("Vous attaquez le guetteur et vous lui infligez 10 points de dégât")
+				time.Sleep(2 * time.Second)
+				perso.Hp -= guetteur.Damage
+				fmt.Println("\nLe guetteur vous attaque en retour et vous enlève 10 points de vie")
+			} else {
+				fmt.Print("\nLe guetteur sort un couteau et vous inflige 50 points de dégât")
+				perso.Hp -= 50
+				guetteur.Hp -= perso.Damage
+			}
+		}
+	}
+	if guetteur.Hp <= 0 {
+		time.Sleep(2 * time.Second)
+		fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", guetteur.Name, "a", guetteur.Hp, "point de vie")
+		time.Sleep(2 * time.Second)
+		fmt.Println("\nVous avez gagnez vôtre combat")
+	} else if perso.Hp <= 0 {
+		time.Sleep(2 * time.Second)
+		fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", guetteur.Name, "a", guetteur.Hp, "point de vie")
+		fmt.Println("\nTu t'es fait arraché t'es nul")
 	}
 }
