@@ -46,19 +46,3 @@ func ChoixPersonnage() character.Personnage {
 	return perso
 
 }
-
-func CombatTestGuetteur(perso character.Personnage) {
-	pvMechant := 100
-	degat := 10
-	for pvMechant > 0 || perso.Hp > 0 {
-		fmt.Printf("Vous avez %v pv, votre ennemi a %v pv.\n", perso.Hp, pvMechant)
-		fmt.Println("inventaire : 1, attaque : 2 ")
-		var atkOuHeal int
-		fmt.Scan(atkOuHeal)
-		switch atkOuHeal {
-		case 2:
-			pvMechant -= perso.Damage
-
-		}
-	}
-}
