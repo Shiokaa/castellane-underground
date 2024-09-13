@@ -29,7 +29,7 @@ func Telegram() {
 	fmt.Println("\nTaper 10 pour acheter une SACOCHE LV : Rajoute 5 emplacement de plus à l'inventaire ")
 	fmt.Println("\nTaper 11 pour sortir du telegram")
 	fmt.Scan(&achat)
-	for achat != 1 && achat != 2 && achat != 3 && achat != 4 && achat != 5 && achat != 6 && achat != 7 && achat != 8 {
+	for achat >= 0 && achat <= 9 && achat == 10 && achat == 11 {
 		fmt.Println("Entrez un numéro valide\n")
 		fmt.Scan(&achat)
 	}

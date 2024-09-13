@@ -6,4 +6,5 @@ type Personnage struct {
 	Hp       int
 	Gold     int
 	Damage   int
+	Hpmax    int
 }

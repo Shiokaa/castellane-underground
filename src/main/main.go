@@ -2,10 +2,16 @@ package main
 
 import (
 	"projet-red/game"
+	"projet-red/menu"
+	"projet-red/story"
 )
 
 func main() {
-game.HistoireDebut()
-perso := game.ChoixPersonnage()
-game.Firstfight(perso)
+	story.HistoireDebut()
+	perso := game.ChoixPersonnage()
+	story.Afterchoixperso()
+	game.Firstfight(perso)
+	story.Afterguetteur()
+	menu.Menu(perso)
+
 }
