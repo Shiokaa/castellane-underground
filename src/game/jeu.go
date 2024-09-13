@@ -108,7 +108,7 @@ func Firstfight(perso character.Personnage) {
 		time.Sleep(2 * time.Second)
 		fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", guetteur.Name, "a", guetteur.Hp, "point de vie")
 		time.Sleep(2 * time.Second)
-		fmt.Println("\nVous avez gagnez vôtre combat")
+		fmt.Println("\nAdversaire vaincu ! Tu récupères sa sacoche C.P. Company contenant : un briquet, 10 €, un sandwich, 2 Ricards ainsi qu’un téléphone (accès à Telegram, le shop du jeu, besoin d’un item ? vas y faire un tour. ")
 	} else if perso.Hp <= 0 {
 		time.Sleep(2 * time.Second)
 		fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", guetteur.Name, "a", guetteur.Hp, "point de vie")
