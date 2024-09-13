@@ -52,7 +52,7 @@ func CombatTestGuetteur(perso character.Personnage) {
 	degat := 10
 	for pvMechant > 0 || perso.Hp > 0 {
 		fmt.Printf("Vous avez %v pv, votre ennemi a %v pv.\n", perso.Hp, pvMechant)
-		fmt.Fprintln("inventaire : 1, attaque : 2 ")
+		fmt.Println("inventaire : 1, attaque : 2 ")
 		var atkOuHeal int
 		fmt.Scan(atkOuHeal)
 		switch atkOuHeal {
