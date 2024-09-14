@@ -56,55 +56,99 @@ func ChoixPersonnage() character.Personnage {
 	return perso
 }
 
+// Fonction pour afficher la santé du personnage avec une barre dynamique
+func displayHealth(entityName string, hp int, hpMax int) {
+	healthBar := "["
+	barLength := 10                        // Longueur totale de la barre
+	filledBars := (hp * barLength) / hpMax // Calcul du nombre de barres remplies en fonction des HP actuels et max
+
+	// Ajouter les barres remplies
+	for i := 0; i < filledBars; i++ {
+		healthBar += "|"
+	}
+	// Ajouter les barres vides
+	for i := filledBars; i < barLength; i++ {
+		healthBar += " "
+	}
+	healthBar += "]"
+
+	// Afficher le nom de l'entité, la barre de santé et les HP actuels/maximum
+	fmt.Printf("%s : %s (%d/%d)\n", entityName, healthBar, hp, hpMax)
+}
+
 func Firstfight(perso *character.Personnage) inventory.Inventory {
 	inv := inventory.Inventory{Limite: 5}
 	briquet := object.ObjectStats{"Briquet", "Utilitaire", 10}
 	sandwitch := object.ObjectStats{"Sandwitch", "Utilitaire", 10}
 	ricard := object.ObjectStats{"Ricard", "Utilitaire", 10}
+
 	attack := 0
 	guetteur := character.Enemy{"Guetteur", 100, 10}
 
+	// Combat Intro
+	fmt.Println("\nVous entrez dans un combat avec un Guetteur !")
 	fmt.Println(`
    O                         O
   /|\                       /|\
   / \                       / \
 `)
+	time.Sleep(2 * time.Second)
 
+	// Boucle de combat
 	for guetteur.Hp > 0 && perso.Hp > 0 {
-		fmt.Println(perso.NameUser, "a", perso.Hp, "point de vie et le", guetteur.Name, "a", guetteur.Hp, "point de vie")
-		fmt.Println("\nAppuyez sur 1 pour lui péter la gueule")
+		fmt.Println("\n--- Combat ---")
+
+		// Utilisation de la nouvelle fonction displayHealth avec hpMax dynamique
+		displayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
+		displayHealth(guetteur.Name, guetteur.Hp, 100)
+
+		// Options de combat
+		fmt.Println("\nQue voulez-vous faire ?")
+		fmt.Println("1 - Attaquer")
 		fmt.Scan(&attack)
 
-		for attack != 1 {
-			fmt.Println("Entrez une valeur valide\n")
+		// Vérification de l'entrée
+		for attack != 1 && attack != 2 {
+			fmt.Println("Entrez une option valide (1)\n")
 			fmt.Scan(&attack)
 		}
 
+		// Gestion des actions
 		switch attack {
-		case 1:
-			guetteur.Hp -= perso.Damage
-			if guetteur.Hp > 21 {
-				perso.Hp -= guetteur.Damage
-				fmt.Println("Vous attaquez le guetteur et vous lui infligez", perso.Damage, "points de dégât\n")
+		case 1: // Attaquer
+			damage := perso.Damage
+			guetteur.Hp -= damage
+			fmt.Printf("Vous infligez %d points de dégât.\n", damage)
+			time.Sleep(2 * time.Second)
+
+			// Attaque du Guetteur
+				if guetteur.Hp > 21 {
+					fmt.Println("Le guetteur riposte !")
+					time.Sleep(1 * time.Second)
+					perso.Hp -= guetteur.Damage
+					fmt.Printf("Le guetteur vous inflige %d points de dégât.\n", guetteur.Damage)
+				} else {
+					// Le guetteur sort un couteau si sa santé est basse
+					criticalDamage := 50
+					perso.Hp -= criticalDamage
+					fmt.Println("Le guetteur sort un couteau !")
+					fmt.Printf("Il vous inflige un coup critique de %d points de dégât.\n", criticalDamage)
+				}
 				time.Sleep(2 * time.Second)
-				fmt.Println("\nLe guetteur vous attaque en retour et vous enlève 10 points de vie")
-			} else {
-				perso.Hp -= 50
-				time.Sleep(2 * time.Second)
-				fmt.Print("\nLe guetteur sort un couteau et vous inflige 50 points de dégât")
+
+			// Si le joueur ou le guetteur sont morts
+			if perso.Hp <= 0 {
+				fmt.Println("\nVous êtes tombé au combat...")
+				break
+			} else if guetteur.Hp <= 0 {
+				fmt.Println("\nVous avez vaincu le guetteur !")
+				inv.AddObject(briquet)
+				inv.AddObject(sandwitch)
+				inv.AddObject(ricard)
+				break
 			}
 		}
-	}
 
-	if guetteur.Hp <= 0 {
-		time.Sleep(2 * time.Second)
-		inv.AddObject(briquet)
-		inv.AddObject(sandwitch)
-		inv.AddObject(ricard)
-	} else if perso.Hp <= 0 {
-		time.Sleep(2 * time.Second)
-		fmt.Println("\nTu t'es fait arracher, t'es nul")
 	}
-
 	return inv
 }
