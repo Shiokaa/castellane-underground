@@ -85,7 +85,6 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	attack := 0
 	guetteur := character.Enemy{"Guetteur", 100, 10}
 
-	// Combat Intro
 	fmt.Println("\nVous entrez dans un combat avec un Guetteur !")
 	fmt.Println(`
    O                         O
@@ -94,41 +93,34 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 `)
 	time.Sleep(2 * time.Second)
 
-	// Boucle de combat
 	for guetteur.Hp > 0 && perso.Hp > 0 {
 		fmt.Println("\n--- Combat ---")
 
-		// Utilisation de la nouvelle fonction displayHealth avec hpMax dynamique
 		displayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		displayHealth(guetteur.Name, guetteur.Hp, 100)
 
-		// Options de combat
 		fmt.Println("\nQue voulez-vous faire ?")
 		fmt.Println("1 - Attaquer")
 		fmt.Scan(&attack)
 
-		// Vérification de l'entrée
 		for attack != 1 && attack != 2 {
 			fmt.Println("Entrez une option valide (1)\n")
 			fmt.Scan(&attack)
 		}
 
-		// Gestion des actions
 		switch attack {
-		case 1: // Attaquer
+		case 1: 
 			damage := perso.Damage
 			guetteur.Hp -= damage
 			fmt.Printf("Vous infligez %d points de dégât.\n", damage)
 			time.Sleep(2 * time.Second)
 
-			// Attaque du Guetteur
 				if guetteur.Hp > 21 {
 					fmt.Println("Le guetteur riposte !")
 					time.Sleep(1 * time.Second)
 					perso.Hp -= guetteur.Damage
 					fmt.Printf("Le guetteur vous inflige %d points de dégât.\n", guetteur.Damage)
 				} else {
-					// Le guetteur sort un couteau si sa santé est basse
 					criticalDamage := 50
 					perso.Hp -= criticalDamage
 					fmt.Println("Le guetteur sort un couteau !")
@@ -136,7 +128,6 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				}
 				time.Sleep(2 * time.Second)
 
-			// Si le joueur ou le guetteur sont morts
 			if perso.Hp <= 0 {
 				fmt.Println("\nVous êtes tombé au combat...")
 				break

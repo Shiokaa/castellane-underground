@@ -8,7 +8,6 @@ import (
 	"time"
 )
 
-// Fonction principale du menu
 func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	var choix int
 	clearScreen()
@@ -27,7 +26,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		switch choix {
 		case 1:
 			fmt.Println("Vous vous préparez à entrer dans un combat...")
-			return // Quitte le menu pour démarrer le combat
+			return
 		case 2:
 			afficherInventaire(inv)
 		case 3:
@@ -36,6 +35,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			Telegram(perso, inv)
 		case 0:
 			fmt.Println("À bientôt!")
+			time.Sleep(4 * time.Second)
 			break
 		default:
 			fmt.Println("Choix invalide, essayez à nouveau.")
@@ -43,7 +43,6 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	}
 }
 
-// Fonction d'affichage de l'inventaire
 func afficherInventaire(inv inventory.Inventory) {
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {
@@ -57,7 +56,6 @@ func afficherInventaire(inv inventory.Inventory) {
 	time.Sleep(2 * time.Second)
 }
 
-// Fonction pour aller au O'Tacos
 func oTacos(perso *character.Personnage, inv inventory.Inventory) {
 	clearScreen()
 	if perso.Hp < perso.Hpmax {
@@ -75,7 +73,6 @@ func oTacos(perso *character.Personnage, inv inventory.Inventory) {
 	Menu(perso, inv)
 }
 
-// Fonction du Telegram (marché)
 func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 	clearScreen()
 	var achat int
@@ -85,7 +82,6 @@ func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 	fmt.Println("Entrez le numéro de l'article que vous souhaitez acheter, ou 0 pour quitter:")
 	fmt.Scan(&achat)
 
-	// Gestion des achats
 	switch achat {
 	case 1:
 		achatObjet(perso, inv, object.ObjectStats{"Lacrimogène", "Arme", 15}, 30)
@@ -125,7 +121,6 @@ func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 	}
 }
 
-// Fonction pour afficher le marché du Telegram
 func afficherMarché() {
 	fmt.Println("\n--------- TELEGRAM MARCHÉ ---------")
 	fmt.Println("1 - LACRIMOGENE à 30€ : -5% de vie par tour, 1 chance sur 3 de rater l'attaque (3 tours)")
@@ -157,7 +152,6 @@ func achatObjet(perso *character.Personnage, inv inventory.Inventory, objet obje
 	Telegram(perso, inv)
 }
 
-// Fonction générique pour améliorer les stats (ex: HP max, capacité d'inventaire)
 func achatStatUpgrade(perso *character.Personnage, inv inventory.Inventory, itemName string, prix int, upgradeValue int) bool {
 	if perso.Gold >= prix {
 		perso.Gold -= prix
@@ -171,7 +165,6 @@ func achatStatUpgrade(perso *character.Personnage, inv inventory.Inventory, item
 	}
 }
 
-// Fonction pour simuler le nettoyage de l'écran (utile pour lisibilité)
 func clearScreen() {
 	fmt.Print("\033[H\033[2J")
 }
