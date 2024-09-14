@@ -3,6 +3,7 @@ package menu
 import (
 	"fmt"
 	"projet-red/character"
+	"projet-red/game"
 	"projet-red/inventory"
 	"projet-red/object"
 	"time"
@@ -10,8 +11,6 @@ import (
 
 func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	var choix int
-	clearScreen()
-
 	for {
 		fmt.Println("\n---------- MENU PRINCIPAL ----------")
 		fmt.Println("1 - Aller au combat")
@@ -19,6 +18,8 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println("3 - Aller au O'Tacos (régénération de vie)")
 		fmt.Println("4 - Accéder au Telegram (marché)")
 		fmt.Println("0 - Quitter")
+		fmt.Println(" - Vos points de vie ")
+		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		fmt.Println("------------------------------------")
 		fmt.Printf("Votre choix: ")
 		fmt.Scan(&choix)
@@ -36,7 +37,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		case 0:
 			fmt.Println("À bientôt!")
 			time.Sleep(4 * time.Second)
-			break
+			return
 		default:
 			fmt.Println("Choix invalide, essayez à nouveau.")
 		}

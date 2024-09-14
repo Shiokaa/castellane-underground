@@ -57,7 +57,7 @@ func ChoixPersonnage() character.Personnage {
 }
 
 // Fonction pour afficher la santé du personnage avec une barre dynamique
-func displayHealth(entityName string, hp int, hpMax int) {
+func DisplayHealth(entityName string, hp int, hpMax int) {
 	healthBar := "["
 	barLength := 10                        // Longueur totale de la barre
 	filledBars := (hp * barLength) / hpMax // Calcul du nombre de barres remplies en fonction des HP actuels et max
@@ -96,8 +96,8 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	for guetteur.Hp > 0 && perso.Hp > 0 {
 		fmt.Println("\n--- Combat ---")
 
-		displayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
-		displayHealth(guetteur.Name, guetteur.Hp, 100)
+		DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
+		DisplayHealth(guetteur.Name, guetteur.Hp, 100)
 
 		fmt.Println("\nQue voulez-vous faire ?")
 		fmt.Println("1 - Attaquer")
@@ -109,24 +109,24 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 		}
 
 		switch attack {
-		case 1: 
+		case 1:
 			damage := perso.Damage
 			guetteur.Hp -= damage
 			fmt.Printf("Vous infligez %d points de dégât.\n", damage)
 			time.Sleep(2 * time.Second)
 
-				if guetteur.Hp > 21 {
-					fmt.Println("Le guetteur riposte !")
-					time.Sleep(1 * time.Second)
-					perso.Hp -= guetteur.Damage
-					fmt.Printf("Le guetteur vous inflige %d points de dégât.\n", guetteur.Damage)
-				} else {
-					criticalDamage := 50
-					perso.Hp -= criticalDamage
-					fmt.Println("Le guetteur sort un couteau !")
-					fmt.Printf("Il vous inflige un coup critique de %d points de dégât.\n", criticalDamage)
-				}
-				time.Sleep(2 * time.Second)
+			if guetteur.Hp > 19 {
+				fmt.Println("Le guetteur riposte !")
+				time.Sleep(1 * time.Second)
+				perso.Hp -= guetteur.Damage
+				fmt.Printf("Le guetteur vous inflige %d points de dégât.\n", guetteur.Damage)
+			} else {
+				criticalDamage := 50
+				perso.Hp -= criticalDamage
+				fmt.Println("Le guetteur sort un couteau !")
+				fmt.Printf("Il vous inflige un coup critique de %d points de dégât.\n", criticalDamage)
+			}
+			time.Sleep(2 * time.Second)
 
 			if perso.Hp <= 0 {
 				fmt.Println("\nVous êtes tombé au combat...")
