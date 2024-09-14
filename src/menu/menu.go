@@ -137,7 +137,6 @@ func afficherMarché() {
 	fmt.Println("----------------------------------")
 }
 
-// Fonction générique pour acheter un objet
 func achatObjet(perso *character.Personnage, inv inventory.Inventory, objet object.ObjectStats, prix int) {
 	if perso.Gold >= prix && len(inv.SacocheCp) < inv.Limite {
 		perso.Gold -= prix
