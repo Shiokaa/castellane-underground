@@ -8,11 +8,8 @@ import (
 	"time"
 )
 
-func Menu(perso character.Personnage) {
-
+func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	choix := 0
-	inv := inventory.Inventory{SacocheCp: []object.ObjectStats{}, Limite: 10}
-
 	fmt.Println("\nTapez 1 pour aller au combat		Tapez 2 pour accéder à l'inventaire")
 	fmt.Println("Tapez 3 pour aller au O'Tacos		Tapez 4 pour accéder au telegram")
 	fmt.Scan(&choix)
@@ -21,26 +18,30 @@ func Menu(perso character.Personnage) {
 		break
 	case 2:
 		fmt.Println("Voici l'inventaire :\n")
-		for _, v := range inv.SacocheCp {
-			fmt.Println(v, "\n")
-		}
-		Menu(character.Personnage{})
+		fmt.Println(inv.SacocheCp)
+		Menu(perso, inv)
 	case 3:
 		if perso.Hp < perso.Hpmax {
-			fmt.Println("Vous êtes à O'Tacos, vous payez 5€ et régénérer vôtre vie")
-			perso.Hp = perso.Hpmax
-			time.Sleep(4 * time.Second)
-			fmt.Println("Vous avez régénérer tout vos point de vie")
+			if perso.Gold >= 5 {
+				fmt.Println("Vous êtes à O'Tacos, vous payez 5€ et régénérer vôtre vie")
+				perso.Hp = perso.Hpmax
+				time.Sleep(4 * time.Second)
+				fmt.Println("Vous avez régénérer tout vos point de vie")
+				Menu(perso, inv)
+			} else {
+				fmt.Println("Vous êtes trop pauvre !")
+				Telegram(perso, inv)
+			}
 		} else {
 			fmt.Println("Vos points de vie sont déjà au maximum")
-			Menu(character.Personnage{})
+			Menu(perso, inv)
 		}
 	case 4:
-		Telegram(character.Personnage{})
+		Telegram(perso, inv)
 	}
 }
 
-func Telegram(perso character.Personnage) {
+func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 	matraque := object.ObjectStats{"Matraque ", "Arme", 80}
 	lacrimogène := object.ObjectStats{"Lacrimogène", "Arme", 15}
 	mortier := object.ObjectStats{"Mortier", "Arme", 200}
@@ -48,10 +49,6 @@ func Telegram(perso character.Personnage) {
 	ricard := object.ObjectStats{"Ricard", "Soin", 10}
 	flash := object.ObjectStats{"Flash", "Soin", 25}
 	redbull := object.ObjectStats{"Redbull", "Consumable", 20}
-	casque := object.ObjectStats{"Casque Arai", "Armure", 50}
-	niketech := object.ObjectStats{"Ensemble Nike Tech", "Armure", 20}
-
-	inv := inventory.Inventory{SacocheCp: []object.ObjectStats{}, Limite: 5}
 	achat := 0
 	fmt.Println("\nTaper 1 pour acheter une LACRIMOGENE à 30€: -5% ‎de point de vie par tour et 1 chance sur 3 de raté son attaque, le tout pendant 3 tours")
 	fmt.Println("\nTaper 2 pour acheter un MATRAQUE à 100€ : Inflige 80 points de dégât")
@@ -64,6 +61,7 @@ func Telegram(perso character.Personnage) {
 	fmt.Println("\nTaper 9 pour acheter un CASQUE ARAI 500€ : Permet d'augmenter ses points de vie de 50")
 	fmt.Println("\nTaper 10 pour acheter une SACOCHE LV 300€ : Rajoute 5 emplacement de plus à l'inventaire")
 	fmt.Println("\nTaper 11 pour sortir du telegram")
+	fmt.Println("\nVous avez", perso.Gold, "€")
 	fmt.Scan(&achat)
 	for achat >= 0 && achat <= 9 && achat == 10 && achat == 11 {
 		fmt.Println("Entrez un numéro valide\n")
@@ -74,95 +72,109 @@ func Telegram(perso character.Personnage) {
 		case 1:
 			if perso.Gold >= 30 {
 				perso.Gold -= 30
-				inv.SacocheCp = append(inv.SacocheCp, lacrimogène)
+				inv.AddObject(lacrimogène)
 				fmt.Println("Une lacrimogène a été ajoutée à l'inventaire")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 2:
 			if perso.Gold >= 100 {
 				perso.Gold -= 100
-				inv.SacocheCp = append(inv.SacocheCp, matraque)
+				inv.AddObject(matraque)
 				fmt.Print("La matraque a été ajoutée à l'inventaire")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 3:
 			if perso.Gold >= 150 {
 				perso.Gold -= 150
-				inv.SacocheCp = append(inv.SacocheCp, mortier)
+				inv.AddObject(mortier)
 				fmt.Println("Un mortier a été ajoutée à l'inventaire")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 4:
 			if perso.Gold >= 250 {
 				perso.Gold -= 250
-				inv.SacocheCp = append(inv.SacocheCp, taser)
+				inv.AddObject(taser)
 				fmt.Print("Un taser a été ajoutée à l'inventaire")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 5:
 			if perso.Gold >= 5 {
 				perso.Gold -= 5
-				inv.SacocheCp = append(inv.SacocheCp, ricard)
+				inv.AddObject(ricard)
 				fmt.Println("Un ricard a été ajoutée à l'inventaire")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 6:
 			if perso.Gold >= 25 {
 				perso.Gold -= 25
-				inv.SacocheCp = append(inv.SacocheCp, flash)
+				inv.AddObject(flash)
 				fmt.Print("Un flash a été ajoutée à l'inventaire")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 7:
 			if perso.Gold >= 10 {
 				perso.Gold -= 10
-				inv.SacocheCp = append(inv.SacocheCp, redbull)
+				inv.AddObject(redbull)
 				fmt.Print("Une redbull a été ajoutée à l'inventaire")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 8:
 			if perso.Gold >= 200 {
 				perso.Gold -= 200
-				inv.SacocheCp = append(inv.SacocheCp, niketech)
+				perso.Hpmax += 20
+				perso.Hp += 20
 				fmt.Print("Vous équipez votre ensemble")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 9:
 			if perso.Gold >= 500 {
 				perso.Gold -= 500
-				inv.SacocheCp = append(inv.SacocheCp, casque)
+				perso.Hpmax += 50
+				perso.Hp += 50
 				fmt.Print("Vous équipez votre casque")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 10:
 			if perso.Gold > 300 {
 				inv.Limite += 5
 				fmt.Println("Vous avez acheté la sacoche lv vous gagnez 10 emplacement")
+				Menu(perso, inv)
 			} else {
 				fmt.Println("Vous êtes trop pauvre !")
-				Telegram(character.Personnage{})
+				Menu(perso, inv)
 			}
 		case 11:
-			Menu(character.Personnage{})
+			Menu(perso, inv)
 		default:
 		}
+	} else {
+		fmt.Println("Inventaire plein ! Impossible d'ajouter plus d'objets.")
 	}
 }

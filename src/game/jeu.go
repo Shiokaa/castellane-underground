@@ -4,24 +4,10 @@ import (
 	"fmt"
 	"math/rand"
 	"projet-red/character"
+	"projet-red/inventory"
+	"projet-red/object"
 	"time"
 )
-
-func HistoireDebut() {
-	fmt.Println("   _____          _       _ _                     _    _           _                                          _ ")
-	fmt.Println("  / ____|        | |     | | |                   | |  | |         | |                                        | |")
-	fmt.Println(" | |     __ _ ___| |_ ___| | | __ _ _ __   ___   | |  | |_ __   __| | ___ _ __ __ _ _ __ ___  _   _ _ __   __| |")
-	fmt.Println(" | |    / _` / __| __/ _ | | |/ _` | '_ \\ / _ \\  | |  | | '_ \\ / _` |/ _ | '__/ _` | '__/ _ \\| | | | '_ \\ / _` |")
-	fmt.Println(" | |___| (_| \\__ | ||  __| | | (_| | | | |  __/  | |__| | | | | (_| |  __| | | (_| | | | (_) | |_| | | | | (_| |")
-	fmt.Println(" \\_____\\__,_|___/\\__\\___|_|_|\\__,_|_| |_| \\___|  \\____/|_| |_|\\__,_|\\___|_|  \\__, |_|  \\___/ \\__,_|_| |_|\\__,_|")
-	fmt.Println("                                                                              __/ |                            ")
-	fmt.Println("                                                                             |___/                             ")
-	str := "L'histoire commence dans la cour d'un HLM avec un daron, le tonton ainsi qu'une daronne, La discution porte autour des resaux au sein du quartier, les trois en ont marre et decident de se révolter ! "
-	for _, char := range str {
-		fmt.Printf("%c", char)
-		time.Sleep(20 * time.Millisecond)
-	}
-}
 
 func ChoixPersonnage() character.Personnage {
 	time.Sleep(3 * time.Second)
@@ -52,7 +38,7 @@ func ChoixPersonnage() character.Personnage {
 			fmt.Println("\nEntrez maximum 12 caractère !\n")
 			fmt.Scan(&nameuser)
 		}
-		perso = character.Personnage{"Daronne", nameuser, 80, 10, 35, 120}
+		perso = character.Personnage{"Daronne", nameuser, 80, 10, 35, 80}
 		fmt.Printf("Voici les stats de la %v %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	case 3:
 		fmt.Println("\nChoisisez un pseudo pour votre personnage \n")
@@ -63,55 +49,62 @@ func ChoixPersonnage() character.Personnage {
 		}
 		rand.Seed(time.Now().UnixNano())
 		argentrandom := rand.Intn(46) + 5
-		perso = character.Personnage{"Tonton", nameuser, 100, argentrandom, 20, 120}
+		perso = character.Personnage{"Tonton", nameuser, 100, argentrandom, 20, 100}
 		fmt.Printf("\nVoici les stats du %v %v \nPoints de vie : %v\nArgent : %v\n", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	default:
 	}
 	return perso
-
 }
 
-func Firstfight(perso character.Personnage) {
+func Firstfight(perso *character.Personnage) inventory.Inventory {
+	inv := inventory.Inventory{Limite: 5}
+	briquet := object.ObjectStats{"Briquet", "Utilitaire", 10}
+	sandwitch := object.ObjectStats{"Sandwitch", "Utilitaire", 10}
+	ricard := object.ObjectStats{"Ricard", "Utilitaire", 10}
 	attack := 0
 	guetteur := character.Enemy{"Guetteur", 100, 10}
+
 	fmt.Println(`
    O                         O
   /|\                       /|\
   / \                       / \
 `)
-	for guetteur.Hp > 0 && perso.Hp > 0 {
 
+	for guetteur.Hp > 0 && perso.Hp > 0 {
 		fmt.Println(perso.NameUser, "a", perso.Hp, "point de vie et le", guetteur.Name, "a", guetteur.Hp, "point de vie")
-		fmt.Println("\nAppuyez sur 1 pour lui peter la gueule")
+		fmt.Println("\nAppuyez sur 1 pour lui péter la gueule")
 		fmt.Scan(&attack)
+
 		for attack != 1 {
 			fmt.Println("Entrez une valeur valide\n")
 			fmt.Scan(&attack)
 		}
-		switch attack {
 
+		switch attack {
 		case 1:
+			guetteur.Hp -= perso.Damage
 			if guetteur.Hp > 21 {
-				guetteur.Hp -= perso.Damage
+				perso.Hp -= guetteur.Damage
 				fmt.Println("Vous attaquez le guetteur et vous lui infligez", perso.Damage, "points de dégât\n")
 				time.Sleep(2 * time.Second)
-				perso.Hp -= guetteur.Damage
 				fmt.Println("\nLe guetteur vous attaque en retour et vous enlève 10 points de vie")
 			} else {
-				fmt.Print("\nLe guetteur sort un couteau et vous inflige 50 points de dégât")
 				perso.Hp -= 50
-				guetteur.Hp -= perso.Damage
+				time.Sleep(2 * time.Second)
+				fmt.Print("\nLe guetteur sort un couteau et vous inflige 50 points de dégât")
 			}
 		}
 	}
+
 	if guetteur.Hp <= 0 {
 		time.Sleep(2 * time.Second)
-		fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", guetteur.Name, "a", guetteur.Hp, "point de vie")
-		time.Sleep(2 * time.Second)
-		fmt.Println("\nAdversaire vaincu ! Tu récupères sa sacoche C.P. Company contenant : un briquet, 10 €, un sandwich, 2 Ricards ainsi qu’un téléphone (accès à Telegram, le shop du jeu, besoin d’un item ? vas y faire un tour. ")
+		inv.AddObject(briquet)
+		inv.AddObject(sandwitch)
+		inv.AddObject(ricard)
 	} else if perso.Hp <= 0 {
 		time.Sleep(2 * time.Second)
-		fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", guetteur.Name, "a", guetteur.Hp, "point de vie")
-		fmt.Println("\nTu t'es fait arraché t'es nul")
+		fmt.Println("\nTu t'es fait arracher, t'es nul")
 	}
+
+	return inv
 }

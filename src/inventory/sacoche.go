@@ -9,3 +9,7 @@ type Inventory struct {
 	CraftInventory []object.ObjectStats
 	Limite         int
 }
+
+func (inv *Inventory) AddObject(obj object.ObjectStats) {
+	inv.SacocheCp = append(inv.SacocheCp, obj)
+}
