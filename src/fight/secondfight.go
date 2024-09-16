@@ -1,3 +1,11 @@
+package fight
+
+import (
+	"fmt"
+	"projet-red/character"
+	"time"
+)
+
 func Secondfight(perso character.Personnage) {
 	attack := 0
 	vendeur := character.Enemy{"vandeur", 200, 20}
