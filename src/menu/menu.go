@@ -31,6 +31,10 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			return
 		case 2:
 			afficherInventaire(inv)
+			for {
+				fmt.Println("1 - Enlever un objet")
+				fmt.Println("2 - Sortir de l'inventaire")
+			}
 		case 3:
 			oTacos(perso, inv)
 		case 4:
