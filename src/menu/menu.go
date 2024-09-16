@@ -11,7 +11,6 @@ import (
 
 func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	var choix int
-	var choixinv int
 	for {
 		fmt.Println("\n---------- MENU PRINCIPAL ----------")
 		fmt.Println("1 - Aller au combat")
@@ -32,10 +31,6 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			return
 		case 2:
 			afficherInventaire(inv)
-			for {
-				fmt.Println("1 - Enlever un objet")
-				fmt.Println("2 - Sortir de l'inventaire")
-			}
 		case 3:
 			oTacos(perso, inv)
 		case 4:

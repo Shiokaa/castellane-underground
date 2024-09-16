@@ -4,15 +4,10 @@ import (
 	"projet-red/fight"
 	"projet-red/game"
 	"projet-red/menu"
-	"projet-red/story"
 )
 
 func main() {
-	story.HistoireDebut()
 	perso := game.ChoixPersonnage()
-	story.Afterchoixperso()
-	fight.Firstfight(&perso)
-	story.Afterguetteur()
-	menu.Menu(&perso)
-
+	inv := fight.Firstfight(&perso)
+	menu.Menu(&perso, inv)
 }
