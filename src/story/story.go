@@ -36,3 +36,11 @@ func Afterguetteur() {
 		time.Sleep(40 * time.Millisecond)
 	}
 }
+
+func AfterVendeur() {
+	str := "\n Apres quelques minutes de marche tu croise un RS6 gris nardo plein a craquer et tu decides de te battre avec le chauffeur de ce go-Fast (Tu attaque en premier, le chauffeur se bat avec un couteau suisse trouvé dans la boite à gants "
+	for _, char := range str {
+		fmt.Printf("%c", char)
+		time.Sleep(40 * time.Millisecond)
+	}
+}

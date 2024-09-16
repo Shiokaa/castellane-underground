@@ -11,7 +11,6 @@ import (
 
 func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	var choix int
-	var choixinv int
 	for {
 		fmt.Println("\n---------- MENU PRINCIPAL ----------")
 		fmt.Println("1 - Aller au combat")
