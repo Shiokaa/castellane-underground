@@ -17,6 +17,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println("2 - Accéder à l'inventaire")
 		fmt.Println("3 - Aller au O'Tacos (régénération de vie)")
 		fmt.Println("4 - Accéder au Telegram (marché)")
+		fmt.Println("5 - Aller zoner dans le quartier")
 		fmt.Println("0 - Quitter")
 		fmt.Println(" - Vos points de vie ")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
@@ -34,6 +35,10 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			oTacos(perso, inv)
 		case 4:
 			Telegram(perso, inv)
+		case 5:
+			fmt.Println("Vous zonez dans le quartier !")
+			time.Sleep(15 * time.Second)
+			perso.Gold += 25
 		case 0:
 			fmt.Println("À bientôt!")
 			time.Sleep(4 * time.Second)
