@@ -11,7 +11,8 @@ func main() {
 	story.HistoireDebut()
 	perso := game.ChoixPersonnage()
 	story.Afterchoixperso()
-	inv := fight.Firstfight(&perso)
+	fight.Firstfight(&perso)
 	story.Afterguetteur()
-	menu.Menu(&perso, inv)
+	menu.Menu(&perso)
+
 }

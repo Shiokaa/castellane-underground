@@ -22,8 +22,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	fmt.Println(`
    O                         O
   /|\                       /|\
-  / \                       / \
-`)
+  / \                       / \`)
 	time.Sleep(2 * time.Second)
 
 	for guetteur.Hp > 0 && perso.Hp > 0 {
