@@ -19,3 +19,4 @@ func (inv *Inventory) RemoveObject(object.ObjectStats){
 		if elem == 
 	}
 }
+
