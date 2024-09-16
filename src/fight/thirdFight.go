@@ -11,7 +11,7 @@ import (
 
 func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
 	attack := 0
-	Gofasteur := character.Enemy{"Go fasteur", 300, 20}
+	Gofasteur := character.Enemy{"Go fasteur", 300, 20, 300}
 	tissu := object.ObjectStats{"tissu", "Utilitaire", 0}
 	fmt.Println("\nVous entrez dans un combat avec un Go fasteur !")
 	fmt.Println(`
