@@ -71,9 +71,9 @@ func ChoixPersonnage() character.Personnage {
 	default:
 	}
 	return perso
+
 }
 
-// Fonction pour afficher la santé du personnage avec une barre dynamique
 func DisplayHealth(entityName string, hp int, hpMax int) {
 	healthBar := "["
 	barLength := 10                        // Longueur totale de la barre

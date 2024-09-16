@@ -12,18 +12,17 @@ import (
 func Firstfight(perso *character.Personnage) inventory.Inventory {
 	inv := inventory.Inventory{Limite: 5}
 	briquet := object.ObjectStats{"Briquet", "Utilitaire", 10}
-	sandwitch := object.ObjectStats{"Sandwitch", "Utilitaire", 10}
-	ricard := object.ObjectStats{"Ricard", "Utilitaire", 10}
+	sandwitch := object.ObjectStats{"Sandwitch", "Soin", 10}
+	ricard := object.ObjectStats{"Ricard", "Soin", 10}
 
 	attack := 0
-	guetteur := character.Enemy{"Guetteur", 100, 10}
+	guetteur := character.Enemy{"Guetteur", 100, 10, 100}
 
 	fmt.Println("\nVous entrez dans un combat avec un Guetteur !")
 	fmt.Println(`
    O                         O
   /|\                       /|\
-  / \                       / \
-`)
+  / \                       / \`)
 	time.Sleep(2 * time.Second)
 
 	for guetteur.Hp > 0 && perso.Hp > 0 {
@@ -63,13 +62,11 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 
 			if perso.Hp <= 0 {
 				fmt.Println("\nVous êtes tombé au combat...")
-				break
 			} else if guetteur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le guetteur !")
 				inv.AddObject(briquet)
 				inv.AddObject(sandwitch)
 				inv.AddObject(ricard)
-				break
 			}
 		}
 
