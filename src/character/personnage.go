@@ -8,7 +8,3 @@ type Personnage struct {
 	Damage   int
 	Hpmax    int
 }
-
-type Test struct {
-	Name string
-}
