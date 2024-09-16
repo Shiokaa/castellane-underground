@@ -1,19 +1,17 @@
 package inventory
 
 import (
-	"fmt"
 	"projet-red/object"
 )
 
 type Inventory struct {
-	SacocheCp []object.ObjectStats
-	Limite    int
+	SacocheCp      []object.ObjectStats
+	CraftInventory []object.ObjectStats
+	Limite         int
 }
 
-func test() {
-	a := []int{1, 2, 3, 4, 5, 6}
-	a = append(a[:2], a[3:]...)
-	fmt.Println(a)
+func (inv *Inventory) AddObject(obj object.ObjectStats) {
+	inv.SacocheCp = append(inv.SacocheCp, obj)
 }
 
 func (inv *Inventory) RemoveObject(obj object.ObjectStats){
