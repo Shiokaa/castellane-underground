@@ -36,7 +36,7 @@ func ChoixPersonnage() character.Personnage {
 			fmt.Println("\nEntrez maximum 12 caractère !\n")
 			fmt.Scan(&nameuser)
 		}
-		perso = character.Personnage{"Daronne", nameuser, 80, 10, 35, 80}
+		perso = character.Personnage{"Daronne", nameuser, 80, 10, 35, 120}
 		fmt.Printf("Voici les stats de la %v %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	case 3:
 		fmt.Println("\nChoisisez un pseudo pour votre personnage \n")
@@ -47,14 +47,14 @@ func ChoixPersonnage() character.Personnage {
 		}
 		rand.Seed(time.Now().UnixNano())
 		argentrandom := rand.Intn(46) + 5
-		perso = character.Personnage{"Tonton", nameuser, 100, argentrandom, 20, 100}
+		perso = character.Personnage{"Tonton", nameuser, 100, argentrandom, 20, 120}
 		fmt.Printf("\nVoici les stats du %v %v \nPoints de vie : %v\nArgent : %v\n", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	default:
 	}
 	return perso
+
 }
 
-// Fonction pour afficher la santé du personnage avec une barre dynamique
 func DisplayHealth(entityName string, hp int, hpMax int) {
 	healthBar := "["
 	barLength := 10                        // Longueur totale de la barre
