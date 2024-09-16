@@ -13,3 +13,7 @@ type Inventory struct {
 func (inv *Inventory) AddObject(obj object.ObjectStats) {
 	inv.SacocheCp = append(inv.SacocheCp, obj)
 }
+
+func (inv *Inventory) RemoveObject(obj object.ObjectStats){
+	
+}
