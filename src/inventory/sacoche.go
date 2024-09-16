@@ -15,3 +15,7 @@ func test() {
 	a = append(a[:2], a[3:]...)
 	fmt.Println(a)
 }
+
+func (inv *Inventory) RemoveObject(obj object.ObjectStats){
+	
+}
