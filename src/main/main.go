@@ -15,4 +15,5 @@ func main() {
 	story.Afterguetteur()
 	menu.Menu(&perso, inv)
 	story.AfterVendeur()
+	fight.ThirdFight(&perso, inv)
 }
