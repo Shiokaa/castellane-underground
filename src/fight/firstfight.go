@@ -16,7 +16,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	ricard := object.ObjectStats{"Ricard", "Soin", 10}
 
 	attack := 0
-	guetteur := character.Enemy{"Guetteur", 100, 10}
+	guetteur := character.Enemy{"Guetteur", 100, 10, 100}
 
 	fmt.Println("\nVous entrez dans un combat avec un Guetteur !")
 	fmt.Println(`
