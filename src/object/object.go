@@ -6,4 +6,3 @@ type ObjectStats struct {
 	Type   string //soin ou arme
 	Damage int    // Dégâts infligés ou soins recu
 }
-
