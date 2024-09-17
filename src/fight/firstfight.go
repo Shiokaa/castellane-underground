@@ -11,9 +11,9 @@ import (
 
 func Firstfight(perso *character.Personnage) inventory.Inventory {
 	inv := inventory.Inventory{Limite: 5}
-	briquet := object.ObjectStats{"Briquet", "Utilitaire", 10}
-	sandwitch := object.ObjectStats{"Sandwitch", "Soin", 10}
-	ricard := object.ObjectStats{"Ricard", "Soin", 10}
+	briquet := object.ObjectStats{Name: "Briquet", Type: "Utilitaire", Damage: 10}
+	sandwitch := object.ObjectStats{Name: "Sandwitch", Type: "Soin", Damage: 10}
+	ricard := object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}
 
 	attack := 0
 	guetteur := character.Enemy{"Guetteur", 100, 10}
