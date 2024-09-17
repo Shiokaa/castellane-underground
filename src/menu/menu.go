@@ -22,15 +22,22 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println(" - Vos points de vie ")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		fmt.Println("------------------------------------")
-		fmt.Printf("Votre choix: ")
-		fmt.Scan(&choix)
+
+		for {
+			fmt.Printf("Votre choix: ")
+			fmt.Scan(&choix)
+			if choix >= 0 && choix <= 5 {
+				break
+			}
+			fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
+		}
 
 		switch choix {
 		case 1:
 			fmt.Println("Vous vous préparez à entrer dans un combat...")
 			return
 		case 2:
-			afficherInventaire(inv)
+			afficherInventaire(&inv)
 		case 3:
 			oTacos(perso, inv)
 		case 4:
@@ -43,13 +50,11 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("À bientôt!")
 			time.Sleep(4 * time.Second)
 			return
-		default:
-			fmt.Println("Choix invalide, essayez à nouveau.")
 		}
 	}
 }
 
-func afficherInventaire(inv inventory.Inventory) {
+func afficherInventaire(inv *inventory.Inventory) {
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {
 		for i, obj := range inv.SacocheCp {
@@ -60,6 +65,36 @@ func afficherInventaire(inv inventory.Inventory) {
 	}
 	fmt.Println("------------------------------")
 	time.Sleep(2 * time.Second)
+
+	var choix int
+	for {
+		fmt.Printf("\nTapez 1 pour supprimer un objet sinon tapez 0. \n\n")
+		fmt.Scan(&choix)
+		if choix == 1 || choix == 0 {
+			break
+		}
+		fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
+	}
+
+	switch choix {
+	case 1:
+		var Nomobjet string
+		fmt.Println("Tapez le nom de l'objet à supprimer")
+		fmt.Scan(&Nomobjet)
+		for index := range inv.SacocheCp {
+			if inv.SacocheCp[index].Name == Nomobjet {
+				if index == len(inv.SacocheCp)-1 {
+					inv.SacocheCp = inv.SacocheCp[:index]
+				} else {
+					inv.SacocheCp = append(inv.SacocheCp[:index], inv.SacocheCp[index+1:]...)
+				}
+				fmt.Printf("Objet '%s' supprimé avec succès.\n", Nomobjet)
+				break
+			}
+		}
+	case 0:
+		return
+	}
 }
 
 func oTacos(perso *character.Personnage, inv inventory.Inventory) {
@@ -85,45 +120,49 @@ func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 	afficherMarché()
 
 	fmt.Printf("\nVous avez %d€.\n", perso.Gold)
-	fmt.Println("Entrez le numéro de l'article que vous souhaitez acheter, ou 0 pour quitter:")
-	fmt.Scan(&achat)
+
+	for {
+		fmt.Println("Entrez le numéro de l'article que vous souhaitez acheter, ou 0 pour quitter:")
+		fmt.Scan(&achat)
+		if achat >= 0 && achat <= 10 {
+			break
+		}
+		fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
+	}
 
 	switch achat {
 	case 1:
-		achatObjet(perso, inv, object.ObjectStats{"Lacrimogène", "Arme", 15}, 30)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Lacrimogène", Type: "Arme", Damage: 15}, 30)
 	case 2:
-		achatObjet(perso, inv, object.ObjectStats{"Matraque", "Arme", 80}, 100)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Matraque", Type: "Arme", Damage: 80}, 100)
 	case 3:
-		achatObjet(perso, inv, object.ObjectStats{"Mortier", "Arme", 200}, 150)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Mortier", Type: "Arme", Damage: 200}, 150)
 	case 4:
-		achatObjet(perso, inv, object.ObjectStats{"Taser", "Arme", 100}, 250)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Taser", Type: "Arme", Damage: 100}, 250)
 	case 5:
-		achatObjet(perso, inv, object.ObjectStats{"Ricard", "Soin", 10}, 5)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}, 5)
 	case 6:
-		achatObjet(perso, inv, object.ObjectStats{"Flash", "Soin", 25}, 20)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 25}, 20)
 	case 7:
-		achatObjet(perso, inv, object.ObjectStats{"Redbull", "Consumable", 20}, 10)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Redbull", Type: "Consumable", Damage: 20}, 10)
 	case 8:
-		if achatStatUpgrade(perso, inv, "Ensemble Nike Tech", 200, 20) {
+		if achatStatUpgrade(perso, "Ensemble Nike Tech", 200) {
 			perso.Hpmax += 20
 			perso.Hp += 20
 		}
 	case 9:
-		if achatStatUpgrade(perso, inv, "Casque Arai", 500, 50) {
+		if achatStatUpgrade(perso, "Casque Arai", 500) {
 			perso.Hpmax += 50
 			perso.Hp += 50
 		}
 	case 10:
-		if achatStatUpgrade(perso, inv, "Sacoche LV", 300, 5) {
+		if achatStatUpgrade(perso, "Sacoche LV", 300) {
 			inv.Limite += 5
 		}
 	case 0:
 		fmt.Println("Retour au menu principal...")
 		time.Sleep(2 * time.Second)
 		Menu(perso, inv)
-	default:
-		fmt.Println("Option invalide.")
-		Telegram(perso, inv)
 	}
 }
 
@@ -157,7 +196,7 @@ func achatObjet(perso *character.Personnage, inv inventory.Inventory, objet obje
 	Telegram(perso, inv)
 }
 
-func achatStatUpgrade(perso *character.Personnage, inv inventory.Inventory, itemName string, prix int, upgradeValue int) bool {
+func achatStatUpgrade(perso *character.Personnage, itemName string, prix int) bool {
 	if perso.Gold >= prix {
 		perso.Gold -= prix
 		fmt.Printf("Vous avez acheté %s et vos statistiques ont été améliorées.\n", itemName)
@@ -172,4 +211,8 @@ func achatStatUpgrade(perso *character.Personnage, inv inventory.Inventory, item
 
 func clearScreen() {
 	fmt.Print("\033[H\033[2J")
+}
+
+func UseObject(obj object.ObjectStats) int {
+	return 0
 }

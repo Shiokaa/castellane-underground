@@ -8,3 +8,9 @@ type Personnage struct {
 	Damage   int
 	Hpmax    int
 }
+
+type Enemy struct {
+	Name   string
+	Hp     int
+	Damage int
+}

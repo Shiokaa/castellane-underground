@@ -11,12 +11,12 @@ import (
 
 func Firstfight(perso *character.Personnage) inventory.Inventory {
 	inv := inventory.Inventory{Limite: 5}
-	briquet := object.ObjectStats{"Briquet", "Utilitaire", 10}
-	sandwitch := object.ObjectStats{"Sandwitch", "Soin", 10}
-	ricard := object.ObjectStats{"Ricard", "Soin", 10}
+	briquet := object.ObjectStats{Name: "Briquet", Type: "Utilitaire", Damage: 10}
+	sandwitch := object.ObjectStats{Name: "Sandwitch", Type: "Soin", Damage: 10}
+	ricard := object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}
 
 	attack := 0
-	guetteur := character.Enemy{"Guetteur", 100, 10}
+	guetteur := character.Enemy{Name: "Guetteur", Hp: 100, Damage: 10}
 
 	fmt.Println("\nVous entrez dans un combat avec un Guetteur !")
 	fmt.Println(`
@@ -36,7 +36,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 		fmt.Scan(&attack)
 
 		for attack != 1 && attack != 2 {
-			fmt.Println("Entrez une option valide (1)\n")
+			fmt.Printf("Entrez une option valide (1)\n\n")
 			fmt.Scan(&attack)
 		}
 
@@ -67,6 +67,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				inv.AddObject(briquet)
 				inv.AddObject(sandwitch)
 				inv.AddObject(ricard)
+				break
 			}
 		}
 
