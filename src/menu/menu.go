@@ -129,17 +129,17 @@ func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 	case 7:
 		achatObjet(perso, inv, object.ObjectStats{Name: "Redbull", Type: "Consumable", Damage: 20}, 10)
 	case 8:
-		if achatStatUpgrade(perso, inv, "Ensemble Nike Tech", 200, 20) {
+		if achatStatUpgrade(perso, "Ensemble Nike Tech", 200) {
 			perso.Hpmax += 20
 			perso.Hp += 20
 		}
 	case 9:
-		if achatStatUpgrade(perso, inv, "Casque Arai", 500, 50) {
+		if achatStatUpgrade(perso, "Casque Arai", 500) {
 			perso.Hpmax += 50
 			perso.Hp += 50
 		}
 	case 10:
-		if achatStatUpgrade(perso, inv, "Sacoche LV", 300, 5) {
+		if achatStatUpgrade(perso, "Sacoche LV", 300) {
 			inv.Limite += 5
 		}
 	case 0:
@@ -182,7 +182,7 @@ func achatObjet(perso *character.Personnage, inv inventory.Inventory, objet obje
 	Telegram(perso, inv)
 }
 
-func achatStatUpgrade(perso *character.Personnage, inv inventory.Inventory, itemName string, prix int, upgradeValue int) bool {
+func achatStatUpgrade(perso *character.Personnage, itemName string, prix int) bool {
 	if perso.Gold >= prix {
 		perso.Gold -= prix
 		fmt.Printf("Vous avez acheté %s et vos statistiques ont été améliorées.\n", itemName)
