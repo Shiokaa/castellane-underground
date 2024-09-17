@@ -90,19 +90,19 @@ func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 
 	switch achat {
 	case 1:
-		achatObjet(perso, inv, object.ObjectStats{"Lacrimogène", "Arme", 15}, 30)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Lacrimogène", Type: "Arme", Damage: 15}, 30)
 	case 2:
-		achatObjet(perso, inv, object.ObjectStats{"Matraque", "Arme", 80}, 100)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Matraque", Type: "Arme", Damage: 80}, 100)
 	case 3:
-		achatObjet(perso, inv, object.ObjectStats{"Mortier", "Arme", 200}, 150)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Mortier", Type: "Arme", Damage: 200}, 150)
 	case 4:
-		achatObjet(perso, inv, object.ObjectStats{"Taser", "Arme", 100}, 250)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Taser", Type: "Arme", Damage: 100}, 250)
 	case 5:
-		achatObjet(perso, inv, object.ObjectStats{"Ricard", "Soin", 10}, 5)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}, 5)
 	case 6:
-		achatObjet(perso, inv, object.ObjectStats{"Flash", "Soin", 25}, 20)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 25}, 20)
 	case 7:
-		achatObjet(perso, inv, object.ObjectStats{"Redbull", "Consumable", 20}, 10)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Redbull", Type: "Consumable", Damage: 20}, 10)
 	case 8:
 		if achatStatUpgrade(perso, inv, "Ensemble Nike Tech", 200, 20) {
 			perso.Hpmax += 20

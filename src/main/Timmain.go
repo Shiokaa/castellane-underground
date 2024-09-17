@@ -7,7 +7,7 @@ import (
 	"projet-red/story"
 )
 
-func main() {
+func Tomymain() {
 	story.HistoireDebut()
 	perso := game.ChoixPersonnage()
 	story.Afterchoixperso()
