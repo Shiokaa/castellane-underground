@@ -4,7 +4,6 @@ import (
 	"projet-red/fight"
 	"projet-red/game"
 	"projet-red/menu"
-	"projet-red/story"
 )
 
 func main() {
