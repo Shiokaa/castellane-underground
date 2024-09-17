@@ -60,6 +60,23 @@ func afficherInventaire(inv inventory.Inventory) {
 	}
 	fmt.Println("------------------------------")
 	time.Sleep(2 * time.Second)
+	fmt.Println("\nTapez 1 pour surpprimer un objet sinon tapez 0. \n")
+	var choix int
+	fmt.Scan(choix)
+	switch choix {
+	case 1:
+		var Nomobjet string
+		fmt.Println("Tapez le nom de l'objet a supprimer")
+		fmt.Scan(Nomobjet)
+		for _, object := range inv.SacocheCp {
+			if Nomobjet == object.Name {
+				inv.RemoveObject(object)
+			}
+		}
+	case 2:
+		return
+	}
+
 }
 
 func oTacos(perso *character.Personnage, inv inventory.Inventory) {
@@ -172,4 +189,8 @@ func achatStatUpgrade(perso *character.Personnage, inv inventory.Inventory, item
 
 func clearScreen() {
 	fmt.Print("\033[H\033[2J")
+}
+
+func UseObject(obj object.ObjectStats) int {
+
 }
