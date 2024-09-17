@@ -11,7 +11,7 @@ import (
 
 func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
 	attack := 0
-	Gofasteur := character.Enemy{"Go fasteur", 300, 20}
+	Gofasteur := character.Enemy{Name: "Go fasteur", Hp: 300, Damage: 20}
 	tissu := object.ObjectStats{Name: "tissu", Type: "Utilitaire", Damage: 0}
 	fmt.Println("\nVous entrez dans un combat avec un Go fasteur !")
 	fmt.Println(`
@@ -31,7 +31,7 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		fmt.Scan(&attack)
 
 		for attack != 1 && attack != 2 {
-			fmt.Println("Entrez une option valide (1)\n")
+			fmt.Printf("Entrez une option valide (1)\n\n")
 			fmt.Scan(&attack)
 		}
 
