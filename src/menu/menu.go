@@ -30,7 +30,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("Vous vous préparez à entrer dans un combat...")
 			return
 		case 2:
-			afficherInventaire(inv)
+			afficherInventaire(&inv)
 		case 3:
 			oTacos(perso, inv)
 		case 4:
@@ -49,7 +49,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	}
 }
 
-func afficherInventaire(inv inventory.Inventory) {
+func afficherInventaire(inv *inventory.Inventory) {
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {
 		for i, obj := range inv.SacocheCp {
@@ -69,14 +69,17 @@ func afficherInventaire(inv inventory.Inventory) {
 		fmt.Println("Tapez le nom de l'objet à supprimer")
 		fmt.Scan(&Nomobjet)
 		for index := range inv.SacocheCp {
+			fmt.Println(index, inv.SacocheCp[index])
 			if inv.SacocheCp[index].Name == Nomobjet {
 				if index == len(inv.SacocheCp)-1 {
 					inv.SacocheCp = inv.SacocheCp[:index]
 				} else {
+					fmt.Println(inv.SacocheCp[:index], inv.SacocheCp[index+1:])
 					inv.SacocheCp = append(inv.SacocheCp[:index], inv.SacocheCp[index+1:]...)
+					fmt.Println(inv.SacocheCp)
 					fmt.Printf("Objet '%s' supprimé avec succès.\n", Nomobjet)
-					break
 				}
+				break
 			}
 		}
 	case 0:

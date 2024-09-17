@@ -67,6 +67,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				inv.AddObject(briquet)
 				inv.AddObject(sandwitch)
 				inv.AddObject(ricard)
+				break
 			}
 		}
 
