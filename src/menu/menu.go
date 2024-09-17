@@ -60,23 +60,28 @@ func afficherInventaire(inv inventory.Inventory) {
 	}
 	fmt.Println("------------------------------")
 	time.Sleep(2 * time.Second)
-	fmt.Println("\nTapez 1 pour surpprimer un objet sinon tapez 0. \n")
+	fmt.Printf("\nTapez 1 pour supprimer un objet sinon tapez 0. \n\n")
 	var choix int
-	fmt.Scan(choix)
+	fmt.Scan(&choix)
 	switch choix {
 	case 1:
 		var Nomobjet string
-		fmt.Println("Tapez le nom de l'objet a supprimer")
-		fmt.Scan(Nomobjet)
-		for _, object := range inv.SacocheCp {
-			if Nomobjet == object.Name {
-				inv.RemoveObject(object)
+		fmt.Println("Tapez le nom de l'objet à supprimer")
+		fmt.Scan(&Nomobjet)
+		for index := range inv.SacocheCp {
+			if inv.SacocheCp[index].Name == Nomobjet {
+				if index == len(inv.SacocheCp)-1 {
+					inv.SacocheCp = inv.SacocheCp[:index]
+				} else {
+					inv.SacocheCp = append(inv.SacocheCp[:index], inv.SacocheCp[index+1:]...)
+					fmt.Printf("Objet '%s' supprimé avec succès.\n", Nomobjet)
+					break
+				}
 			}
 		}
-	case 2:
+	case 0:
 		return
 	}
-
 }
 
 func oTacos(perso *character.Personnage, inv inventory.Inventory) {
@@ -192,5 +197,5 @@ func clearScreen() {
 }
 
 func UseObject(obj object.ObjectStats) int {
-
+	return 0
 }
