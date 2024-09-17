@@ -3,17 +3,16 @@ package main
 import (
 	"projet-red/fight"
 	"projet-red/game"
-	"projet-red/menu"
-	"projet-red/story"
 )
 
 func Timmain() {
-	story.HistoireDebut()
+	//story.HistoireDebut()
 	perso := game.ChoixPersonnage()
-	story.Afterchoixperso()
+	//story.Afterchoixperso()
 	inv := fight.Firstfight(&perso)
-	story.Afterguetteur()
-	menu.Menu(&perso, inv)
-	story.AfterVendeur()
+	///story.Afterguetteur()
+	//menu.Menu(&perso, inv)
+	//story.AfterVendeur()
 	fight.ThirdFight(&perso, inv)
+
 }

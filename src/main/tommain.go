@@ -6,7 +6,7 @@ import (
 	"projet-red/menu"
 )
 
-func main() {
+func tommain() {
 	perso := game.ChoixPersonnage()
 	inv := fight.Firstfight(&perso)
 	menu.Menu(&perso, inv)

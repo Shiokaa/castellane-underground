@@ -49,6 +49,19 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	}
 }
 
+func AfficherInventaireEnCombat(inv *inventory.Inventory) {
+	fmt.Println("\n--------- INVENTAIRE ---------")
+	if len(inv.SacocheCp) > 0 {
+		for i, obj := range inv.SacocheCp {
+			fmt.Printf("%d. %s (%s)\n", i+1, obj.Name, obj.Type)
+		}
+	} else {
+		fmt.Println("Votre inventaire est vide.")
+	}
+	fmt.Println("------------------------------")
+	time.Sleep(2 * time.Second)
+}
+
 func afficherInventaire(inv *inventory.Inventory) {
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {

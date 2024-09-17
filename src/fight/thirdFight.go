@@ -5,6 +5,7 @@ import (
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
+	"projet-red/menu"
 	"projet-red/object"
 	"time"
 )
@@ -25,11 +26,15 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 100)
+		menu.AfficherInventaireEnCombat(&inv)
 
 		fmt.Println("\nQue voulez-vous faire ?")
 		fmt.Println("1 - Attaquer")
 		fmt.Scan(&attack)
-
+		x := len(inv.SacocheCp)
+		for i := 0; i < x; i++ {
+			fmt.Printf("Utilisez le %v pour infliger/soigner %v deg/soin. Appuyez sur %v", inv.SacocheCp[i].Type, inv.SacocheCp[i].Damage, i)
+		}
 		for attack != 1 && attack != 2 {
 			fmt.Printf("Entrez une option valide (1)\n\n")
 			fmt.Scan(&attack)
