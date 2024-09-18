@@ -5,7 +5,7 @@ import (
 	"projet-red/game"
 )
 
-func Timmain() {
+func timmain() {
 	//story.HistoireDebut()
 	perso := game.ChoixPersonnage()
 	//story.Afterchoixperso()
@@ -14,5 +14,4 @@ func Timmain() {
 	//menu.Menu(&perso, inv)
 	//story.AfterVendeur()
 	fight.ThirdFight(&perso, inv)
-
 }
