@@ -73,19 +73,21 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				fmt.Println("\nVous êtes tombé au combat...")
 			} else if guetteur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le guetteur !")
-				perso.CombatCounteur = 1
+				if perso.CombatCounteur < 2 {
+					perso.CombatCounteur = 1
+				}
+
+				if perso.Name == "Daron" {
+					inv.AddObject(armeBaseDaron)
+				} else if perso.Name == "Daronne" {
+					inv.AddObject(armeBaseDaronne)
+				} else if perso.Name == "Tonton" {
+					inv.AddObject(armeBaseTonton)
+				}
+
 				inv.AddCraft(briquet)
 				inv.AddObject(sandwitch)
 				inv.AddObject(ricard)
-				if perso.Name == "Daron" {
-					inv.AddObject(armeBaseDaron)
-				}
-				if perso.Name == "Daronne" {
-					inv.AddObject(armeBaseDaronne)
-				}
-				if perso.Name == "Tonton" {
-					inv.AddObject(armeBaseTonton)
-				}
 				break
 			}
 		}
