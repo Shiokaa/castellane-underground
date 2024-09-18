@@ -26,24 +26,24 @@ func Secondfight(perso character.Personnage) {
 
 		switch attack {
 		case 1:
-			vendeur.Hp -= perso.Damage
-			fmt.Printf("Vous attaquez le vendeur et vous lui infligez %v points de dégât", perso.Damage)
+			damage := perso.Damage
+			vendeur.Hp -= damage
+			fmt.Printf("Vous infligez %d points de dégât.\n", damage)
 			time.Sleep(2 * time.Second)
+			fmt.Println("Le vendeur riposte !")
+			time.Sleep(1 * time.Second)
 			perso.Hp -= vendeur.Damage
-			fmt.Printf("\nLe vendeur vous attaque en retour et vous enlève %v points de vie", vendeur.Damage)
-		}
+			fmt.Printf("Le vendeur vous inflige %d points de dégât.\n", vendeur.eDamage)
+			time.Sleep(2 * time.Second)
 
-		if vendeur.Hp <= 0 {
-			time.Sleep(2 * time.Second)
-			fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", vendeur.Name, "a", vendeur.Hp, "point de vie")
-			time.Sleep(2 * time.Second)
-			fmt.Println("\nVous avez gagnez vôtre combat? Vous dépouyer le vendeur et trouvez 100 euros ! ")
-			perso.Gold += 100
-			fmt.Printf("Vous possedez désormais %v euros", perso.Gold)
-		} else if perso.Hp <= 0 {
-			time.Sleep(2 * time.Second)
-			fmt.Println("\n", perso.Name, "a", perso.Hp, "point de vie et ", vendeur.Name, "a", vendeur.Hp, "point de vie")
-			fmt.Println("\nTu t'es fait arraché t'es nul")
+			if perso.Hp <= 0 {
+				fmt.Println("\nVous êtes tombé au combat...")
+			} else if vendeur.Hp <= 0 {
+				fmt.Println("\nVous avez vaincu le vendeur ! Vous trouvez du tissu et  100 euros !!")
+				inv.AddObject(tissu)
+				perso.Gold += 100
+			}
 		}
 	}
 }
+

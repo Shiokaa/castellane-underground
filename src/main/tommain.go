@@ -4,10 +4,13 @@ import (
 	"projet-red/fight"
 	"projet-red/game"
 	"projet-red/menu"
+	"projet-red/story"
 )
 
 func tommain() {
 	perso := game.ChoixPersonnage()
+	story.Afterchoixperso()
 	inv := fight.Firstfight(&perso)
+	story.Afterguetteur()
 	menu.Menu(&perso, inv)
 }
