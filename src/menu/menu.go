@@ -3,7 +3,6 @@ package menu
 import (
 	"fmt"
 	"projet-red/character"
-	"projet-red/fight"
 	"projet-red/game"
 	"projet-red/inventory"
 	"projet-red/object"

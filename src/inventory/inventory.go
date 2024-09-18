@@ -17,6 +17,7 @@ func (inv *Inventory) AddObject(obj object.ObjectStats) {
 }
 func (inv *Inventory) AddCraft(obj object.ObjectStats) {
 	inv.SacocheCp = append(inv.CraftInventory, obj)
+}
 
 func (inv *Inventory) AfficherInventaireEnCombat() {
 	fmt.Println("\n--------- INVENTAIRE ---------")
