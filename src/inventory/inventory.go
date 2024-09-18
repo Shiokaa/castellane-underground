@@ -5,7 +5,7 @@ import (
 )
 
 type Inventory struct {
-	SacocheCp      []object.ObjectStats
+	SacocheCp      [8]object.ObjectStats
 	CraftInventory []object.ObjectStats
 	Limite         int
 }

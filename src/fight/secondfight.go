@@ -40,7 +40,7 @@ func Secondfight(perso character.Personnage) {
 				fmt.Println("\nVous êtes tombé au combat...")
 			} else if vendeur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le vendeur ! Vous trouvez du tissu et  100 euros !!")
-				inv.AddObject(tissu)
+				//inv.AddObject(tissu)
 				perso.Gold += 100
 			}
 		}

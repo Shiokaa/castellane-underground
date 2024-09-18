@@ -14,6 +14,9 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	briquet := object.ObjectStats{Name: "Briquet", Type: "Utilitaire", Damage: 10}
 	sandwitch := object.ObjectStats{Name: "Sandwitch", Type: "Soin", Damage: 10}
 	ricard := object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}
+	armeBaseDaron := object.ObjectStats{Name: "Ceinture", Type: "Arme", Damage: 20}
+	armeBaseDaronne := object.ObjectStats{Name: "Claquette", Type: "Arme", Damage: 35}
+	armeBaseTonton := object.ObjectStats{Name: "Boule", Type: "Arme", Damage: 10}
 
 	attack := 0
 	guetteur := character.Enemy{Name: "Guetteur", Hp: 100, Damage: 10}
@@ -52,17 +55,17 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				time.Sleep(1 * time.Second)
 				perso.Hp -= guetteur.Damage
 				fmt.Printf("Le guetteur vous inflige %d points de dégât.\n", guetteur.Damage)
-				time.Sleep(3 * time.Second)
+				time.Sleep(2 * time.Second)
 				game.ClearScreen()
 			} else {
 				criticalDamage := 50
 				perso.Hp -= criticalDamage
 				fmt.Println("Le guetteur sort un couteau !")
 				fmt.Printf("Il vous inflige un coup critique de %d points de dégât.\n", criticalDamage)
-				time.Sleep(3 * time.Second)
+				time.Sleep(2 * time.Second)
 				game.ClearScreen()
 			}
-			time.Sleep(2 * time.Second)
+			time.Sleep(1 * time.Second)
 
 			if perso.Hp <= 0 {
 				fmt.Println("\nVous êtes tombé au combat...")

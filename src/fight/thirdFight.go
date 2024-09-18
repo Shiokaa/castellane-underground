@@ -28,13 +28,23 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 100)
 		menu.AfficherInventaireEnCombat(&inv)
 
-		fmt.Println("\nQue voulez-vous faire ?")
-		fmt.Println("1 - Attaquer")
-		fmt.Scan(&attack)
 		x := len(inv.SacocheCp)
+		armeUtilisable := 0
 		for i := 0; i < x; i++ {
-			fmt.Printf("Utilisez le %v pour infliger/soigner %v deg/soin. Appuyez sur %v", inv.SacocheCp[i].Type, inv.SacocheCp[i].Damage, i)
+			if inv.SacocheCp[i].Type != "Utilitaire" {
+				armeUtilisable++
+				if inv.SacocheCp[i].Type == "Soin" {
+					fmt.Printf("\nPour utilisez le %v et soigner %v pv. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
+				}
+				if inv.SacocheCp[i].Type == "Damage" {
+					fmt.Printf("\nPour utilisez le %v et infliger %v deg. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
+				}
+			}
+
 		}
+
+		fmt.Scan(&attack)
+
 		for attack != 1 && attack != 2 {
 			fmt.Printf("Entrez une option valide (1)\n\n")
 			fmt.Scan(&attack)
@@ -42,6 +52,7 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 
 		switch attack {
 		case 1:
+
 			damage := perso.Damage
 			Gofasteur.Hp -= damage
 			fmt.Printf("Vous infligez %d points de dégât.\n", damage)
