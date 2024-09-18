@@ -1,9 +1,17 @@
 package main
 
 import (
-	"projet-red/ascii"
+	"projet-red/fight"
+	"projet-red/game"
+	"projet-red/menu"
+	"projet-red/story"
 )
 
 func tommain() {
-	ascii.Ascii()
+	story.HistoireDebut()
+	perso := game.ChoixPersonnage()
+	story.Afterchoixperso()
+	inv := fight.Firstfight(&perso)
+	story.Afterguetteur()
+	menu.Menu(&perso, inv)
 }
