@@ -72,8 +72,8 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 			if perso.Hp <= 0 {
 				fmt.Println("\nVous êtes tombé au combat...")
 			} else if guetteur.Hp <= 0 {
-				fmt.Println("\nVous avez vaincu le guetteur !")
 				perso.CombatCounteur = 1
+				fmt.Println("\nVous avez vaincu le guetteur !")
 				inv.AddCraft(briquet)
 				inv.AddObject(sandwitch)
 				inv.AddObject(ricard)

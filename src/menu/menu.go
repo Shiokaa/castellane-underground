@@ -42,7 +42,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("3 - Combat contre l'homme de main')")
 			fmt.Println("4 - Combat contre le gérant")
 			fmt.Println("5 - Combat contre le caïd")
-			fmt.Println("0 - Quitter")
+			fmt.Println("0 - Revenir au menu")
 			fmt.Scan(&choix2)
 			switch choix2 {
 			case 1:
@@ -50,7 +50,43 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
 					fight.Secondfight(*perso)
+				} else {
+					fmt.Println("Veuillez combattre le guetteur d'abord")
 				}
+			case 2:
+				if perso.CombatCounteur == 2 {
+					fmt.Println("Vous vous préparez à entrer dans un combat...")
+					time.Sleep(3 * time.Second)
+					fight.ThirdFight(perso, inv)
+				} else {
+					fmt.Println("Veuillez combattre le vendeur d'abord")
+				}
+			case 3:
+				if perso.CombatCounteur == 3 {
+					fmt.Println("Vous vous préparez à entrer dans un combat...")
+					time.Sleep(3 * time.Second)
+					fight.ThirdFight(perso, inv)
+				} else {
+					fmt.Println("Veuillez combattre le vendeur d'abord")
+				}
+			case 4:
+				if perso.CombatCounteur == 4 {
+					fmt.Println("Vous vous préparez à entrer dans un combat...")
+					time.Sleep(3 * time.Second)
+					fight.ThirdFight(perso, inv)
+				} else {
+					fmt.Println("Veuillez combattre le vendeur d'abord")
+				}
+			case 5:
+				if perso.CombatCounteur == 5 {
+					fmt.Println("Vous vous préparez à entrer dans un combat...")
+					time.Sleep(3 * time.Second)
+					fight.ThirdFight(perso, inv)
+				} else {
+					fmt.Println("Veuillez combattre le vendeur d'abord")
+				}
+			case 0:
+				return
 			}
 		case 2:
 			afficherInventaire(&inv)
@@ -59,8 +95,10 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		case 4:
 			Telegram(perso, inv)
 		case 5:
+			game.ClearScreen()
 			fmt.Println("Vous zonez dans le quartier !")
 			time.Sleep(15 * time.Second)
+			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
 		case 0:
 			fmt.Println("À bientôt!")
