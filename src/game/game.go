@@ -27,7 +27,7 @@ func ChoixPersonnage() character.Personnage {
 			fmt.Printf("\nEntrez maximum 12 caractère !\n \n")
 			fmt.Scan(&nameuser)
 		}
-		perso = character.Personnage{Name: "Daron", NameUser: nameuser, Hp: 120, Gold: 10, Damage: 20, Hpmax: 120}
+		perso = character.Personnage{Name: "Daron", NameUser: nameuser, Hp: 120, Gold: 10, Damage: 20, Hpmax: 120, CombatCounteur: 0}
 		fmt.Printf("Voici les stats du %v %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	case 2:
 		fmt.Printf("\nChoisisez un pseudo pour votre personnage \n\n")
@@ -36,7 +36,7 @@ func ChoixPersonnage() character.Personnage {
 			fmt.Printf("\nEntrez maximum 12 caractère !\n \n")
 			fmt.Scan(&nameuser)
 		}
-		perso = character.Personnage{Name: "Daronne", NameUser: nameuser, Hp: 80, Gold: 10, Damage: 35, Hpmax: 80}
+		perso = character.Personnage{Name: "Daronne", NameUser: nameuser, Hp: 80, Gold: 10, Damage: 35, Hpmax: 80, CombatCounteur: 0}
 		fmt.Printf("Voici les stats de la %v %v \nPoints de vie : %v\nArgent : %v", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	case 3:
 		fmt.Printf("\nChoisisez un pseudo pour votre personnage \n \n")
@@ -47,7 +47,7 @@ func ChoixPersonnage() character.Personnage {
 		}
 		rand.Seed(time.Now().UnixNano())
 		argentrandom := rand.Intn(46) + 5
-		perso = character.Personnage{Name: "Tonton", NameUser: nameuser, Hp: 100, Gold: argentrandom, Damage: character.DegatTonton(), Hpmax: 100}
+		perso = character.Personnage{Name: "Tonton", NameUser: nameuser, Hp: 100, Gold: argentrandom, Damage: character.DegatTonton(), Hpmax: 100, CombatCounteur: 0}
 		fmt.Printf("\nVoici les stats du %v %v \nPoints de vie : %v\nArgent : %v\n", perso.Name, perso.NameUser, perso.Hp, perso.Gold)
 	default:
 	}

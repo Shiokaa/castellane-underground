@@ -45,9 +45,11 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 
 		switch attack {
 		case 1:
-			damage := perso.Damage
-			guetteur.Hp -= damage
-			fmt.Printf("Vous infligez %d points de dégât.\n", damage)
+			if perso.Name == "Tonton" {
+				perso.Damage = character.DegatTonton()
+			}
+			guetteur.Hp -= perso.Damage
+			fmt.Printf("Vous infligez %d points de dégât.\n", perso.Damage)
 			time.Sleep(2 * time.Second)
 
 			if guetteur.Hp > 19 {
@@ -71,6 +73,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				fmt.Println("\nVous êtes tombé au combat...")
 			} else if guetteur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le guetteur !")
+				perso.CombatCounteur = 1
 				inv.AddCraft(briquet)
 				inv.AddObject(sandwitch)
 				inv.AddObject(ricard)
