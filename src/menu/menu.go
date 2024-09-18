@@ -22,6 +22,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println("0 - Quitter")
 		fmt.Println(" - Vos points de vie ")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
+		fmt.Printf("Vous avez %v€\n", perso.Gold)
 		fmt.Println("------------------------------------")
 
 		for {
@@ -97,7 +98,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		case 5:
 			game.ClearScreen()
 			fmt.Println("Vous zonez dans le quartier !")
-			time.Sleep(15 * time.Second)
+			time.Sleep(10 * time.Second)
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
 		case 0:
@@ -117,7 +118,14 @@ func afficherInventaire(inv *inventory.Inventory) {
 	} else {
 		fmt.Println("Votre inventaire est vide.")
 	}
-	fmt.Println("------------------------------")
+	fmt.Println("\n----- INVENTAIRE DE CRAFT -----")
+	if len(inv.CraftInventory) > 0 {
+		for i, obj := range inv.CraftInventory {
+			fmt.Printf("%d. %s (%s)\n", i+1, obj.Name, obj.Type)
+		}
+	} else {
+		fmt.Println("Votre inventaire d'objet à craft est vide.")
+	}
 	time.Sleep(2 * time.Second)
 
 	var choix int
@@ -135,6 +143,10 @@ func afficherInventaire(inv *inventory.Inventory) {
 		var Nomobjet string
 		fmt.Println("Tapez le nom de l'objet à supprimer")
 		fmt.Scan(&Nomobjet)
+		if Nomobjet == "Briquet" || Nomobjet == "Tissu" || Nomobjet == "Bouteille d'alcool en verre" {
+			fmt.Println("Vous ne pouvez pas supprimer les objets de craft")
+			return
+		}
 		for index := range inv.SacocheCp {
 			if inv.SacocheCp[index].Name == Nomobjet {
 				if index == len(inv.SacocheCp)-1 {
