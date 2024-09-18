@@ -34,8 +34,23 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 
 		switch choix {
 		case 1:
-			fmt.Println("Vous vous préparez à entrer dans un combat...")
-			return
+			var choix2 int
+			game.ClearScreen()
+			fmt.Println("1 - Combat contre le vendeur")
+			fmt.Println("2 - Combat contre le Go Fasteur")
+			fmt.Println("3 - Combat contre l'homme de main')")
+			fmt.Println("4 - Combat contre le gérant")
+			fmt.Println("5 - Combat contre le caïd")
+			fmt.Println("0 - Quitter")
+			fmt.Scan(&choix2)
+			switch choix2 {
+			case 1:
+				if perso.CombatCounteur == 1 {
+					fmt.Println("Vous vous préparez à entrer dans un combat...")
+					time.Sleep(3 * time.Second)
+					fight.Secondfight(*perso)
+				}
+			}
 		case 2:
 			afficherInventaire(&inv)
 		case 3:

@@ -1,12 +1,13 @@
 package character
 
 type Personnage struct {
-	Name     string
-	NameUser string
-	Hp       int
-	Gold     int
-	Damage   int
-	Hpmax    int
+	Name           string
+	NameUser       string
+	Hp             int
+	Gold           int
+	Damage         int
+	Hpmax          int
+	CombatCounteur int
 }
 
 type Enemy struct {
