@@ -48,7 +48,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				if perso.CombatCounteur == 1 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.Secondfight(*perso)
+					//fight.Secondfight(*perso)
 				}
 			}
 		case 2:

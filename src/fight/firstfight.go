@@ -16,7 +16,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	ricard := object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}
 	armeBaseDaron := object.ObjectStats{Name: "Ceinture", Type: "Arme", Damage: 20}
 	armeBaseDaronne := object.ObjectStats{Name: "Claquette", Type: "Arme", Damage: 35}
-	armeBaseTonton := object.ObjectStats{Name: "Boule", Type: "Arme", Damage: 10}
+	armeBaseTonton := object.ObjectStats{Name: "Boule", Type: "Arme", Damage: character.DegatTonton()}
 
 	attack := 0
 	guetteur := character.Enemy{Name: "Guetteur", Hp: 100, Damage: 10}
@@ -71,9 +71,18 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				fmt.Println("\nVous êtes tombé au combat...")
 			} else if guetteur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le guetteur !")
-				inv.AddObject(briquet)
+				inv.AddCraft(briquet)
 				inv.AddObject(sandwitch)
 				inv.AddObject(ricard)
+				if perso.Name == "Daron" {
+					inv.AddObject(armeBaseDaron)
+				}
+				if perso.Name == "Daronne" {
+					inv.AddObject(armeBaseDaronne)
+				}
+				if perso.Name == "Tonton" {
+					inv.AddObject(armeBaseTonton)
+				}
 				break
 			}
 		}
