@@ -5,7 +5,6 @@ import (
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
-	"projet-red/menu"
 	"projet-red/object"
 	"time"
 )
@@ -26,7 +25,7 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 100)
-		menu.AfficherInventaireEnCombat(&inv)
+		inv.AfficherInventaireEnCombat()
 
 		x := len(inv.SacocheCp)
 		armeUtilisable := 0
