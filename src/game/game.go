@@ -73,3 +73,7 @@ func DisplayHealth(entityName string, hp int, hpMax int) {
 	// Afficher le nom de l'entité, la barre de santé et les HP actuels/maximum
 	fmt.Printf("%s : %s (%d/%d)\n", entityName, healthBar, hp, hpMax)
 }
+
+func ClearScreen() {
+	fmt.Print("\033[H\033[2J")
+}

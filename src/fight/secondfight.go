@@ -33,7 +33,7 @@ func Secondfight(perso character.Personnage) {
 			fmt.Println("Le vendeur riposte !")
 			time.Sleep(1 * time.Second)
 			perso.Hp -= vendeur.Damage
-			fmt.Printf("Le vendeur vous inflige %d points de dégât.\n", vendeur.eDamage)
+			fmt.Printf("Le vendeur vous inflige %d points de dégât.\n", vendeur.Damage)
 			time.Sleep(2 * time.Second)
 
 			if perso.Hp <= 0 {
@@ -46,4 +46,3 @@ func Secondfight(perso character.Personnage) {
 		}
 	}
 }
-

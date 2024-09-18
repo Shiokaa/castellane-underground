@@ -5,7 +5,6 @@ import (
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
-	"projet-red/menu"
 	"projet-red/object"
 	"time"
 )
@@ -54,14 +53,14 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				perso.Hp -= guetteur.Damage
 				fmt.Printf("Le guetteur vous inflige %d points de dégât.\n", guetteur.Damage)
 				time.Sleep(3 * time.Second)
-				menu.ClearScreen()
+				game.ClearScreen()
 			} else {
 				criticalDamage := 50
 				perso.Hp -= criticalDamage
 				fmt.Println("Le guetteur sort un couteau !")
 				fmt.Printf("Il vous inflige un coup critique de %d points de dégât.\n", criticalDamage)
 				time.Sleep(3 * time.Second)
-				menu.ClearScreen()
+				game.ClearScreen()
 			}
 			time.Sleep(2 * time.Second)
 

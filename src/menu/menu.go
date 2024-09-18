@@ -111,7 +111,7 @@ func afficherInventaire(inv *inventory.Inventory) {
 }
 
 func oTacos(perso *character.Personnage, inv inventory.Inventory) {
-	ClearScreen()
+	game.ClearScreen()
 	if perso.Hp < perso.Hpmax {
 		if perso.Gold >= 5 {
 			perso.Gold -= 5
@@ -128,7 +128,7 @@ func oTacos(perso *character.Personnage, inv inventory.Inventory) {
 }
 
 func Telegram(perso *character.Personnage, inv inventory.Inventory) {
-	ClearScreen()
+	game.ClearScreen()
 	var achat int
 	afficherMarché()
 
@@ -220,10 +220,6 @@ func achatStatUpgrade(perso *character.Personnage, itemName string, prix int) bo
 		time.Sleep(2 * time.Second)
 		return false
 	}
-}
-
-func ClearScreen() {
-	fmt.Print("\033[H\033[2J")
 }
 
 func UseObject(obj object.ObjectStats) int {
