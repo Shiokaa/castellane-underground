@@ -40,24 +40,15 @@ func Afterguetteur() {
 }
 
 func AfterVendeur() {
-<<<<<<< HEAD
 	str := "\n Tu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache. Le combat commence ! "
-=======
-	str := "\nTu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache."
->>>>>>> aa8533f20554cab67bb2c83239a9269dfbe053cb
 	for _, char := range str {
 		fmt.Printf("%c", char)
 		time.Sleep(40 * time.Millisecond)
 	}
 }
 
-<<<<<<< HEAD
-func AfterGofasteur() {
-	str := "\n Tu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache. Le combat commence ! "
-=======
 func AfterGoFast() {
 	str := "\n. Au loin, l’homme de main t’a repéré (la brute du quartier) et ne souhaite pas t’épargner, le combat commence !"
->>>>>>> aa8533f20554cab67bb2c83239a9269dfbe053cb
 	for _, char := range str {
 		fmt.Printf("%c", char)
 		time.Sleep(40 * time.Millisecond)

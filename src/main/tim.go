@@ -1,6 +1,6 @@
 package main
 
-func tim( ){
+func tim(){
 	go.music.Music()
 	story.HistoireDebut()
 	perso := game.ChoixPersonnage()
