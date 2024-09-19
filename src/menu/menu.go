@@ -31,8 +31,9 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Scan(&choix)
 			if choix >= 0 && choix <= 5 {
 				break
+			} else if choix != 0 && choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5 {
+				fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
 			}
-			fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
 		}
 
 		switch choix {
@@ -93,7 +94,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		case 2:
 			afficherInventaire(&inv)
 		case 3:
-			oTacos(perso, inv)
+			oTacos(perso, &inv)
 		case 4:
 			Telegram(perso, &inv)
 		case 5:
@@ -165,7 +166,7 @@ func afficherInventaire(inv *inventory.Inventory) {
 	}
 }
 
-func oTacos(perso *character.Personnage, inv inventory.Inventory) {
+func oTacos(perso *character.Personnage, inv *inventory.Inventory) {
 	game.ClearScreen()
 	if perso.Hp < perso.Hpmax {
 		if perso.Gold >= 5 {
@@ -179,7 +180,7 @@ func oTacos(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println("Votre vie est déjà au maximum.")
 	}
 	time.Sleep(3 * time.Second)
-	Menu(perso, inv)
+	Menu(perso, *inv)
 }
 
 func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
@@ -212,7 +213,7 @@ func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 	case 6:
 		achatObjet(perso, *inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 25}, 20)
 	case 7:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Redbull", Type: "Consumable", Damage: 20}, 10)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Redbull", Type: "Utilitaire", Damage: 20}, 10)
 	case 8:
 		if achatStatUpgrade(perso, "Ensemble Nike Tech", 200) {
 			perso.Hpmax += 20
@@ -275,8 +276,4 @@ func achatStatUpgrade(perso *character.Personnage, itemName string, prix int) bo
 		time.Sleep(2 * time.Second)
 		return false
 	}
-}
-
-func UseObject(obj object.ObjectStats) int {
-	return 0
 }
