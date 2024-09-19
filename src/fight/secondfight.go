@@ -10,7 +10,7 @@ import (
 )
 
 func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
-	Vendeur := character.Enemy{Name: "Vendeur", Hp: 300, Damage: 20}
+	Vendeur := character.Enemy{Name: "Vendeur", Hp: 100, Damage: 20}
 	tissu := object.ObjectStats{Name: "tissu", Type: "Utilitaire", Damage: 0}
 
 	fmt.Println("\nVous entrez dans un combat avec un Vendeur !")
@@ -27,10 +27,10 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 		inv.AfficherInventaireEnCombat()
 
 		// Sélection de l'action par l'utilisateur
-		attack := chooseAction(len(inv.SacocheCp), inv)
+		attack := chooseActionVendeur(len(inv.SacocheCp), inv)
 
 		// Appliquer l'action choisie
-		handleAction(attack, &Vendeur, perso, inv)
+		handleActionVendeur(attack, &Vendeur, perso, inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if Vendeur.Hp <= 0 {
@@ -44,14 +44,14 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 		}
 
 		// Riposte du Vendeur
-		enemyRetaliation(&Vendeur, perso)
+		enemyRetaliationVendeur(&Vendeur, perso)
 	}
 
 	return inv
 }
 
 // Choisir une action valide
-func chooseAction(max int, inv inventory.Inventory) int {
+func chooseActionVendeur(max int, inv inventory.Inventory) int {
 	var attack int
 	for i := 0; i < len(inv.SacocheCp); i++ {
 		if inv.SacocheCp[i].Type != "Utilitaire" {
@@ -78,7 +78,7 @@ func chooseAction(max int, inv inventory.Inventory) int {
 }
 
 // Gérer l'action choisie par le joueur (attaque ou soin)
-func handleAction(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleActionVendeur(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
 	item := inv.SacocheCp[attack]
 	if item.Type == "Arme" {
 		damage := item.Damage
@@ -93,10 +93,10 @@ func handleAction(attack int, enemy *character.Enemy, perso *character.Personnag
 }
 
 // Riposte de l'ennemi
-func enemyRetaliation(enemy *character.Enemy, perso *character.Personnage) {
+func enemyRetaliationVendeur(enemy *character.Enemy, perso *character.Personnage) {
 	fmt.Println("Le Vendeur riposte !")
 	time.Sleep(1 * time.Second)
 	perso.Hp -= enemy.Damage
-	fmt.Printf("Le Go fasteur vous inflige %d points de dégât.\n", enemy.Damage)
+	fmt.Printf("Le Vendeur vous inflige %d points de dégât.\n", enemy.Damage)
 	time.Sleep(2 * time.Second)
 }
