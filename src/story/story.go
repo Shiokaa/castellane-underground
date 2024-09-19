@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func  () {
+func HistoireDebut() {
 	fmt.Println("   _____          _       _ _                     _    _           _                                          _ ")
 	fmt.Println("  / ____|        | |     | | |                   | |  | |         | |                                        | |")
 	fmt.Println(" | |     __ _ ___| |_ ___| | | __ _ _ __   ___   | |  | |_ __   __| | ___ _ __ __ _ _ __ ___  _   _ _ __   __| |")
