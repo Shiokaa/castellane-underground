@@ -2,6 +2,7 @@ package menu
 
 import (
 	"fmt"
+	"projet-red/ascii"
 	"projet-red/character"
 	"projet-red/fight"
 	"projet-red/game"
@@ -22,8 +23,8 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println("0 - Quitter")
 		fmt.Println(" - Vos points de vie ")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
+		fmt.Printf("Vous avez %v€\n", perso.Gold)
 		fmt.Println("------------------------------------")
-
 		for {
 			fmt.Printf("Votre choix: ")
 			fmt.Scan(&choix)
@@ -46,15 +47,15 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Scan(&choix2)
 			switch choix2 {
 			case 1:
-				if perso.CombatCounteur == 1 {
+				if perso.CombatCounteur >= 1 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.Secondfight(*perso)
+					fight.SecondFight(perso, inv)
 				} else {
 					fmt.Println("Veuillez combattre le guetteur d'abord")
 				}
 			case 2:
-				if perso.CombatCounteur == 2 {
+				if perso.CombatCounteur >= 2 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
 					fight.ThirdFight(perso, inv)
@@ -62,20 +63,20 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 					fmt.Println("Veuillez combattre le vendeur d'abord")
 				}
 			case 3:
-				if perso.CombatCounteur == 3 {
+				if perso.CombatCounteur >= 3 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
 					fight.ThirdFight(perso, inv)
 				} else {
-					fmt.Println("Veuillez combattre le vendeur d'abord")
+					fmt.Println("Veuillez combattre le GoFasteur d'abord")
 				}
 			case 4:
-				if perso.CombatCounteur == 4 {
+				if perso.CombatCounteur >= 4 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.ThirdFight(perso, inv)
+					fight.FifthFight(perso, inv)
 				} else {
-					fmt.Println("Veuillez combattre le vendeur d'abord")
+					fmt.Println("Veuillez combattre l'Homme de main d'abord")
 				}
 			case 5:
 				if perso.CombatCounteur == 5 {
@@ -83,7 +84,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 					time.Sleep(3 * time.Second)
 					fight.ThirdFight(perso, inv)
 				} else {
-					fmt.Println("Veuillez combattre le vendeur d'abord")
+					fmt.Println("Veuillez combattre le Gérant d'abord")
 				}
 			case 0:
 				return
@@ -93,11 +94,12 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		case 3:
 			oTacos(perso, inv)
 		case 4:
-			Telegram(perso, inv)
+			Telegram(perso, &inv)
 		case 5:
 			game.ClearScreen()
 			fmt.Println("Vous zonez dans le quartier !")
-			time.Sleep(15 * time.Second)
+			ascii.Jul()
+			time.Sleep(10 * time.Second)
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
 		case 0:
@@ -117,7 +119,14 @@ func afficherInventaire(inv *inventory.Inventory) {
 	} else {
 		fmt.Println("Votre inventaire est vide.")
 	}
-	fmt.Println("------------------------------")
+	fmt.Println("\n----- INVENTAIRE DE CRAFT -----")
+	if len(inv.CraftInventory) > 0 {
+		for i, obj := range inv.CraftInventory {
+			fmt.Printf("%d. %s (%s)\n", i+1, obj.Name, obj.Type)
+		}
+	} else {
+		fmt.Println("Votre inventaire d'objet à craft est vide.")
+	}
 	time.Sleep(2 * time.Second)
 
 	var choix int
@@ -135,6 +144,10 @@ func afficherInventaire(inv *inventory.Inventory) {
 		var Nomobjet string
 		fmt.Println("Tapez le nom de l'objet à supprimer")
 		fmt.Scan(&Nomobjet)
+		if Nomobjet == "Briquet" || Nomobjet == "Tissu" || Nomobjet == "Bouteille d'alcool en verre" {
+			fmt.Println("Vous ne pouvez pas supprimer les objets de craft")
+			return
+		}
 		for index := range inv.SacocheCp {
 			if inv.SacocheCp[index].Name == Nomobjet {
 				if index == len(inv.SacocheCp)-1 {
@@ -168,7 +181,7 @@ func oTacos(perso *character.Personnage, inv inventory.Inventory) {
 	Menu(perso, inv)
 }
 
-func Telegram(perso *character.Personnage, inv inventory.Inventory) {
+func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 	game.ClearScreen()
 	var achat int
 	afficherMarché()
@@ -186,19 +199,19 @@ func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 
 	switch achat {
 	case 1:
-		achatObjet(perso, inv, object.ObjectStats{Name: "Lacrimogène", Type: "Arme", Damage: 15}, 30)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Lacrimogène", Type: "Arme", Damage: 15}, 30)
 	case 2:
-		achatObjet(perso, inv, object.ObjectStats{Name: "Matraque", Type: "Arme", Damage: 80}, 100)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Matraque", Type: "Arme", Damage: 80}, 100)
 	case 3:
-		achatObjet(perso, inv, object.ObjectStats{Name: "Mortier", Type: "Arme", Damage: 200}, 150)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Mortier", Type: "Arme", Damage: 200}, 150)
 	case 4:
-		achatObjet(perso, inv, object.ObjectStats{Name: "Taser", Type: "Arme", Damage: 100}, 250)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Taser", Type: "Arme", Damage: 100}, 250)
 	case 5:
-		achatObjet(perso, inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}, 5)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}, 5)
 	case 6:
-		achatObjet(perso, inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 25}, 20)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 25}, 20)
 	case 7:
-		achatObjet(perso, inv, object.ObjectStats{Name: "Redbull", Type: "Consumable", Damage: 20}, 10)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Redbull", Type: "Consumable", Damage: 20}, 10)
 	case 8:
 		if achatStatUpgrade(perso, "Ensemble Nike Tech", 200) {
 			perso.Hpmax += 20
@@ -216,7 +229,7 @@ func Telegram(perso *character.Personnage, inv inventory.Inventory) {
 	case 0:
 		fmt.Println("Retour au menu principal...")
 		time.Sleep(2 * time.Second)
-		Menu(perso, inv)
+		Menu(perso, *inv)
 	}
 }
 
@@ -247,7 +260,7 @@ func achatObjet(perso *character.Personnage, inv inventory.Inventory, objet obje
 		fmt.Println("Votre inventaire est plein.")
 	}
 	time.Sleep(2 * time.Second)
-	Telegram(perso, inv)
+	Telegram(perso, &inv)
 }
 
 func achatStatUpgrade(perso *character.Personnage, itemName string, prix int) bool {

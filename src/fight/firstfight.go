@@ -74,7 +74,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 			} else if guetteur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le guetteur !")
 				if perso.CombatCounteur < 2 {
-					perso.CombatCounteur = 1
+					perso.CombatCounteur += 1
 				}
 
 				if perso.Name == "Daron" {
