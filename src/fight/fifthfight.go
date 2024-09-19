@@ -55,6 +55,7 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 
 	fmt.Println("\nVous êtes tombé au combat...")
 	perso.Hp = perso.Hpmax / 2
+	perso.Gold /= 2
 	time.Sleep(5 * time.Second)
 	return inv
 }
@@ -183,68 +184,67 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 }
 
 func enemyRetaliation2(enemy *character.Enemy, perso *character.Personnage, guetteur1 *character.Enemy, guetteur2 *character.Enemy) {
-	fmt.Println("Le Gérant et ses guetteurs ripostent !")
 	time.Sleep(1 * time.Second)
 
 	if enemy.LacrymogèneActive {
 		enemy.Hp -= 15
 		if enemy.Hp < 0 {
 			enemy.Hp = 0
-			fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", enemy.Name)
-			enemy.LacrymogèneTurns--
-			if enemy.LacrymogèneTurns <= 0 {
-				enemy.LacrymogèneActive = false
-				fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", enemy.Name)
-			}
 		}
-
-		if guetteur1.LacrymogèneActive {
-			guetteur1.Hp -= 15
-			if guetteur1.Hp < 0 {
-				guetteur1.Hp = 0
-			}
-			fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", guetteur1.Name)
-			guetteur1.LacrymogèneTurns--
-			if guetteur1.LacrymogèneTurns <= 0 {
-				guetteur1.LacrymogèneActive = false
-				fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", guetteur1.Name)
-			}
+		fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", enemy.Name)
+		enemy.LacrymogèneTurns--
+		if enemy.LacrymogèneTurns <= 0 {
+			enemy.LacrymogèneActive = false
+			fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", enemy.Name)
 		}
-
-		if guetteur2.LacrymogèneActive {
-			guetteur2.Hp -= 15
-			if guetteur2.Hp < 0 {
-				guetteur2.Hp = 0
-			}
-			fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", guetteur2.Name)
-			guetteur2.LacrymogèneTurns--
-			if guetteur2.LacrymogèneTurns <= 0 {
-				guetteur2.LacrymogèneActive = false
-				fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", guetteur2.Name)
-			}
-		}
-
-		totalDamage := 0
-
-		if guetteur1.Hp <= 0 && guetteur2.Hp > 0 {
-			totalDamage = enemy.Damage + guetteur2.Damage
-			fmt.Printf("Le Gérant et le guetteur 2 vous infligent %d points de dégât.\n", totalDamage)
-		} else if guetteur2.Hp <= 0 && guetteur1.Hp > 0 {
-			totalDamage = enemy.Damage + guetteur1.Damage
-			fmt.Printf("Le Gérant et le guetteur 1 vous infligent %d points de dégât.\n", totalDamage)
-		} else if guetteur1.Hp <= 0 && guetteur2.Hp <= 0 {
-			totalDamage = enemy.Damage
-			fmt.Printf("Le Gérant vous inflige %d points de dégât.\n", totalDamage)
-		} else if enemy.Hp <= 0 {
-			totalDamage = guetteur1.Damage + guetteur2.Damage
-			fmt.Printf("Les guetteurs vous infligent %d points de dégât.\n", totalDamage)
-		} else {
-			totalDamage = enemy.Damage + guetteur1.Damage + guetteur2.Damage
-			fmt.Printf("Le Gérant et ses guetteurs vous infligent %d points de dégât.\n", totalDamage)
-		}
-
-		perso.Hp -= totalDamage
-
-		time.Sleep(2 * time.Second)
 	}
+
+	if guetteur1.LacrymogèneActive {
+		guetteur1.Hp -= 15
+		if guetteur1.Hp < 0 {
+			guetteur1.Hp = 0
+		}
+		fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", guetteur1.Name)
+		guetteur1.LacrymogèneTurns--
+		if guetteur1.LacrymogèneTurns <= 0 {
+			guetteur1.LacrymogèneActive = false
+			fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", guetteur1.Name)
+		}
+	}
+
+	if guetteur2.LacrymogèneActive {
+		guetteur2.Hp -= 15
+		if guetteur2.Hp < 0 {
+			guetteur2.Hp = 0
+		}
+		fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", guetteur2.Name)
+		guetteur2.LacrymogèneTurns--
+		if guetteur2.LacrymogèneTurns <= 0 {
+			guetteur2.LacrymogèneActive = false
+			fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", guetteur2.Name)
+		}
+	}
+
+	totalDamage := 0
+
+	if guetteur1.Hp <= 0 && guetteur2.Hp > 0 {
+		totalDamage = enemy.Damage + guetteur2.Damage
+		fmt.Printf("Le Gérant et le guetteur 2 vous infligent %d points de dégât.\n", totalDamage)
+	} else if guetteur2.Hp <= 0 && guetteur1.Hp > 0 {
+		totalDamage = enemy.Damage + guetteur1.Damage
+		fmt.Printf("Le Gérant et le guetteur 1 vous infligent %d points de dégât.\n", totalDamage)
+	} else if guetteur1.Hp <= 0 && guetteur2.Hp <= 0 {
+		totalDamage = enemy.Damage
+		fmt.Printf("Le Gérant vous inflige %d points de dégât.\n", totalDamage)
+	} else if enemy.Hp <= 0 {
+		totalDamage = guetteur1.Damage + guetteur2.Damage
+		fmt.Printf("Les guetteurs vous infligent %d points de dégât.\n", totalDamage)
+	} else {
+		totalDamage = enemy.Damage + guetteur1.Damage + guetteur2.Damage
+		fmt.Printf("Le Gérant et ses guetteurs vous infligent %d points de dégât.\n", totalDamage)
+	}
+
+	perso.Hp -= totalDamage
+
+	time.Sleep(2 * time.Second)
 }

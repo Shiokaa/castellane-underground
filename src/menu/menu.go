@@ -2,6 +2,7 @@ package menu
 
 import (
 	"fmt"
+	"os"
 	"projet-red/ascii"
 	"projet-red/character"
 	"projet-red/fight"
@@ -21,7 +22,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println("4 - Accéder au Telegram (marché)")
 		fmt.Println("5 - Aller zoner dans le quartier")
 		fmt.Println("0 - Quitter")
-		fmt.Println(" - Vos points de vie ")
+		fmt.Println("  - Vos points de vie ")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		fmt.Printf("Vous avez %v€\n", perso.Gold)
 		fmt.Println("------------------------------------")
@@ -103,9 +104,9 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
 		case 0:
-			fmt.Println("À bientôt!")
+			fmt.Println("Merci et à bientôt !")
 			time.Sleep(4 * time.Second)
-			return
+			os.Exit(0)
 		}
 	}
 }
