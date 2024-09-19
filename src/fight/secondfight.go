@@ -19,6 +19,9 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 	time.Sleep(2 * time.Second)
 	inv.AfficherInventaireEnCombat()
 	for Vendeur.Hp > 0 && perso.Hp > 0 {
+		if perso.Name == "Tonton" {
+			perso.Damage = character.DegatTonton()
+		}
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Vendeur.Name, Vendeur.Hp, 100)
@@ -33,7 +36,7 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 		if Vendeur.Hp <= 0 {
 			fmt.Println("\nBravo, tu as hagar le revendeur ! , tu le dépouille et en tire 100€ Continue dans le quartier ")
 			perso.Gold += 100
-			if perso.CombatCounteur < 3 {
+			if perso.CombatCounteur < 2 {
 				perso.CombatCounteur += 1
 			}
 			break
@@ -84,6 +87,7 @@ func handleActionVendeur(attack int, enemy *character.Enemy, perso *character.Pe
 		enemy.Hp -= damage
 		fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, enemy.Name)
 	} else if item.Type == "Soin" {
+		inv.RemoveObject(item)
 		heal := item.Damage
 		perso.Hp += heal
 		fmt.Printf("Vous vous soignez de %d pv.\n", heal)

@@ -21,6 +21,9 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	time.Sleep(2 * time.Second)
 	inv.AfficherInventaireEnCombat()
 	for Gofasteur.Hp > 0 && perso.Hp > 0 {
+		if perso.Name == "Tonton" {
+			perso.Damage = character.DegatTonton()
+		}
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 300)
@@ -87,6 +90,7 @@ func handleAction(attack int, enemy *character.Enemy, perso *character.Personnag
 		enemy.Hp -= damage
 		fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, enemy.Name)
 	} else if item.Type == "Soin" {
+		inv.RemoveObject(item)
 		heal := item.Damage
 		perso.Hp += heal
 		fmt.Printf("Vous vous soignez de %d pv.\n", heal)

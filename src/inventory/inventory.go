@@ -42,7 +42,6 @@ func (inv Inventory) RemoveObject(object object.ObjectStats) {
 			} else {
 				inv.SacocheCp = append(inv.SacocheCp[:index], inv.SacocheCp[index+1:]...)
 			}
-			fmt.Printf("Objet '%s' supprimé avec succès.\n", Nomobjet)
 			break
 		}
 	}
