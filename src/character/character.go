@@ -16,10 +16,13 @@ type Personnage struct {
 }
 
 type Enemy struct {
-	Name   string
-	Hp     int
-	Damage int
+    Name               string
+    Hp                 int
+    Damage             int
+    LacrymogèneActive  bool
+    LacrymogèneTurns   int
 }
+
 
 func DegatTonton() int {
 	// Initialisation du générateur de nombres aléatoires avec un seed basé sur le temps

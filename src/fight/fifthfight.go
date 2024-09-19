@@ -35,7 +35,7 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		attack := chooseAction2(len(inv.SacocheCp), inv)
 
 		// Appliquer l'action choisie
-		handleAction2(attack, &Gérant, perso, inv)
+		handleAction2(attack, &Gérant, perso, &inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if Gérant.Hp <= 0 {
@@ -70,7 +70,7 @@ func chooseAction2(max int, inv inventory.Inventory) int {
 				if inv.SacocheCp[i].Name == "Boule" {
 					fmt.Printf("\nPour utilisez le %v et infliger des degats aléatoire. Appuyez sur %v\n", inv.SacocheCp[i].Name, i)
 				} else {
-					fmt.Printf("\nPour utilisez le %v et infliger %v deg. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
+					fmt.Printf("\nPour utilisez le %v et infliger %v dégât. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 				}
 			}
 		}
@@ -85,7 +85,7 @@ func chooseAction2(max int, inv inventory.Inventory) int {
 	}
 }
 
-func handleAction2(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleAction2(attack int, enemy *character.Enemy, perso *character.Personnage, inv *inventory.Inventory) {
 	var attack2 int
 	item := inv.SacocheCp[attack]
 
@@ -109,36 +109,57 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 		switch attack2 {
 		case 1:
 			if enemy.Hp > 0 {
-				damage := item.Damage
-				enemy.Hp -= damage
-				if enemy.Hp < 0 {
-					enemy.Hp = 0 // Pour éviter des HP négatifs
+				if item.Name == "Lacrymogène" {
+					enemy.LacrymogèneActive = true
+					enemy.LacrymogèneTurns = 3
+					inv.RemoveObject(item)
+					fmt.Printf("Vous utilisez la lacrymogène sur %s. Il subira 15 points de dégât par tour pendant 3 tours.\n", enemy.Name)
+				} else {
+					damage := item.Damage
+					enemy.Hp -= damage
+					if enemy.Hp < 0 {
+						enemy.Hp = 0
+					}
+					fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, enemy.Name)
 				}
-				fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, enemy.Name)
 			} else {
 				fmt.Println("Le Gérant est déjà vaincu !")
 			}
 
 		case 2:
 			if Guetteur.Hp > 0 {
-				damage := item.Damage
-				Guetteur.Hp -= damage
-				if Guetteur.Hp < 0 {
-					Guetteur.Hp = 0 // Pour éviter des HP négatifs
+				if item.Name == "Lacrymogène" {
+					Guetteur.LacrymogèneActive = true
+					Guetteur.LacrymogèneTurns = 3
+					inv.RemoveObject(item)
+					fmt.Printf("Vous utilisez la lacrymogène sur %s. Il subira 15 points de dégât par tour pendant 3 tours.\n", Guetteur.Name)
+				} else {
+					damage := item.Damage
+					Guetteur.Hp -= damage
+					if Guetteur.Hp < 0 {
+						Guetteur.Hp = 0
+					}
+					fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, Guetteur.Name)
 				}
-				fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, Guetteur.Name)
 			} else {
 				fmt.Println("Le Guetteur 1 est déjà vaincu !")
 			}
 
 		case 3:
 			if Guetteur2.Hp > 0 {
-				damage := item.Damage
-				Guetteur2.Hp -= damage
-				if Guetteur2.Hp < 0 {
-					Guetteur2.Hp = 0 // Pour éviter des HP négatifs
+				if item.Name == "Lacrymogène" {
+					Guetteur2.LacrymogèneActive = true
+					Guetteur2.LacrymogèneTurns = 3
+					inv.RemoveObject(item)
+					fmt.Printf("Vous utilisez la lacrymogène sur %s. Il subira 15 points de dégât par tour pendant 3 tours.\n", Guetteur2.Name)
+				} else {
+					damage := item.Damage
+					Guetteur2.Hp -= damage
+					if Guetteur2.Hp < 0 {
+						Guetteur2.Hp = 0
+					}
+					fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, Guetteur2.Name)
 				}
-				fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, Guetteur2.Name)
 			} else {
 				fmt.Println("Le Guetteur 2 est déjà vaincu !")
 			}
@@ -151,40 +172,79 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 		heal := item.Damage
 		perso.Hp += heal
 		if perso.Hp > perso.Hpmax {
-			perso.Hp = perso.Hpmax // Pour éviter de dépasser les HP max
+			perso.Hp = perso.Hpmax
 		}
 		fmt.Printf("Vous vous soignez de %d PV.\n", heal)
+
+		inv.RemoveObject(item)
 	}
 
 	time.Sleep(2 * time.Second)
 }
 
 func enemyRetaliation2(enemy *character.Enemy, perso *character.Personnage, guetteur1 *character.Enemy, guetteur2 *character.Enemy) {
-	// Initialiser les dommages
-	totalDamage := 0
+	fmt.Println("Le Gérant et ses guetteurs ripostent !")
+	time.Sleep(1 * time.Second)
 
-	// Si un des guetteurs est mort
-	if guetteur1.Hp <= 0 && guetteur2.Hp > 0 {
-		totalDamage = enemy.Damage + guetteur2.Damage
-		fmt.Printf("Le Gérant et le guetteur 2 vous infligent %d points de dégât.\n", totalDamage)
-	} else if guetteur2.Hp <= 0 && guetteur1.Hp > 0 {
-		totalDamage = enemy.Damage + guetteur1.Damage
-		fmt.Printf("Le Gérant et le guetteur 1 vous infligent %d points de dégât.\n", totalDamage)
-	} else if guetteur1.Hp <= 0 && guetteur2.Hp <= 0 {
-		totalDamage = enemy.Damage
-		fmt.Printf("Le Gérant vous inflige %d points de dégât.\n", totalDamage)
-	} else if enemy.Hp <= 0 {
-		// Si seulement les guetteurs sont en vie
-		totalDamage = guetteur1.Damage + guetteur2.Damage
-		fmt.Printf("Les guetteurs vous infligent %d points de dégât.\n", totalDamage)
-	} else {
-		// Si tout le monde est en vie
-		totalDamage = enemy.Damage + guetteur1.Damage + guetteur2.Damage
-		fmt.Printf("Le Gérant et ses guetteurs vous infligent %d points de dégât.\n", totalDamage)
+	if enemy.LacrymogèneActive {
+		enemy.Hp -= 15
+		if enemy.Hp < 0 {
+			enemy.Hp = 0
+			fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", enemy.Name)
+			enemy.LacrymogèneTurns--
+			if enemy.LacrymogèneTurns <= 0 {
+				enemy.LacrymogèneActive = false
+				fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", enemy.Name)
+			}
+		}
+
+		if guetteur1.LacrymogèneActive {
+			guetteur1.Hp -= 15
+			if guetteur1.Hp < 0 {
+				guetteur1.Hp = 0
+			}
+			fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", guetteur1.Name)
+			guetteur1.LacrymogèneTurns--
+			if guetteur1.LacrymogèneTurns <= 0 {
+				guetteur1.LacrymogèneActive = false
+				fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", guetteur1.Name)
+			}
+		}
+
+		if guetteur2.LacrymogèneActive {
+			guetteur2.Hp -= 15
+			if guetteur2.Hp < 0 {
+				guetteur2.Hp = 0
+			}
+			fmt.Printf("%s subit 15 points de dégâts à cause de la lacrymogène.\n", guetteur2.Name)
+			guetteur2.LacrymogèneTurns--
+			if guetteur2.LacrymogèneTurns <= 0 {
+				guetteur2.LacrymogèneActive = false
+				fmt.Printf("L'effet de la lacrymogène sur %s a pris fin.\n", guetteur2.Name)
+			}
+		}
+
+		totalDamage := 0
+
+		if guetteur1.Hp <= 0 && guetteur2.Hp > 0 {
+			totalDamage = enemy.Damage + guetteur2.Damage
+			fmt.Printf("Le Gérant et le guetteur 2 vous infligent %d points de dégât.\n", totalDamage)
+		} else if guetteur2.Hp <= 0 && guetteur1.Hp > 0 {
+			totalDamage = enemy.Damage + guetteur1.Damage
+			fmt.Printf("Le Gérant et le guetteur 1 vous infligent %d points de dégât.\n", totalDamage)
+		} else if guetteur1.Hp <= 0 && guetteur2.Hp <= 0 {
+			totalDamage = enemy.Damage
+			fmt.Printf("Le Gérant vous inflige %d points de dégât.\n", totalDamage)
+		} else if enemy.Hp <= 0 {
+			totalDamage = guetteur1.Damage + guetteur2.Damage
+			fmt.Printf("Les guetteurs vous infligent %d points de dégât.\n", totalDamage)
+		} else {
+			totalDamage = enemy.Damage + guetteur1.Damage + guetteur2.Damage
+			fmt.Printf("Le Gérant et ses guetteurs vous infligent %d points de dégât.\n", totalDamage)
+		}
+
+		perso.Hp -= totalDamage
+
+		time.Sleep(2 * time.Second)
 	}
-
-	// Appliquer les dommages
-	perso.Hp -= totalDamage
-
-	time.Sleep(2 * time.Second)
 }

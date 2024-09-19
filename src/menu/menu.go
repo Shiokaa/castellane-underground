@@ -199,7 +199,7 @@ func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 
 	switch achat {
 	case 1:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Lacrimogène", Type: "Arme", Damage: 15}, 30)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Lacrymogène", Type: "Arme", Damage: 15}, 30)
 	case 2:
 		achatObjet(perso, *inv, object.ObjectStats{Name: "Matraque", Type: "Arme", Damage: 80}, 100)
 	case 3:
