@@ -19,12 +19,11 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	  /|\                       /|\
 	  / \                       / \`)
 	time.Sleep(2 * time.Second)
-
+	inv.AfficherInventaireEnCombat()
 	for Gofasteur.Hp > 0 && perso.Hp > 0 {
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
-		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 100)
-		inv.AfficherInventaireEnCombat()
+		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 300)
 
 		// Sélection de l'action par l'utilisateur
 		attack := chooseAction(len(inv.SacocheCp), inv)
@@ -34,12 +33,15 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 
 		// Vérifier si l'un des deux personnages est mort
 		if Gofasteur.Hp <= 0 {
-			fmt.Println("\nVous avez vaincu le Go fasteur ! Vous trouvez du tissu et 500 euros !!")
-			inv.AddObject(tissu)
+			fmt.Println("\n Bravo, tu as Hagar le chauffeur du go-fast tu le dépouille et en tire 500€ ainsi que du tissu. Au loin, l’homme de main t’a repéré (la brute du quartier) et ne souhaite pas t’épargner, le combat commence !")
+			inv.AddCraft(tissu)
 			perso.Gold += 500
+			if perso.CombatCounteur < 3 {
+				perso.CombatCounteur += 1
+			}
 			break
 		} else if perso.Hp <= 0 {
-			fmt.Println("\nVous êtes tombé au combat...")
+			fmt.Println("\n Tu t’es fait Hagar ! Le chauffeur du go-fast a pris ton argent et t’a envoyé à l’hôpital Nord. Régénère ta vie, puis reviens plus fort !")
 			break
 		}
 

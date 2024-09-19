@@ -40,7 +40,15 @@ func Afterguetteur() {
 }
 
 func AfterVendeur() {
-	str := "\n Apres quelques minutes de marche tu croise un RS6 gris nardo plein a craquer et tu decides de te battre avec le chauffeur de ce go-Fast (Tu attaque en premier, le chauffeur se bat avec un couteau suisse trouvé dans la boite à gants "
+	str := "\nTu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache."
+	for _, char := range str {
+		fmt.Printf("%c", char)
+		time.Sleep(40 * time.Millisecond)
+	}
+}
+
+func AfterGoFast() {
+	str := "\n. Au loin, l’homme de main t’a repéré (la brute du quartier) et ne souhaite pas t’épargner, le combat commence !"
 	for _, char := range str {
 		fmt.Printf("%c", char)
 		time.Sleep(40 * time.Millisecond)

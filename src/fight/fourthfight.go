@@ -5,52 +5,55 @@ import (
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
+	"projet-red/object"
 	"time"
 )
 
-func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
-	Vendeur := character.Enemy{Name: "Vendeur", Hp: 100, Damage: 20}
+func FourthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+	HommeDeMain := character.Enemy{Name: "Homme de main", Hp: 500, Damage: 30}
+	BouteilleAlcool := object.ObjectStats{Name: "tissu", Type: "Utilitaire", Damage: 0}
 
-	fmt.Println("\nTu t’enfonce dans le quartier et fini par trouvé le Vendeur, il refuse de te vendre quoi que se soit et te manque de respect, Le Combat commence !")
+	fmt.Println("\nVous entrez dans un combat avec un Homme de main !")
 	fmt.Println(`
 	   O                         O
 	  /|\                       /|\
 	  / \                       / \`)
 	time.Sleep(2 * time.Second)
 	inv.AfficherInventaireEnCombat()
-	for Vendeur.Hp > 0 && perso.Hp > 0 {
+	for HommeDeMain.Hp > 0 && perso.Hp > 0 {
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
-		game.DisplayHealth(Vendeur.Name, Vendeur.Hp, 100)
+		game.DisplayHealth(HommeDeMain.Name, HommeDeMain.Hp, 100)
+		inv.AfficherInventaireEnCombat()
 
 		// Sélection de l'action par l'utilisateur
-		attack := chooseActionVendeur(len(inv.SacocheCp), inv)
+		attack := chooseActionHomme(len(inv.SacocheCp), inv)
 
 		// Appliquer l'action choisie
-		handleActionVendeur(attack, &Vendeur, perso, inv)
+		handleActionHomme(attack, &HommeDeMain, perso, inv)
 
 		// Vérifier si l'un des deux personnages est mort
-		if Vendeur.Hp <= 0 {
-			fmt.Println("\nBravo, tu as hagar le revendeur ! , tu le dépouille et en tire 100€ Continue dans le quartier ")
-			perso.Gold += 100
-			if perso.CombatCounteur < 3 {
+		if HommeDeMain.Hp <= 0 {
+			fmt.Println("\nBravo ! tu es venu a bout de l’homme de main ( le plus coriace du secteur ) tu le dépouille et en tire une bouteille d’alcool en verre .")
+			inv.AddCraft(BouteilleAlcool)
+			if perso.CombatCounteur < 4 {
 				perso.CombatCounteur += 1
 			}
 			break
 		} else if perso.Hp <= 0 {
-			fmt.Println("\nTu t’es fait Hagar ! Le vendeur a pris ton argent et t’a envoyé à l’hôpital Nord. Régénère ta vie, puis reviens plus fort !")
+			fmt.Println("\n Tu t’es fait Hagar ! L’homme de main a pris ton argent et t’a envoyé à la thimone. Régénère ta vie, puis reviens plus fort !")
 			break
 		}
 
-		// Riposte du Vendeur
-		enemyRetaliationVendeur(&Vendeur, perso)
+		// Riposte du Homme de main
+		enemyRetaliationHomme(&HommeDeMain, perso)
 	}
 
 	return inv
 }
 
 // Choisir une action valide
-func chooseActionVendeur(max int, inv inventory.Inventory) int {
+func chooseActionHomme(max int, inv inventory.Inventory) int {
 	var attack int
 	for i := 0; i < len(inv.SacocheCp); i++ {
 		if inv.SacocheCp[i].Type != "Utilitaire" {
@@ -77,7 +80,7 @@ func chooseActionVendeur(max int, inv inventory.Inventory) int {
 }
 
 // Gérer l'action choisie par le joueur (attaque ou soin)
-func handleActionVendeur(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
 	item := inv.SacocheCp[attack]
 	if item.Type == "Arme" {
 		damage := item.Damage
@@ -92,10 +95,10 @@ func handleActionVendeur(attack int, enemy *character.Enemy, perso *character.Pe
 }
 
 // Riposte de l'ennemi
-func enemyRetaliationVendeur(enemy *character.Enemy, perso *character.Personnage) {
-	fmt.Println("Le Vendeur riposte !")
+func enemyRetaliationHomme(enemy *character.Enemy, perso *character.Personnage) {
+	fmt.Println("L'omme de main riposte !")
 	time.Sleep(1 * time.Second)
 	perso.Hp -= enemy.Damage
-	fmt.Printf("Le Vendeur vous inflige %d points de dégât.\n", enemy.Damage)
+	fmt.Printf("L'homme de main vous inflige %d points de dégât.\n", enemy.Damage)
 	time.Sleep(2 * time.Second)
 }
