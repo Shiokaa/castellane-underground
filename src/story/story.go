@@ -42,7 +42,7 @@ func Afterguetteur() {
 }
 
 func AfterVendeur() {
-	str := "\nTu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache."
+	str := "\n Tu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache. Le combat commence ! "
 	for _, char := range str {
 		fmt.Printf("%c", char)
 		time.Sleep(40 * time.Millisecond)

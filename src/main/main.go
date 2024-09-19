@@ -6,4 +6,5 @@ func main() {
 	inv := fight.Firstfight(&perso)
 	menu.Menu(&perso, inv)*/
 	romainmain()
+	tommain()
 }
