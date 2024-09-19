@@ -2,6 +2,7 @@ package menu
 
 import (
 	"fmt"
+	"projet-red/ascii"
 	"projet-red/character"
 	"projet-red/fight"
 	"projet-red/game"
@@ -24,7 +25,6 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		fmt.Printf("Vous avez %v€\n", perso.Gold)
 		fmt.Println("------------------------------------")
-
 		for {
 			fmt.Printf("Votre choix: ")
 			fmt.Scan(&choix)
@@ -98,6 +98,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		case 5:
 			game.ClearScreen()
 			fmt.Println("Vous zonez dans le quartier !")
+			ascii.Jul()
 			time.Sleep(10 * time.Second)
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25

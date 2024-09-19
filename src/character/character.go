@@ -31,3 +31,5 @@ func DegatTonton() int {
 	randomNumber := rand.Intn(max-min+1) + min
 	return randomNumber
 }
+
+
