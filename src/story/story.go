@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func HistoireDebut() {
+func  () {
 	fmt.Println("   _____          _       _ _                     _    _           _                                          _ ")
 	fmt.Println("  / ____|        | |     | | |                   | |  | |         | |                                        | |")
 	fmt.Println(" | |     __ _ ___| |_ ___| | | __ _ _ __   ___   | |  | |_ __   __| | ___ _ __ __ _ _ __ ___  _   _ _ __   __| |")
@@ -38,7 +38,15 @@ func Afterguetteur() {
 }
 
 func AfterVendeur() {
-	str := "\n Apres quelques minutes de marche tu croise un RS6 gris nardo plein a craquer et tu decides de te battre avec le chauffeur de ce go-Fast (Tu attaque en premier, le chauffeur se bat avec un couteau suisse trouvé dans la boite à gants "
+	str := "\n Tu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache. Le combat commence ! "
+	for _, char := range str {
+		fmt.Printf("%c", char)
+		time.Sleep(40 * time.Millisecond)
+	}
+}
+
+func AfterGofasteur() {
+	str := "\n Tu te balades tranquillement, tout à coup, tu aperçois une Audi RS6 gris Nardo, pleine à craquer, passer à fond à côté de toi et se garer 10 mètres plus loin. Tu décides d’aller voir ce qui se cache à l’intérieur mais le chauffeur du go-fast n’est absolument pas d’accord a l’idée de regarder ce qu’il s’y cache. Le combat commence ! "
 	for _, char := range str {
 		fmt.Printf("%c", char)
 		time.Sleep(40 * time.Millisecond)
