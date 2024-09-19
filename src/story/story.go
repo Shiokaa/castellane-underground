@@ -14,8 +14,10 @@ func HistoireDebut() {
 	fmt.Println(" | |___| (_| \\__ | ||  __| | | (_| | | | |  __/  | |__| | | | | (_| |  __| | | (_| | | | (_) | |_| | | | | (_| |")
 	fmt.Println(" \\_____\\__,_|___/\\__\\___|_|_|\\__,_|_| |_| \\___|  \\____/|_| |_|\\__,_|\\___|_|  \\__, |_|  \\___/ \\__,_|_| |_|\\__,_|")
 	fmt.Println("                                                                              __/ |                            ")
-	ascii.Jul()
 	fmt.Println("                                                                             |___/                             ")
+	fmt.Println("\033[34m")
+	ascii.OM()
+	fmt.Println("\033[0m")
 	str := "L’histoire commence dans la cour d’un HLM avec un daron, un tonton ainsi qu’une daronne. La discussion porte autour des réseaux au sein du quartier,\nles trois en ont marre et décident de se révolter ! Choisis ton personnage !"
 	for _, char := range str {
 		fmt.Printf("%c", char)
