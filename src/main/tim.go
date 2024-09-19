@@ -1,5 +1,6 @@
 package main
 
+<<<<<<< HEAD
 import (
 	"projet-red/fight"
 	"projet-red/game"
@@ -18,4 +19,8 @@ func tim() {
 	story.AfterVendeur()
 	fight.ThirdFight(&perso, inv)
 	story.AfterGoFast()
+=======
+func tim() {
+
+>>>>>>> 36afc2904dc0cb977f35b9ae041844e9127c7f5d
 }
