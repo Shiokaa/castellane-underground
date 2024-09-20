@@ -40,7 +40,7 @@ func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventor
 			fmt.Println("\nBravo ! tu es venu a bout de l’homme de main ( le plus coriace du secteur ) tu le dépouille et en tire une bouteille d’alcool en verre .")
 			inv.AddCraft(BouteilleAlcool)
 			if perso.CombatCounteur < 4 {
-				perso.CombatCounteur += 1
+				perso.CombatCounteur = 4
 			}
 			break
 		} else if perso.Hp <= 0 {
