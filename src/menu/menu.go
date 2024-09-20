@@ -15,6 +15,7 @@ import (
 
 func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	var choix int
+	game.ClearScreen()
 	for {
 		fmt.Println("\n---------- MENU PRINCIPAL ----------")
 		fmt.Println("1 - Aller au combat")
@@ -102,10 +103,13 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				break
 			}
 		case 2:
+			game.ClearScreen()
 			afficherInventaire(&inv)
 		case 3:
+			game.ClearScreen()
 			oTacos(perso, &inv)
 		case 4:
+			game.ClearScreen()
 			Telegram(perso, &inv)
 		case 5:
 			game.ClearScreen()
@@ -115,6 +119,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
 		case 6:
+			game.ClearScreen()
 			jeutel.PlayMorpion()
 		case 0:
 			fmt.Println("Merci et à bientôt !")
@@ -192,7 +197,6 @@ func afficherInventaire(inv *inventory.Inventory) {
 }
 
 func oTacos(perso *character.Personnage, inv *inventory.Inventory) {
-	game.ClearScreen()
 	if perso.Hp < perso.Hpmax {
 		if perso.Gold >= 5 {
 			perso.Gold -= 5
@@ -209,7 +213,7 @@ func oTacos(perso *character.Personnage, inv *inventory.Inventory) {
 }
 
 func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
-	game.ClearScreen()
+
 	var achat int
 	afficherMarché()
 

@@ -10,6 +10,7 @@ import (
 )
 
 func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventory.Inventory {
+	game.ClearScreen()
 	HommeDeMain := character.Enemy{Name: "Homme de main", Hp: 500, Damage: 30}
 	BouteilleAlcool := object.ObjectStats{Name: "Bouteille d'alcool en verre", Type: "Utilitaire", Damage: 10}
 
@@ -20,6 +21,7 @@ func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventor
 	  / \                       / \`)
 	time.Sleep(2 * time.Second)
 	for HommeDeMain.Hp > 0 && perso.Hp > 0 {
+		game.ClearScreen()
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
 		}
