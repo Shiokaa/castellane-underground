@@ -129,7 +129,6 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 }
 
 func afficherInventaire(inv *inventory.Inventory) {
-	counteur := 0
 	cocktail := object.ObjectStats{Name: "Cocktail Molotov", Type: "Utilitaire", Damage: 150}
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {
@@ -168,31 +167,32 @@ func afficherInventaire(inv *inventory.Inventory) {
 			fmt.Println("Vous ne pouvez pas supprimer les objets de craft")
 			return
 		}
-		for index := range inv.SacocheCp {
-			if inv.SacocheCp[index].Name == Nomobjet {
-				if index == len(inv.SacocheCp)-1 {
-					inv.SacocheCp = inv.SacocheCp[:index]
-				} else {
-					inv.SacocheCp = append(inv.SacocheCp[:index], inv.SacocheCp[index+1:]...)
-				}
+		// Recherche de l'objet dans l'inventaire
+		found := false
+		for index, obj := range inv.SacocheCp {
+			if obj.Name == Nomobjet {
+				// Suppression de l'objet à l'index donné
+				inv.SacocheCp = append(inv.SacocheCp[:index], inv.SacocheCp[index+1:]...)
 				fmt.Printf("Objet '%s' supprimé avec succès.\n", Nomobjet)
+				found = true
 				break
 			}
 		}
+		if !found {
+			fmt.Printf("Objet '%s' non trouvé dans l'inventaire.\n", Nomobjet)
+		}
 	case 2:
-		for i := range inv.CraftInventory {
-			counteur = i
-			if counteur == 2 {
-				inv.CraftInventory = inv.CraftInventory[3:]
-				inv.AddObject(cocktail)
-				fmt.Print("Cocktail crafté avec succès !")
-				time.Sleep(3 * time.Second)
-				return
-			}
+		// Compte des objets de craft dans l'inventaire
+		if len(inv.CraftInventory) >= 3 {
+			// Si assez d'objets de craft, création du cocktail
+			inv.CraftInventory = inv.CraftInventory[3:]
+			inv.AddObject(cocktail)
+			fmt.Println("Cocktail crafté avec succès !")
+		} else {
+			fmt.Println("Vous n'avez pas tous les objets requis pour le craft.")
 		}
-		if counteur < 2 {
-			fmt.Print("Vous n'avez pas tout les objets requis")
-		}
+		time.Sleep(3 * time.Second)
+		return
 	case 0:
 		return
 	}
@@ -215,7 +215,6 @@ func oTacos(perso *character.Personnage, inv *inventory.Inventory) {
 }
 
 func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
-	invtemp := []object.ObjectStats{}
 	var achat int
 	afficherMarché()
 
@@ -232,19 +231,19 @@ func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 
 	switch achat {
 	case 1:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Lacrymogène", Type: "Arme", Damage: 15}, 30)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Lacrymogène", Type: "Arme", Damage: 15}, 30)
 	case 2:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Matraque", Type: "Arme", Damage: 80}, 100)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Matraque", Type: "Arme", Damage: 80}, 100)
 	case 3:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Mortier", Type: "Arme", Damage: 200}, 150)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Mortier", Type: "Arme", Damage: 200}, 150)
 	case 4:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Taser", Type: "Arme", Damage: 100}, 250)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Taser", Type: "Arme", Damage: 100}, 250)
 	case 5:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 30}, 5)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 30}, 5)
 	case 6:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 75}, 20)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 75}, 20)
 	case 7:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Redbull", Type: "Utilitaire", Damage: 20}, 10)
+		achatObjet(perso, inv, object.ObjectStats{Name: "Redbull", Type: "Utilitaire", Damage: 20}, 10)
 	case 8:
 		if achatStatUpgrade(perso, "Ensemble Nike Tech", 200) {
 			perso.Hpmax += 20
@@ -257,9 +256,7 @@ func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 		}
 	case 10:
 		if achatStatUpgrade(perso, "Sacoche LV", 300) {
-			invtemp = append(invtemp, inv.SacocheCp...)
 			inv.Limite += 5
-			inv.SacocheCp = append(inv.SacocheCp, invtemp...)
 		}
 	case 0:
 		fmt.Println("Retour au menu principal...")
@@ -270,7 +267,7 @@ func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 
 func afficherMarché() {
 	fmt.Println("\n--------- TELEGRAM MARCHÉ ---------")
-	fmt.Println("1 - LACRIMOGENE à 30€ : -5% de vie par tour, 1 chance sur 3 de rater l'attaque (3 tours)")
+	fmt.Println("1 - LACRIMOGENE à 30€ : -15 point de vie à l'adversaire pendant 3 tours")
 	fmt.Println("2 - MATRAQUE à 100€ : Inflige 80 dégâts")
 	fmt.Println("3 - MORTIER à 150€ : Inflige 200 dégâts")
 	fmt.Println("4 - TASER à 250€ : Inflige 100 dégâts et immobilise 1 tour")
@@ -284,7 +281,7 @@ func afficherMarché() {
 	fmt.Println("----------------------------------")
 }
 
-func achatObjet(perso *character.Personnage, inv inventory.Inventory, objet object.ObjectStats, prix int) {
+func achatObjet(perso *character.Personnage, inv *inventory.Inventory, objet object.ObjectStats, prix int) {
 	if perso.Gold >= prix && len(inv.SacocheCp) < inv.Limite {
 		perso.Gold -= prix
 		inv.AddObject(objet)
@@ -295,7 +292,7 @@ func achatObjet(perso *character.Personnage, inv inventory.Inventory, objet obje
 		fmt.Println("Votre inventaire est plein.")
 	}
 	time.Sleep(2 * time.Second)
-	Telegram(perso, &inv)
+	Telegram(perso, inv)
 }
 
 func achatStatUpgrade(perso *character.Personnage, itemName string, prix int) bool {

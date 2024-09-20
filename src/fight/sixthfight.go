@@ -19,7 +19,6 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	  /|\                       /|\
 	  / \                       / \`)
 	time.Sleep(2 * time.Second)
-	inv.AfficherInventaireEnCombat()
 	for Caid.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
 		if perso.Name == "Tonton" {
