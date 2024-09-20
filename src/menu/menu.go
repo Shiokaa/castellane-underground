@@ -181,24 +181,18 @@ func afficherInventaire(inv *inventory.Inventory) {
 			}
 		}
 	case 2:
-		for _, obj := range inv.CraftInventory {
-			if obj.Name == "Briquet" {
-				counteur++
-			}
-			if obj.Name == "Tisuu" {
-				counteur++
-			}
-			if obj.Name == "Bouteille d'alcool en verre" {
-				counteur++
-			}
-			if counteur == 3 {
-				inv.CraftInventory = inv.CraftInventory[:]
+		for i := range inv.CraftInventory {
+			counteur = i
+			if counteur == 2 {
+				inv.CraftInventory = inv.CraftInventory[3:]
 				inv.AddObject(cocktail)
+				fmt.Print("Cocktail crafté avec succès !")
+				time.Sleep(3 * time.Second)
 				return
-			} else {
-				fmt.Println("Vous n'avez pas tout les objets requis")
-				time.Sleep(2 * time.Second)
 			}
+		}
+		if counteur < 2 {
+			fmt.Print("Vous n'avez pas tout les objets requis")
 		}
 	case 0:
 		return
