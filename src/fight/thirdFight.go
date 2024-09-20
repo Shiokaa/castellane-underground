@@ -88,7 +88,29 @@ func chooseAction(max int, inv inventory.Inventory) int {
 // Gérer l'action choisie par le joueur (attaque ou soin)
 func handleAction(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
 	item := inv.SacocheCp[attack]
+	if item.Name == "Redbull" {
+		// Gestion du Redbull qui augmente les dégâts pendant 3 tours
+		fmt.Println("Vous buvez un Redbull, vos dégâts sont augmentés pendant 3 tours !")
+		perso.BoostDamageTurns = 4
+		inv.RemoveObject(item) // Supprimer l'objet après usage
+		return
+	}
 	if item.Type == "Arme" {
+		if item.Name == "Taser" {
+			enemy.Immobilized = true
+			enemy.ImmobilizedTurns = 2
+			fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", enemy.Name)
+			inv.RemoveObject(item)
+			return
+		}
+		// Gestion de la Lacrymogène
+		if item.Name == "Lacrymogène" {
+			enemy.LacrymogèneActive = true
+			enemy.LacrymogèneTurns = 3
+			fmt.Printf("Vous lancez une lacrymogène sur %s. Il subira 15 points de dégâts par tour pendant 3 tours !\n", enemy.Name)
+			inv.RemoveObject(item) // Suppression de l'objet après utilisation
+			return
+		}
 		damage := item.Damage
 		enemy.Hp -= damage
 		fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, enemy.Name)
