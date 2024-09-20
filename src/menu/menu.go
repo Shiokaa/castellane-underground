@@ -8,6 +8,7 @@ import (
 	"projet-red/fight"
 	"projet-red/game"
 	"projet-red/inventory"
+	"projet-red/jeutel"
 	"projet-red/object"
 	"time"
 )
@@ -21,6 +22,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		fmt.Println("3 - Aller au O'Tacos (régénération de vie)")
 		fmt.Println("4 - Accéder au Telegram (marché)")
 		fmt.Println("5 - Aller zoner dans le quartier")
+		fmt.Println("6 - Jouez au morpion avec un ami")
 		fmt.Println("0 - Quitter")
 		fmt.Println("  - Vos points de vie ")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
@@ -29,7 +31,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 		for {
 			fmt.Printf("Votre choix: ")
 			fmt.Scan(&choix)
-			if choix >= 0 && choix <= 5 {
+			if choix >= 0 && choix <= 6 {
 				break
 			} else if choix != 0 && choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5 {
 				fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
@@ -88,6 +90,8 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				} else {
 					fmt.Println("Veuillez combattre le Gérant d'abord")
 				}
+			case 6:
+				jeutel.PlayMorpion()
 			case 0:
 				return
 			}
