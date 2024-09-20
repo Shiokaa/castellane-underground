@@ -33,6 +33,10 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	for guetteur.Hp > 0 && perso.Hp > 0 {
 
 		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+		O                         O
+	   /|\                       /|\
+	   / \                       / \`)
 
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(guetteur.Name, guetteur.Hp, 100)

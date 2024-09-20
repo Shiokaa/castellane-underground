@@ -25,6 +25,10 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+		O                         O
+	   /|\                       /|\
+	   / \                       / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Vendeur.Name, Vendeur.Hp, 100)
 
