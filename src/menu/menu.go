@@ -33,7 +33,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Scan(&choix)
 			if choix >= 0 && choix <= 6 {
 				break
-			} else if choix != 0 && choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5 {
+			} else if choix != 0 && choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5 && choix != 6 {
 				fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
 			}
 		}
@@ -48,7 +48,15 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("4 - Combat contre le gérant")
 			fmt.Println("5 - Combat contre le caïd")
 			fmt.Println("0 - Revenir au menu")
-			fmt.Scan(&choix2)
+			for {
+				fmt.Printf("Votre choix: ")
+				fmt.Scan(&choix2)
+				if choix2 >= 0 && choix2 < 6 {
+					break
+				} else if choix2 != 0 && choix2 != 1 && choix2 != 2 && choix2 != 3 && choix2 != 4 && choix2 != 5 {
+					fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
+				}
+			}
 			switch choix2 {
 			case 1:
 				if perso.CombatCounteur >= 1 {
@@ -90,10 +98,8 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				} else {
 					fmt.Println("Veuillez combattre le Gérant d'abord")
 				}
-			case 6:
-				jeutel.PlayMorpion()
 			case 0:
-				return
+				break
 			}
 		case 2:
 			afficherInventaire(&inv)
@@ -108,6 +114,8 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			time.Sleep(10 * time.Second)
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
+		case 6:
+			jeutel.PlayMorpion()
 		case 0:
 			fmt.Println("Merci et à bientôt !")
 			time.Sleep(4 * time.Second)
@@ -117,6 +125,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 }
 
 func afficherInventaire(inv *inventory.Inventory) {
+	cocktail := object.ObjectStats{Name: "Cocktail Molotov", Type: "Utilitaire", Damage: 200}
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {
 		for i, obj := range inv.SacocheCp {
@@ -138,8 +147,13 @@ func afficherInventaire(inv *inventory.Inventory) {
 	var choix int
 	for {
 		fmt.Printf("\nTapez 1 pour supprimer un objet sinon tapez 0. \n\n")
+		for _, obj := range inv.CraftInventory {
+			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
+				fmt.Printf("\nVous avez débloquer l'option de craft, tapez 2 si vous voulez craft le cocktail molotov \n\n")
+			}
+		}
 		fmt.Scan(&choix)
-		if choix == 1 || choix == 0 {
+		if choix == 1 || choix == 0 || choix == 2 {
 			break
 		}
 		fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
@@ -164,6 +178,13 @@ func afficherInventaire(inv *inventory.Inventory) {
 				fmt.Printf("Objet '%s' supprimé avec succès.\n", Nomobjet)
 				break
 			}
+		}
+	case 2:
+		for _, obj := range inv.CraftInventory {
+			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
+				inv.RemoveObject(obj)
+			}
+			inv.AddObject(cocktail)
 		}
 	case 0:
 		return
