@@ -213,9 +213,9 @@ func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 	case 4:
 		achatObjet(perso, *inv, object.ObjectStats{Name: "Taser", Type: "Arme", Damage: 100}, 250)
 	case 5:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}, 5)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 30}, 5)
 	case 6:
-		achatObjet(perso, *inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 25}, 20)
+		achatObjet(perso, *inv, object.ObjectStats{Name: "Flash", Type: "Soin", Damage: 75}, 20)
 	case 7:
 		achatObjet(perso, *inv, object.ObjectStats{Name: "Redbull", Type: "Utilitaire", Damage: 20}, 10)
 	case 8:
