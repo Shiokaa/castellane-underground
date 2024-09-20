@@ -6,19 +6,24 @@ import (
 )
 
 type Personnage struct {
-	Name           string
-	NameUser       string
-	Hp             int
-	Gold           int
-	Damage         int
-	Hpmax          int
-	CombatCounteur int
+	Name             string
+	NameUser         string
+	Hp               int
+	Gold             int
+	Damage           int
+	Hpmax            int
+	CombatCounteur   int
+	BoostDamageTurns int
 }
 
 type Enemy struct {
-	Name   string
-	Hp     int
-	Damage int
+	Name              string
+	Hp                int
+	Damage            int
+	LacrymogèneActive bool
+	LacrymogèneTurns  int
+	Immobilized       bool
+	ImmobilizedTurns  int
 }
 
 func DegatTonton() int {
@@ -31,5 +36,3 @@ func DegatTonton() int {
 	randomNumber := rand.Intn(max-min+1) + min
 	return randomNumber
 }
-
-

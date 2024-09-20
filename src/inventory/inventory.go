@@ -33,7 +33,7 @@ func (inv *Inventory) AfficherInventaireEnCombat() {
 	time.Sleep(2 * time.Second)
 }
 
-func (inv Inventory) RemoveObject(object object.ObjectStats) {
+func (inv *Inventory) RemoveObject(object object.ObjectStats) {
 	Nomobjet := object.Name
 	for index := range inv.SacocheCp {
 		if inv.SacocheCp[index].Name == Nomobjet {
