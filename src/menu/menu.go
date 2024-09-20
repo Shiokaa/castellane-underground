@@ -215,7 +215,7 @@ func oTacos(perso *character.Personnage, inv *inventory.Inventory) {
 }
 
 func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
-
+	invtemp := []object.ObjectStats{}
 	var achat int
 	afficherMarché()
 
@@ -257,7 +257,9 @@ func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
 		}
 	case 10:
 		if achatStatUpgrade(perso, "Sacoche LV", 300) {
+			invtemp = append(invtemp, inv.SacocheCp...)
 			inv.Limite += 5
+			inv.SacocheCp = append(inv.SacocheCp, invtemp...)
 		}
 	case 0:
 		fmt.Println("Retour au menu principal...")
