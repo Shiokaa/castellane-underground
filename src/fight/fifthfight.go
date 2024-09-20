@@ -86,11 +86,11 @@ func chooseAction2(max int, inv inventory.Inventory) int {
 			}
 			if inv.SacocheCp[i].Type == "Arme" {
 				// Affiche les options pour les armes.
-				if inv.SacocheCp[i].Name == "Cocktail Molotov" {
-					fmt.Printf("\nPour utiliser le %v et infliger %v dégâts à tout les adversaires. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
-				}
 				if inv.SacocheCp[i].Name == "Boule" {
 					fmt.Printf("\nPour utiliser la %v et infliger des dégâts aléatoire. Appuyez sur %v\n", inv.SacocheCp[i].Name, i)
+				}
+				if inv.SacocheCp[i].Name == "Cocktail Molotov" {
+					fmt.Printf("\nPour utiliser le %v et infliger %v dégâts à tout les adversaires. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 				} else {
 					fmt.Printf("\nPour utiliser le %v et infliger %v dégâts. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 				}
