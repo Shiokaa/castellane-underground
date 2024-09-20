@@ -26,6 +26,10 @@ func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventor
 			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+		O                         O
+	   /|\                       /|\
+	   / \                       / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(HommeDeMain.Name, HommeDeMain.Hp, 500)
 
