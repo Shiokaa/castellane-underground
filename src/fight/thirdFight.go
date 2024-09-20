@@ -45,6 +45,9 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 			break
 		} else if perso.Hp <= 0 {
 			fmt.Println("\n Tu t’es fait Hagar ! Le chauffeur du go-fast a pris ton argent et t’a envoyé à l’hôpital Nord. Régénère ta vie, puis reviens plus fort !")
+			perso.Hp = perso.Hpmax / 2
+			perso.Gold /= 2
+			time.Sleep(5 * time.Second)
 			break
 		}
 

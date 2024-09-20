@@ -5,13 +5,11 @@ import (
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
-	"projet-red/object"
 	"time"
 )
 
-func FourthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
-	HommeDeMain := character.Enemy{Name: "Homme de main", Hp: 500, Damage: 30}
-	BouteilleAlcool := object.ObjectStats{Name: "tissu", Type: "Utilitaire", Damage: 0}
+func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+	Caid := character.Enemy{Name: "Homme de main", Hp: 1000, Damage: 35}
 
 	fmt.Println("\nVous entrez dans un combat avec un Homme de main !")
 	fmt.Println(`
@@ -20,31 +18,31 @@ func FourthFight(perso *character.Personnage, inv inventory.Inventory) inventory
 	  / \                       / \`)
 	time.Sleep(2 * time.Second)
 	inv.AfficherInventaireEnCombat()
-	for HommeDeMain.Hp > 0 && perso.Hp > 0 {
+	for Caid.Hp > 0 && perso.Hp > 0 {
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
-		game.DisplayHealth(HommeDeMain.Name, HommeDeMain.Hp, 100)
+		game.DisplayHealth(Caid.Name, Caid.Hp, 1000)
 		inv.AfficherInventaireEnCombat()
 
 		// Sélection de l'action par l'utilisateur
-		attack := chooseActionHomme(len(inv.SacocheCp), inv)
+		attack := chooseActionCaid(len(inv.SacocheCp), inv)
 
 		// Appliquer l'action choisie
-		handleActionHomme(attack, &HommeDeMain, perso, inv)
+		handleActionCaid(attack, &Caid, perso, inv)
 
 		// Vérifier si l'un des deux personnages est mort
-		if HommeDeMain.Hp <= 0 {
-			fmt.Println("\nBravo ! tu es venu a bout de l’homme de main ( le plus coriace du secteur ) tu le dépouille et en tire une bouteille d’alcool en verre .")
-			inv.AddCraft(BouteilleAlcool)
-			if perso.CombatCounteur < 4 {
+		if Caid.Hp <= 0 {
+			fmt.Println("\n Tu as vaincu le Caïd ! Son corps s’effondre sur le sol tandis que tu t’approches du coffre-fort. À l’intérieur, tu trouves des liasses de billets, des téléphones cryptés, et des preuves qui te permettent de démanteler tout le réseau. Tu es désormais le maître du quartier !")
+
+			if perso.CombatCounteur < 6 {
 				perso.CombatCounteur += 1
 			}
 			break
 		} else if perso.Hp <= 0 {
-			fmt.Println("\n Tu t’es fait Hagar ! L’homme de main a pris ton argent et t’a envoyé à la thimone. Régénère ta vie, puis reviens plus fort !")
+			fmt.Println("\n Le Caïd t'a battu. Tu te réveilles à l’hôpital, gravement blessé. Le quartier est à nouveau sous contrôle du réseau. Tu devras revenir plus fort pour avoir une chance de les détrôner")
 			perso.Hp = perso.Hpmax / 2
 			perso.Gold /= 2
 			time.Sleep(5 * time.Second)
@@ -52,14 +50,14 @@ func FourthFight(perso *character.Personnage, inv inventory.Inventory) inventory
 		}
 
 		// Riposte du Homme de main
-		enemyRetaliationHomme(&HommeDeMain, perso)
+		enemyRetaliationCaid(&Caid, perso)
 	}
 
 	return inv
 }
 
 // Choisir une action valide
-func chooseActionHomme(max int, inv inventory.Inventory) int {
+func chooseActionCaid(max int, inv inventory.Inventory) int {
 	var attack int
 	for i := 0; i < len(inv.SacocheCp); i++ {
 		if inv.SacocheCp[i].Type != "Utilitaire" {
@@ -86,7 +84,7 @@ func chooseActionHomme(max int, inv inventory.Inventory) int {
 }
 
 // Gérer l'action choisie par le joueur (attaque ou soin)
-func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleActionCaid(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
 	item := inv.SacocheCp[attack]
 	if item.Type == "Arme" {
 		damage := item.Damage
@@ -102,7 +100,7 @@ func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Pers
 }
 
 // Riposte de l'ennemi
-func enemyRetaliationHomme(enemy *character.Enemy, perso *character.Personnage) {
+func enemyRetaliationCaid(enemy *character.Enemy, perso *character.Personnage) {
 	fmt.Println("L'omme de main riposte !")
 	time.Sleep(1 * time.Second)
 	perso.Hp -= enemy.Damage
