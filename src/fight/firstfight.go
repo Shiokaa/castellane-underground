@@ -2,6 +2,7 @@ package fight
 
 import (
 	"fmt"
+	"os"
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
@@ -70,7 +71,9 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 			time.Sleep(1 * time.Second)
 
 			if perso.Hp <= 0 {
-				fmt.Println("\nVous êtes tombé au combat...")
+				fmt.Println("\nVous êtes mort sur le premier combat c'est honteux")
+				time.Sleep(3 * time.Second)
+				os.Exit(0)
 			} else if guetteur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le guetteur !")
 				if perso.CombatCounteur < 1 {
