@@ -11,7 +11,7 @@ import (
 
 func FourthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
 	HommeDeMain := character.Enemy{Name: "Homme de main", Hp: 500, Damage: 30}
-	BouteilleAlcool := object.ObjectStats{Name: "tissu", Type: "Utilitaire", Damage: 0}
+	BouteilleAlcool := object.ObjectStats{Name: "Bouteille d'alcool en verre", Type: "Utilitaire", Damage: 0}
 
 	fmt.Println("\nVous entrez dans un combat avec un Homme de main !")
 	fmt.Println(`
