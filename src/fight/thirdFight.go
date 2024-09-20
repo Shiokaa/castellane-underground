@@ -32,7 +32,7 @@ func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 		attack := chooseAction(len(inv.SacocheCp), *inv)
 
 		// Appliquer l'action choisie
-		handleAction(attack, &Gofasteur, perso, *inv)
+		handleAction(attack, &Gofasteur, perso, inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if Gofasteur.Hp <= 0 {
@@ -89,7 +89,7 @@ func chooseAction(max int, inv inventory.Inventory) int {
 }
 
 // Gérer l'action choisie par le joueur (attaque ou soin)
-func handleAction(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleAction(attack int, enemy *character.Enemy, perso *character.Personnage, inv *inventory.Inventory) {
 	item := inv.SacocheCp[attack]
 	if item.Name == "Redbull" {
 		// Gestion du Redbull qui augmente les dégâts pendant 3 tours
