@@ -38,7 +38,6 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
 			}
 		}
-
 		switch choix {
 		case 1:
 			var choix2 int

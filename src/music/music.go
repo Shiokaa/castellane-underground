@@ -50,7 +50,6 @@ func Music() {
 
 	// Create a new 'player' that will handle our sound. Paused by default.
 	player := otoCtx.NewPlayer(decodedMp3)
-
 	// Play starts playing the sound and returns without waiting for it (Play() is async).
 	player.Play()
 
