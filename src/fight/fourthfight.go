@@ -33,7 +33,7 @@ func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventor
 		attack := chooseActionHomme(len(inv.SacocheCp), *inv)
 
 		// Appliquer l'action choisie
-		handleActionHomme(attack, &HommeDeMain, perso, *inv)
+		handleActionHomme(attack, &HommeDeMain, perso, inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if HommeDeMain.Hp <= 0 {
@@ -89,7 +89,7 @@ func chooseActionHomme(max int, inv inventory.Inventory) int {
 }
 
 // Gérer l'action choisie par le joueur (attaque ou soin)
-func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Personnage, inv *inventory.Inventory) {
 	item := inv.SacocheCp[attack]
 	if item.Name == "Redbull" {
 		// Gestion du Redbull qui augmente les dégâts pendant 3 tours

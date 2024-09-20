@@ -130,6 +130,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 }
 
 func afficherInventaire(inv *inventory.Inventory) {
+	counteur := 0
 	cocktail := object.ObjectStats{Name: "Cocktail Molotov", Type: "Utilitaire", Damage: 150}
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {
@@ -180,11 +181,18 @@ func afficherInventaire(inv *inventory.Inventory) {
 			}
 		}
 	case 2:
-		for _, obj := range inv.CraftInventory {
-			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
-				inv.CraftInventory = inv.CraftInventory[:]
+		for i := range inv.CraftInventory {
+			counteur = i
+			if counteur == 2 {
+				inv.CraftInventory = inv.CraftInventory[3:]
 				inv.AddObject(cocktail)
+				fmt.Print("Cocktail crafté avec succès !")
+				time.Sleep(3 * time.Second)
+				return
 			}
+		}
+		if counteur < 2 {
+			fmt.Print("Vous n'avez pas tout les objets requis")
 		}
 	case 0:
 		return
