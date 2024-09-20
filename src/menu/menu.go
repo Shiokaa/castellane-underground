@@ -93,7 +93,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			case 6:
 				jeutel.PlayMorpion()
 			case 0:
-				return
+				break
 			}
 		case 2:
 			afficherInventaire(&inv)
