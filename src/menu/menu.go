@@ -175,9 +175,8 @@ func afficherInventaire(inv *inventory.Inventory) {
 		for _, obj := range inv.CraftInventory {
 			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
 				inv.RemoveObject(obj)
-				inv.AddObject(cocktail)
-				return
 			}
+			inv.AddObject(cocktail)
 		}
 	case 0:
 		return
