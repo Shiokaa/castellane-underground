@@ -7,6 +7,7 @@ import (
 )
 
 func HistoireDebut() {
+	fmt.Println("\033[35m")
 	fmt.Println("   _____          _       _ _                     _    _           _                                          _ ")
 	fmt.Println("  / ____|        | |     | | |                   | |  | |         | |                                        | |")
 	fmt.Println(" | |     __ _ ___| |_ ___| | | __ _ _ __   ___   | |  | |_ __   __| | ___ _ __ __ _ _ __ ___  _   _ _ __   __| |")
@@ -15,6 +16,7 @@ func HistoireDebut() {
 	fmt.Println(" \\_____\\__,_|___/\\__\\___|_|_|\\__,_|_| |_| \\___|  \\____/|_| |_|\\__,_|\\___|_|  \\__, |_|  \\___/ \\__,_|_| |_|\\__,_|")
 	fmt.Println("                                                                              __/ |                            ")
 	fmt.Println("                                                                             |___/                             ")
+	fmt.Println("\033[0m")
 	fmt.Println("\033[34m")
 	ascii.OM()
 	fmt.Println("\033[0m")
