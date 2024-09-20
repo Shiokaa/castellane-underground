@@ -21,7 +21,7 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	for Caid.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
 		if perso.Name == "Tonton" {
-			perso.Damage = character.DegatTonton()
+			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
