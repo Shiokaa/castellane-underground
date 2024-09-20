@@ -16,8 +16,8 @@ Castellane Underground est un jeu de rôle textuel développé en Go, inspiré p
 #### prérequis
 Go version 1.17 ou plus récente doit être installé sur votre machine.
 
-Cloner le dépots :
-git clone https://github.com/Shiokaa/castellane-underground.git
+``` Cloner le dépots :
+git clone https://github.com/Shiokaa/castellane-underground.git ```
 
 
 ### Utilisation
