@@ -18,20 +18,26 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
 	fmt.Println("\nVous entrez dans un combat avec un Gérant !")
 	fmt.Println(`
-	   O                         O
-	  /|\                       /|\
-	  / \                       / \`)
+	O                         O     o    o
+   /|\                       /|\   /|\  /|\
+   / \                       / \   / \  / \`)
 	time.Sleep(2 * time.Second) // Pause pour donner l'impression d'un délai.
 
 	// Boucle principale du combat. Continue tant que le Gérant et le personnage ont encore des points de vie.
 	for Gérant.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
+
 		// Si le personnage s'appelle "Tonton", ses dégâts sont ajustés via la fonction DegatTonton.
 		if perso.Name == "Tonton" {
 			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		// Affiche la santé du personnage et des ennemis à chaque tour de combat.
 		fmt.Println("\n--- Combat ---")
+		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+ O                         O     o    o
+/|\                       /|\   /|\  /|\
+/ \                       / \   / \  / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		fmt.Println("")
 		game.DisplayHealth(Gérant.Name, Gérant.Hp, 300)

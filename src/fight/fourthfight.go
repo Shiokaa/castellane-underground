@@ -27,9 +27,9 @@ func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventor
 		}
 		fmt.Println("\n--- Combat ---")
 		fmt.Println(`
-		O                         O
-	   /|\                       /|\
-	   / \                       / \`)
+ O                         O
+/|\                       /|\
+/ \                       / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(HommeDeMain.Name, HommeDeMain.Hp, 500)
 

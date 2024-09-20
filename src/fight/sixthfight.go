@@ -24,10 +24,11 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
+		fmt.Println("\n--- Combat ---")
 		fmt.Println(`
-		O                         O
-	   /|\                       /|\
-	   / \                       / \`)
+ O                          O
+/|\                      //|||\\
+/ \                       // \\  `)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Caid.Name, Caid.Hp, 1000)
 		inv.AfficherInventaireEnCombat()
