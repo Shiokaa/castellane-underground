@@ -118,6 +118,14 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 		return
 	}
 
+	if item.Name == "Cocktail Molotov" {
+		fmt.Println("Vous infligez des dégâts à tout les adversaires")
+		enemy.Hp -= 150
+		Guetteur.Hp -= 150
+		Guetteur2.Hp -= 150
+		return
+	}
+
 	if item.Type == "Arme" {
 		fmt.Println("\nQui souhaitez-vous attaquer ?")
 
