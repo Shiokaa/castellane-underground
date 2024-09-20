@@ -19,14 +19,13 @@ func FourthFight(perso *character.Personnage, inv inventory.Inventory) inventory
 	  /|\                       /|\
 	  / \                       / \`)
 	time.Sleep(2 * time.Second)
-	inv.AfficherInventaireEnCombat()
 	for HommeDeMain.Hp > 0 && perso.Hp > 0 {
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
-		game.DisplayHealth(HommeDeMain.Name, HommeDeMain.Hp, 100)
+		game.DisplayHealth(HommeDeMain.Name, HommeDeMain.Hp, 500)
 		inv.AfficherInventaireEnCombat()
 
 		// Sélection de l'action par l'utilisateur
