@@ -44,7 +44,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			game.ClearScreen()
 			fmt.Println("1 - Combat contre le vendeur")
 			fmt.Println("2 - Combat contre le Go Fasteur")
-			fmt.Println("3 - Combat contre l'homme de main')")
+			fmt.Println("3 - Combat contre l'homme de main")
 			fmt.Println("4 - Combat contre le gérant")
 			fmt.Println("5 - Combat contre le caïd")
 			fmt.Println("0 - Revenir au menu")

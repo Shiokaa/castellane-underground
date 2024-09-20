@@ -12,18 +12,23 @@ var Gérant = character.Enemy{Name: "Gérant", Hp: 300, Damage: 25}
 var Guetteur = character.Enemy{Name: "Guetteur 1", Hp: 100, Damage: 10}
 var Guetteur2 = character.Enemy{Name: "Guetteur 2", Hp: 100, Damage: 10}
 
+// Fonction principale pour gérer le combat entre le joueur et les ennemis.
 func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
 	fmt.Println("\nVous entrez dans un combat avec un Gérant !")
 	fmt.Println(`
 	   O                         O
 	  /|\                       /|\
 	  / \                       / \`)
-	time.Sleep(2 * time.Second)
+	time.Sleep(2 * time.Second) // Pause pour donner l'impression d'un délai.
 
+	// Boucle principale du combat. Continue tant que le Gérant et le personnage ont encore des points de vie.
 	for Gérant.Hp > 0 && perso.Hp > 0 {
+		// Si le personnage s'appelle "Tonton", ses dégâts sont ajustés via la fonction DegatTonton.
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
 		}
+		// Affiche la santé du personnage et des ennemis à chaque tour de combat.
 		fmt.Println("\n--- Combat ---")
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		fmt.Println("")
@@ -31,46 +36,54 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		game.DisplayHealth(Guetteur.Name, Guetteur.Hp, 100)
 		game.DisplayHealth(Guetteur2.Name, Guetteur2.Hp, 100)
 
-		// Sélection de l'action par l'utilisateur
+		// L'utilisateur sélectionne une action via la fonction chooseAction2.
 		attack := chooseAction2(len(inv.SacocheCp), inv)
 
-		// Appliquer l'action choisie
+		// Applique l'action choisie (attaque, soin, etc.) avec la fonction handleAction2.
 		handleAction2(attack, &Gérant, perso, &inv)
 
-		// Vérifier si l'un des deux personnages est mort
+		// Vérifie si le Gérant ou le personnage est mort pour arrêter le combat.
 		if Gérant.Hp <= 0 {
-			fmt.Println("\nVous avez vaincu le Gérant ! Vous trouvez 500 euros !!")
+			fmt.Println("\nFélicitations ! Tu es venu à bout du gérant et de ses deux guetteurs. Tu les dépouilles et en tires 500€, mais une fois vaincu, le gérant t'avoue qu'il n'est pas à la tête de tous les réseaux et te donne le nom et l'adresse du chef.")
+			// Si le joueur n'a pas encore atteint le 4ème combat, son compteur de combats est mis à jour.
 			if perso.CombatCounteur < 4 {
 				perso.CombatCounteur = 4
 			}
+			// Ajoute 500 pièces d'or au joueur.
 			perso.Gold += 500
 			break
 		} else if perso.Hp <= 0 {
 			break
 		}
 
-		// Riposte du Gérant et des guetteurs
+		// Riposte du Gérant et des guetteurs.
 		enemyRetaliation2(&Gérant, perso, &Guetteur, &Guetteur2)
 	}
 
-	fmt.Println("\nVous êtes tombé au combat...")
+	// Si le personnage meurt, il perd la moitié de ses points de vie et la moitié de son or.
+	fmt.Println("\nLe gérant ainsi que les deux guetteurs t'ont allumé et dépouillé. Retourne t'entraîner et reviens plus fort.")
 	perso.Hp = perso.Hpmax / 2
 	perso.Gold /= 2
-	time.Sleep(5 * time.Second)
+	time.Sleep(5 * time.Second) // Pause de 5 secondes avant de continuer.
 	return inv
 }
 
+// Fonction pour choisir une action (attaque ou utilisation d'objet).
 func chooseAction2(max int, inv inventory.Inventory) int {
 	var attack int
+	// Parcours des objets dans l'inventaire et affiche les options disponibles.
 	for i := 0; i < len(inv.SacocheCp); i++ {
+		// Si l'objet n'est pas "Utilitaire", il est soit une arme soit un soin.
 		if inv.SacocheCp[i].Type != "Utilitaire" {
 			if inv.SacocheCp[i].Type == "Soin" {
+				// Affiche les options pour les objets de soin.
 				if inv.SacocheCp[i].Name == "Redbull" {
 					fmt.Printf("\nPour utilisez le %v et augmenter vos dégâts %v%%. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 				}
 				fmt.Printf("\nPour utiliser le %v et soigner %v pv. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 			}
 			if inv.SacocheCp[i].Type == "Arme" {
+				// Affiche les options pour les armes.
 				if inv.SacocheCp[i].Name == "Boule" {
 					fmt.Printf("\nPour utiliser la %v et infliger des dégâts aléatoire. Appuyez sur %v\n", inv.SacocheCp[i].Name, i)
 				} else {
@@ -79,6 +92,7 @@ func chooseAction2(max int, inv inventory.Inventory) int {
 			}
 		}
 	}
+	// Attente de l'entrée utilisateur pour choisir une action valide.
 	for {
 		fmt.Print("\nEntrez votre choix : ")
 		fmt.Scan(&attack)
@@ -123,7 +137,7 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 				// Gestion du Taser
 				if item.Name == "Taser" {
 					enemy.Immobilized = true
-					enemy.ImmobilizedTurns = 1
+					enemy.ImmobilizedTurns = 2
 					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", enemy.Name)
 					inv.RemoveObject(item)
 					return
@@ -155,7 +169,7 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 			if Guetteur.Hp > 0 {
 				if item.Name == "Taser" {
 					Guetteur.Immobilized = true
-					Guetteur.ImmobilizedTurns = 1
+					Guetteur.ImmobilizedTurns = 2
 					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", Guetteur.Name)
 					inv.RemoveObject(item)
 					return
@@ -168,8 +182,9 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 					return
 				}
 				damage := item.Damage
+				damageFloat := float32(damage) * 1.2
 				if perso.BoostDamageTurns > 0 {
-					damage += 10
+					damage = int(damageFloat)
 				}
 				Guetteur.Hp -= damage
 				if Guetteur.Hp < 0 {
@@ -198,8 +213,9 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 					return
 				}
 				damage := item.Damage
+				damageFloat := float32(damage) * 1.2
 				if perso.BoostDamageTurns > 0 {
-					damage += 10
+					damage = int(damageFloat)
 				}
 				Guetteur2.Hp -= damage
 				if Guetteur2.Hp < 0 {
@@ -241,20 +257,26 @@ func enemyRetaliation2(enemy *character.Enemy, perso *character.Personnage, guet
 
 	// Gérer l'immobilisation des ennemis
 	if enemy.Immobilized {
+		enemy.ImmobilizedTurns--
 		if enemy.ImmobilizedTurns == 1 {
+			enemy.Damage = 0
 			fmt.Printf("%s est immobilisé et ne peut pas attaquer ce tour.\n", enemy.Name)
 		}
 		if enemy.ImmobilizedTurns <= 0 {
+			enemy.Damage = 25
 			enemy.Immobilized = false
 			fmt.Printf("%s n'est plus immobilisé.\n", enemy.Name)
 		}
 	}
 
 	if guetteur1.Immobilized {
+		guetteur1.ImmobilizedTurns--
 		if guetteur1.ImmobilizedTurns == 1 {
-			fmt.Printf("%s est immobilisé et ne peut pas attaquer ce tour.\n", guetteur2.Name)
+			guetteur1.Damage = 0
+			fmt.Printf("%s est immobilisé et ne peut pas attaquer ce tour.\n", guetteur1.Name)
 		}
 		if guetteur1.ImmobilizedTurns <= 0 {
+			guetteur1.Damage = 1
 			guetteur1.Immobilized = false
 			fmt.Printf("%s n'est plus immobilisé.\n", guetteur1.Name)
 		}
@@ -263,9 +285,11 @@ func enemyRetaliation2(enemy *character.Enemy, perso *character.Personnage, guet
 	if guetteur2.Immobilized {
 		guetteur2.ImmobilizedTurns--
 		if guetteur2.ImmobilizedTurns == 1 {
+			guetteur2.Damage = 0
 			fmt.Printf("%s est immobilisé et ne peut pas attaquer ce tour.\n", guetteur2.Name)
 		}
 		if guetteur2.ImmobilizedTurns <= 0 {
+			guetteur2.Damage = 10
 			guetteur2.Immobilized = false
 			fmt.Printf("%s n'est plus immobilisé.\n", guetteur2.Name)
 		}
@@ -315,48 +339,21 @@ func enemyRetaliation2(enemy *character.Enemy, perso *character.Personnage, guet
 	totalDamage := 0
 
 	if guetteur1.Hp <= 0 && guetteur2.Hp > 0 {
-		if !guetteur2.Immobilized && !enemy.Immobilized {
-			totalDamage = enemy.Damage + guetteur2.Damage
-			fmt.Printf("Le Gérant et le guetteur 2 vous infligent %d points de dégât.\n", totalDamage)
-		} else if enemy.Immobilized {
-			totalDamage = guetteur2.Damage
-			fmt.Printf("Le Gérant est immobilisé et le guetteur 2 vous inflige %d points de dégât.\n", totalDamage)
-		} else if guetteur2.Immobilized {
-			totalDamage = enemy.Damage
-			fmt.Printf("Le guetteur 2 est immobilisé et le gérant vous inflige %d points de dégât.\n", totalDamage)
-		}
+		totalDamage = enemy.Damage + guetteur2.Damage
+		fmt.Printf("Le Gérant et le guetteur 2 vous infligent %d points de dégât.\n", totalDamage)
 
 	} else if guetteur2.Hp <= 0 && guetteur1.Hp > 0 {
-		if !guetteur1.Immobilized && !enemy.Immobilized {
-			totalDamage = enemy.Damage + guetteur1.Damage
-			fmt.Printf("Le Gérant et le guetteur 1 vous infligent %d points de dégât.\n", totalDamage)
-		} else if enemy.Immobilized {
-			totalDamage = guetteur1.Damage
-			fmt.Printf("Le Gérant est immobilisé et le guetteur 2 vous inflige %d points de dégât.\n", totalDamage)
-		} else if guetteur1.Immobilized {
-			totalDamage = enemy.Damage
-			fmt.Printf("Le guetteur 1 est immobilisé et le Gérant vous inflige %d points de dégât.\n", totalDamage)
-		}
+		totalDamage = enemy.Damage + guetteur1.Damage
+		fmt.Printf("Le Gérant et le guetteur 1 vous infligent %d points de dégât.\n", totalDamage)
 
 	} else if guetteur1.Hp <= 0 && guetteur2.Hp <= 0 {
-		if !enemy.Immobilized {
-			totalDamage = enemy.Damage
-			fmt.Printf("Le Gérant vous inflige %d points de dégât.\n", totalDamage)
-		} else if enemy.Immobilized {
-			fmt.Printf("Le Gérant est immobilisé et il ne vous inflige aucun dégât.\n")
-		}
+		totalDamage = enemy.Damage
+		fmt.Printf("Le Gérant vous inflige %d points de dégât.\n", totalDamage)
 
 	} else if enemy.Hp <= 0 {
-		if !guetteur1.Immobilized && !guetteur2.Immobilized {
-			totalDamage = guetteur1.Damage + guetteur2.Damage
-			fmt.Printf("Les guetteurs vous infligent %d points de dégât.\n", totalDamage)
-		} else if guetteur1.Immobilized {
-			totalDamage = guetteur2.Damage
-			fmt.Printf("Le guetteur 1 est immobilisé et le guetteur 2 vous inflige %d points de dégât.\n", totalDamage)
-		} else if guetteur2.Immobilized {
-			totalDamage = guetteur1.Damage
-			fmt.Printf("Le guetteur 2 est immobilisé et le guetteur 1 vous inflige %d points de dégât.\n", totalDamage)
-		}
+		totalDamage = guetteur1.Damage + guetteur2.Damage
+		fmt.Printf("Les guetteurs vous infligent %d points de dégât.\n", totalDamage)
+
 	} else {
 		totalDamage = enemy.Damage + guetteur1.Damage + guetteur2.Damage
 		fmt.Printf("Le Gérant et ses guetteurs vous infligent %d points de dégât.\n", totalDamage)
