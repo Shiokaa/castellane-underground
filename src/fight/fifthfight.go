@@ -14,6 +14,7 @@ var Guetteur2 = character.Enemy{Name: "Guetteur 2", Hp: 100, Damage: 10}
 
 // Fonction principale pour gérer le combat entre le joueur et les ennemis.
 func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+	game.ClearScreen()
 	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
 	fmt.Println("\nVous entrez dans un combat avec un Gérant !")
 	fmt.Println(`
@@ -24,6 +25,7 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 
 	// Boucle principale du combat. Continue tant que le Gérant et le personnage ont encore des points de vie.
 	for Gérant.Hp > 0 && perso.Hp > 0 {
+		game.ClearScreen()
 		// Si le personnage s'appelle "Tonton", ses dégâts sont ajustés via la fonction DegatTonton.
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
@@ -115,6 +117,14 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 		fmt.Println("Vous buvez un Redbull, vos dégâts sont augmentés pendant 3 tours !")
 		perso.BoostDamageTurns = 4
 		inv.RemoveObject(item) // Supprimer l'objet après usage
+		return
+	}
+
+	if item.Name == "Cocktail Molotov" {
+		fmt.Println("Vous infligez des dégâts à tout les adversaires")
+		enemy.Hp -= 150
+		Guetteur.Hp -= 150
+		Guetteur2.Hp -= 150
 		return
 	}
 

@@ -9,18 +9,18 @@ import (
 	"time"
 )
 
-func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory.Inventory {
 	Gofasteur := character.Enemy{Name: "Go fasteur", Hp: 300, Damage: 20}
-	tissu := object.ObjectStats{Name: "tissu", Type: "Utilitaire", Damage: 0}
-
+	tissu := object.ObjectStats{Name: "Tissu", Type: "Utilitaire", Damage: 10}
+	game.ClearScreen()
 	fmt.Println("\nVous entrez dans un combat avec un Go fasteur !")
 	fmt.Println(`
 	   O                         O
 	  /|\                       /|\
 	  / \                       / \`)
 	time.Sleep(2 * time.Second)
-	inv.AfficherInventaireEnCombat()
 	for Gofasteur.Hp > 0 && perso.Hp > 0 {
+		game.ClearScreen()
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
 		}
@@ -29,10 +29,10 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 300)
 
 		// Sélection de l'action par l'utilisateur
-		attack := chooseAction(len(inv.SacocheCp), inv)
+		attack := chooseAction(len(inv.SacocheCp), *inv)
 
 		// Appliquer l'action choisie
-		handleAction(attack, &Gofasteur, perso, inv)
+		handleAction(attack, &Gofasteur, perso, *inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if Gofasteur.Hp <= 0 {
@@ -55,7 +55,7 @@ func ThirdFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		enemyRetaliation(&Gofasteur, perso)
 	}
 
-	return inv
+	return *inv
 }
 
 // Choisir une action valide
@@ -64,6 +64,9 @@ func chooseAction(max int, inv inventory.Inventory) int {
 	for i := 0; i < len(inv.SacocheCp); i++ {
 		if inv.SacocheCp[i].Type != "Utilitaire" {
 			if inv.SacocheCp[i].Type == "Soin" {
+				if inv.SacocheCp[i].Name == "Redbull" {
+					fmt.Printf("\nPour utilisez le %v et augmenter vos dégâts %v%%. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
+				}
 				fmt.Printf("\nPour utilisez le %v et soigner %v pv. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 			}
 			if inv.SacocheCp[i].Type == "Arme" {
@@ -125,6 +128,30 @@ func handleAction(attack int, enemy *character.Enemy, perso *character.Personnag
 
 // Riposte de l'ennemi
 func enemyRetaliation(enemy *character.Enemy, perso *character.Personnage) {
+	time.Sleep(1 * time.Second)
+
+	// Réduire le nombre de tours pour le boost de dégâts du joueur (Redbull)
+	if perso.BoostDamageTurns > 0 {
+		perso.BoostDamageTurns--
+		if perso.BoostDamageTurns == 0 {
+			fmt.Println("L'effet de Redbull est terminé, vos dégâts reviennent à la normale.")
+		}
+	}
+
+	// Gérer l'immobilisation des ennemis
+	if enemy.Immobilized {
+		enemy.ImmobilizedTurns--
+		if enemy.ImmobilizedTurns == 1 {
+			enemy.Damage = 0
+			fmt.Printf("%s est immobilisé et ne peut pas attaquer ce tour.\n", enemy.Name)
+			return
+		}
+		if enemy.ImmobilizedTurns <= 0 {
+			enemy.Damage = 20
+			enemy.Immobilized = false
+			fmt.Printf("%s n'est plus immobilisé.\n", enemy.Name)
+		}
+	}
 	fmt.Println("Le Go fasteur riposte !")
 	time.Sleep(1 * time.Second)
 	perso.Hp -= enemy.Damage

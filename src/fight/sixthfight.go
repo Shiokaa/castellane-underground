@@ -10,7 +10,7 @@ import (
 
 func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
 	Caid := character.Enemy{Name: "Homme de main", Hp: 1000, Damage: 35}
-
+	game.ClearScreen()
 	fmt.Println("\nVous entrez dans un combat avec un Homme de main !")
 	fmt.Println(`
 	   O                         O
@@ -19,6 +19,7 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	time.Sleep(2 * time.Second)
 	inv.AfficherInventaireEnCombat()
 	for Caid.Hp > 0 && perso.Hp > 0 {
+		game.ClearScreen()
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
 		}

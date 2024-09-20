@@ -9,6 +9,7 @@ import (
 )
 
 func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+	game.ClearScreen()
 	Vendeur := character.Enemy{Name: "Vendeur", Hp: 100, Damage: 20}
 
 	fmt.Println("\nTu t’enfonce dans le quartier et fini par trouvé le Vendeur, il refuse de te vendre quoi que se soit et te manque de respect, Le Combat commence !")
@@ -19,6 +20,7 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 	time.Sleep(2 * time.Second)
 	inv.AfficherInventaireEnCombat()
 	for Vendeur.Hp > 0 && perso.Hp > 0 {
+		game.ClearScreen()
 		if perso.Name == "Tonton" {
 			perso.Damage = character.DegatTonton()
 		}

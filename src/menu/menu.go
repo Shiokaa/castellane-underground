@@ -15,6 +15,7 @@ import (
 
 func Menu(perso *character.Personnage, inv inventory.Inventory) {
 	var choix int
+	game.ClearScreen()
 	for {
 		fmt.Println("\n---------- MENU PRINCIPAL ----------")
 		fmt.Println("1 - Aller au combat")
@@ -70,7 +71,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				if perso.CombatCounteur >= 2 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.ThirdFight(perso, inv)
+					fight.ThirdFight(perso, &inv)
 				} else {
 					fmt.Println("Veuillez combattre le vendeur d'abord")
 				}
@@ -78,7 +79,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				if perso.CombatCounteur >= 3 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.ThirdFight(perso, inv)
+					fight.FourthFight(perso, &inv)
 				} else {
 					fmt.Println("Veuillez combattre le GoFasteur d'abord")
 				}
@@ -94,7 +95,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				if perso.CombatCounteur == 5 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.ThirdFight(perso, inv)
+					fight.ThirdFight(perso, &inv)
 				} else {
 					fmt.Println("Veuillez combattre le Gérant d'abord")
 				}
@@ -102,10 +103,13 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				break
 			}
 		case 2:
+			game.ClearScreen()
 			afficherInventaire(&inv)
 		case 3:
+			game.ClearScreen()
 			oTacos(perso, &inv)
 		case 4:
+			game.ClearScreen()
 			Telegram(perso, &inv)
 		case 5:
 			game.ClearScreen()
@@ -115,6 +119,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
 		case 6:
+			game.ClearScreen()
 			jeutel.PlayMorpion()
 		case 0:
 			fmt.Println("Merci et à bientôt !")
@@ -125,7 +130,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 }
 
 func afficherInventaire(inv *inventory.Inventory) {
-	cocktail := object.ObjectStats{Name: "Cocktail Molotov", Type: "Utilitaire", Damage: 200}
+	cocktail := object.ObjectStats{Name: "Cocktail Molotov", Type: "Utilitaire", Damage: 150}
 	fmt.Println("\n--------- INVENTAIRE ---------")
 	if len(inv.SacocheCp) > 0 {
 		for i, obj := range inv.SacocheCp {
@@ -146,12 +151,7 @@ func afficherInventaire(inv *inventory.Inventory) {
 
 	var choix int
 	for {
-		fmt.Printf("\nTapez 1 pour supprimer un objet sinon tapez 0. \n\n")
-		for _, obj := range inv.CraftInventory {
-			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
-				fmt.Printf("\nVous avez débloquer l'option de craft, tapez 2 si vous voulez craft le cocktail molotov \n\n")
-			}
-		}
+		fmt.Printf("\nTapez 1 pour supprimer un objet ou tapez 2 pour crafter un objet, sinon tapez 0. \n\n")
 		fmt.Scan(&choix)
 		if choix == 1 || choix == 0 || choix == 2 {
 			break
@@ -182,9 +182,9 @@ func afficherInventaire(inv *inventory.Inventory) {
 	case 2:
 		for _, obj := range inv.CraftInventory {
 			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
-				inv.RemoveObject(obj)
+				inv.CraftInventory = inv.CraftInventory[:]
+				inv.AddObject(cocktail)
 			}
-			inv.AddObject(cocktail)
 		}
 	case 0:
 		return
@@ -192,7 +192,6 @@ func afficherInventaire(inv *inventory.Inventory) {
 }
 
 func oTacos(perso *character.Personnage, inv *inventory.Inventory) {
-	game.ClearScreen()
 	if perso.Hp < perso.Hpmax {
 		if perso.Gold >= 5 {
 			perso.Gold -= 5
@@ -209,7 +208,7 @@ func oTacos(perso *character.Personnage, inv *inventory.Inventory) {
 }
 
 func Telegram(perso *character.Personnage, inv *inventory.Inventory) {
-	game.ClearScreen()
+
 	var achat int
 	afficherMarché()
 
