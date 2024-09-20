@@ -32,7 +32,7 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		attack := chooseActionCaid(len(inv.SacocheCp), inv)
 
 		// Appliquer l'action choisie
-		handleActionCaid(attack, &Caid, perso, inv)
+		handleActionCaid(attack, &Caid, perso, &inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if Caid.Hp <= 0 {
@@ -85,7 +85,7 @@ func chooseActionCaid(max int, inv inventory.Inventory) int {
 }
 
 // Gérer l'action choisie par le joueur (attaque ou soin)
-func handleActionCaid(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleActionCaid(attack int, enemy *character.Enemy, perso *character.Personnage, inv *inventory.Inventory) {
 	item := inv.SacocheCp[attack]
 	if item.Name == "Redbull" {
 		// Gestion du Redbull qui augmente les dégâts pendant 3 tours

@@ -32,7 +32,7 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 		attack := chooseActionVendeur(len(inv.SacocheCp), inv)
 
 		// Appliquer l'action choisie
-		handleActionVendeur(attack, &Vendeur, perso, inv)
+		handleActionVendeur(attack, &Vendeur, perso, &inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if Vendeur.Hp <= 0 {
@@ -85,7 +85,7 @@ func chooseActionVendeur(max int, inv inventory.Inventory) int {
 }
 
 // Gérer l'action choisie par le joueur (attaque ou soin)
-func handleActionVendeur(attack int, enemy *character.Enemy, perso *character.Personnage, inv inventory.Inventory) {
+func handleActionVendeur(attack int, enemy *character.Enemy, perso *character.Personnage, inv *inventory.Inventory) {
 	item := inv.SacocheCp[attack]
 	if item.Name == "Redbull" {
 		// Gestion du Redbull qui augmente les dégâts pendant 3 tours
