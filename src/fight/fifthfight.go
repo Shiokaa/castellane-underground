@@ -29,7 +29,7 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 
 		// Si le personnage s'appelle "Tonton", ses dégâts sont ajustés via la fonction DegatTonton.
 		if perso.Name == "Tonton" {
-			perso.Damage = character.DegatTonton()
+			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		// Affiche la santé du personnage et des ennemis à chaque tour de combat.
 		fmt.Println("\n--- Combat ---")
