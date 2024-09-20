@@ -22,9 +22,13 @@ func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 	for Gofasteur.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
 		if perso.Name == "Tonton" {
-			perso.Damage = character.DegatTonton()
+			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+ O                         O
+/|\                       /|\
+/ \                       / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Gofasteur.Name, Gofasteur.Hp, 300)
 
@@ -40,20 +44,20 @@ func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 			inv.AddCraft(tissu)
 			perso.Gold += 500
 			if perso.CombatCounteur < 3 {
-				perso.CombatCounteur += 1
+				perso.CombatCounteur = 3
 			}
-			break
+			return *inv
 		} else if perso.Hp <= 0 {
-			fmt.Println("\n Tu t’es fait Hagar ! Le chauffeur du go-fast a pris ton argent et t’a envoyé à l’hôpital Nord. Régénère ta vie, puis reviens plus fort !")
-			perso.Hp = perso.Hpmax / 2
-			perso.Gold /= 2
-			time.Sleep(5 * time.Second)
 			break
 		}
 
 		// Riposte du Go fasteur
 		enemyRetaliation(&Gofasteur, perso)
 	}
+	fmt.Println("\n Tu t’es fait Hagar ! Le chauffeur du go-fast a pris ton argent et t’a envoyé à l’hôpital Nord. Régénère ta vie, puis reviens plus fort !")
+	perso.Hp = perso.Hpmax / 2
+	perso.Gold /= 2
+	time.Sleep(5 * time.Second)
 
 	return *inv
 }

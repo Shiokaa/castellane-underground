@@ -22,9 +22,13 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 	for Vendeur.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
 		if perso.Name == "Tonton" {
-			perso.Damage = character.DegatTonton()
+			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+ O                         O
+/|\                       /|\
+/ \                       / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Vendeur.Name, Vendeur.Hp, 100)
 
@@ -39,21 +43,20 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 			fmt.Println("\nBravo, tu as hagar le revendeur ! , tu le dépouille et en tire 100€ Continue dans le quartier ")
 			perso.Gold += 100
 			if perso.CombatCounteur < 2 {
-				perso.CombatCounteur += 1
+				perso.CombatCounteur = 2
 			}
-			break
+			return inv
 		} else if perso.Hp <= 0 {
-			fmt.Println("\nTu t’es fait Hagar ! Le vendeur a pris ton argent et t’a envoyé à l’hôpital Nord. Régénère ta vie, puis reviens plus fort !")
-			perso.Hp = perso.Hpmax / 2
-			perso.Gold /= 2
-			time.Sleep(5 * time.Second)
 			break
 		}
 
 		// Riposte du Vendeur
 		enemyRetaliationVendeur(&Vendeur, perso)
 	}
-
+	fmt.Println("\nTu t’es fait Hagar ! Le vendeur a pris ton argent et t’a envoyé à l’hôpital Nord. Régénère ta vie, puis reviens plus fort !")
+	perso.Hp = perso.Hpmax / 2
+	perso.Gold /= 2
+	time.Sleep(5 * time.Second)
 	return inv
 }
 

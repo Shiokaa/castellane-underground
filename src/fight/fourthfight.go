@@ -23,9 +23,13 @@ func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventor
 	for HommeDeMain.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
 		if perso.Name == "Tonton" {
-			perso.Damage = character.DegatTonton()
+			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+ O                         O
+/|\                       /|\
+/ \                       / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(HommeDeMain.Name, HommeDeMain.Hp, 500)
 
@@ -40,21 +44,21 @@ func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventor
 			fmt.Println("\nBravo ! tu es venu a bout de l’homme de main ( le plus coriace du secteur ) tu le dépouille et en tire une bouteille d’alcool en verre .")
 			inv.AddCraft(BouteilleAlcool)
 			if perso.CombatCounteur < 4 {
-				perso.CombatCounteur += 1
+				perso.CombatCounteur = 4
 			}
-			break
+			return *inv
 		} else if perso.Hp <= 0 {
-			fmt.Println("\n Tu t’es fait Hagar ! L’homme de main a pris ton argent et t’a envoyé à la thimone. Régénère ta vie, puis reviens plus fort !")
-			perso.Hp = perso.Hpmax / 2
-			perso.Gold /= 2
-			time.Sleep(5 * time.Second)
+
 			break
 		}
 
 		// Riposte du Homme de main
 		enemyRetaliationHomme(&HommeDeMain, perso)
 	}
-
+	fmt.Println("\n Tu t’es fait Hagar ! L’homme de main a pris ton argent et t’a envoyé à la thimone. Régénère ta vie, puis reviens plus fort !")
+	perso.Hp = perso.Hpmax / 2
+	perso.Gold /= 2
+	time.Sleep(5 * time.Second)
 	return *inv
 }
 

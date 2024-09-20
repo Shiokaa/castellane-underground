@@ -21,7 +21,6 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 
 	attack := 0
 	guetteur := character.Enemy{Name: "Guetteur", Hp: 100, Damage: 10}
-	game.ClearScreen()
 
 	fmt.Println("\nVous entrez dans un combat avec un Guetteur !")
 	fmt.Println(`
@@ -33,6 +32,10 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	for guetteur.Hp > 0 && perso.Hp > 0 {
 
 		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+ O                         O
+/|\                       /|\
+/ \                       / \`)
 
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(guetteur.Name, guetteur.Hp, 100)

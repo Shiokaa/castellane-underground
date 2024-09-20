@@ -18,20 +18,26 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
 	fmt.Println("\nVous entrez dans un combat avec un Gérant !")
 	fmt.Println(`
-	   O                         O
-	  /|\                       /|\
-	  / \                       / \`)
+	O                         O     o    o
+   /|\                       /|\   /|\  /|\
+   / \                       / \   / \  / \`)
 	time.Sleep(2 * time.Second) // Pause pour donner l'impression d'un délai.
 
 	// Boucle principale du combat. Continue tant que le Gérant et le personnage ont encore des points de vie.
 	for Gérant.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
+
 		// Si le personnage s'appelle "Tonton", ses dégâts sont ajustés via la fonction DegatTonton.
 		if perso.Name == "Tonton" {
-			perso.Damage = character.DegatTonton()
+			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		// Affiche la santé du personnage et des ennemis à chaque tour de combat.
 		fmt.Println("\n--- Combat ---")
+		fmt.Println("\n--- Combat ---")
+		fmt.Println(`
+ O                         O     o    o
+/|\                       /|\   /|\  /|\
+/ \                       / \   / \  / \`)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		fmt.Println("")
 		game.DisplayHealth(Gérant.Name, Gérant.Hp, 300)
@@ -45,15 +51,15 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		handleAction2(attack, &Gérant, perso, &inv)
 
 		// Vérifie si le Gérant ou le personnage est mort pour arrêter le combat.
-		if Gérant.Hp <= 0 {
+		if Gérant.Hp <= 0 && Guetteur2.Hp <= 0 && Guetteur.Hp <= 0 {
 			fmt.Println("\nFélicitations ! Tu es venu à bout du gérant et de ses deux guetteurs. Tu les dépouilles et en tires 500€, mais une fois vaincu, le gérant t'avoue qu'il n'est pas à la tête de tous les réseaux et te donne le nom et l'adresse du chef.")
 			// Si le joueur n'a pas encore atteint le 4ème combat, son compteur de combats est mis à jour.
 			if perso.CombatCounteur < 4 {
-				perso.CombatCounteur = 4
+				perso.CombatCounteur = 5
 			}
 			// Ajoute 500 pièces d'or au joueur.
 			perso.Gold += 500
-			break
+			return inv
 		} else if perso.Hp <= 0 {
 			break
 		}
@@ -79,22 +85,22 @@ func chooseAction2(max int, inv inventory.Inventory) int {
 		if inv.SacocheCp[i].Type != "Utilitaire" {
 			if inv.SacocheCp[i].Type == "Soin" {
 				// Affiche les options pour les objets de soin.
-				if inv.SacocheCp[i].Name == "Redbull" {
-					fmt.Printf("\nPour utilisez le %v et augmenter vos dégâts %v%%. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
-				}
 				fmt.Printf("\nPour utiliser le %v et soigner %v pv. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 			}
 			if inv.SacocheCp[i].Type == "Arme" {
 				// Affiche les options pour les armes.
-				if inv.SacocheCp[i].Name == "Cocktail Molotov" {
-					fmt.Printf("\nPour utiliser le %v et infliger %v dégâts à tout les adversaires. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
-				}
 				if inv.SacocheCp[i].Name == "Boule" {
 					fmt.Printf("\nPour utiliser la %v et infliger des dégâts aléatoire. Appuyez sur %v\n", inv.SacocheCp[i].Name, i)
 				} else {
 					fmt.Printf("\nPour utiliser le %v et infliger %v dégâts. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 				}
 			}
+		}
+		if inv.SacocheCp[i].Name == "Cocktail Molotov" {
+			fmt.Printf("\nPour utiliser le %v et infliger %v dégâts à tout les adversaires (1 utilisation possible), Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
+		}
+		if inv.SacocheCp[i].Name == "Redbull" {
+			fmt.Printf("\nPour utilisez le %v et augmenter vos dégâts %v%%. Appuyez sur %v\n", inv.SacocheCp[i].Name, inv.SacocheCp[i].Damage, i)
 		}
 	}
 	// Attente de l'entrée utilisateur pour choisir une action valide.
@@ -123,8 +129,9 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 	if item.Name == "Cocktail Molotov" {
 		fmt.Println("Vous infligez des dégâts à tout les adversaires")
 		enemy.Hp -= 150
-		Guetteur.Hp -= 150
-		Guetteur2.Hp -= 150
+		Guetteur.Hp = 0
+		Guetteur2.Hp = 0
+		inv.RemoveObject(item)
 		return
 	}
 
@@ -213,7 +220,6 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 				if item.Name == "Taser" {
 					Guetteur2.Immobilized = true
 					Guetteur2.ImmobilizedTurns = 2
-					inv.RemoveObject(item)
 					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", Guetteur2.Name)
 					inv.RemoveObject(item)
 					return
