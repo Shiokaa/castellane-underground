@@ -6,11 +6,13 @@ import (
 	"projet-red/game"
 	"projet-red/inventory"
 	"projet-red/object"
+	"projet-red/story"
 	"time"
 )
 
 func FourthFight(perso *character.Personnage, inv *inventory.Inventory) inventory.Inventory {
 	game.ClearScreen()
+	story.AfterGoFast()
 	HommeDeMain := character.Enemy{Name: "Homme de main", Hp: 500, Damage: 30}
 	BouteilleAlcool := object.ObjectStats{Name: "Bouteille d'alcool en verre", Type: "Utilitaire", Damage: 10}
 

@@ -6,6 +6,7 @@ import (
 	"projet-red/game"
 	"projet-red/inventory"
 	"projet-red/object"
+	"projet-red/story"
 	"time"
 )
 
@@ -13,6 +14,7 @@ func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 	Gofasteur := character.Enemy{Name: "Go fasteur", Hp: 300, Damage: 20}
 	tissu := object.ObjectStats{Name: "Tissu", Type: "Utilitaire", Damage: 10}
 	game.ClearScreen()
+	story.AfterVendeur()
 	fmt.Println("\nVous entrez dans un combat avec un Go fasteur !")
 	fmt.Println(`
 	   O                         O
@@ -40,7 +42,7 @@ func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 
 		// Vérifier si l'un des deux personnages est mort
 		if Gofasteur.Hp <= 0 {
-			fmt.Println("\n Bravo, tu as Hagar le chauffeur du go-fast tu le dépouille et en tire 500€ ainsi que du tissu. Au loin, l’homme de main t’a repéré (la brute du quartier) et ne souhaite pas t’épargner, le combat commence !")
+			fmt.Println("\n Bravo, tu as Hagar le chauffeur du go-fast tu le dépouille et en tire 500€ ainsi que du tissu. Au loin, l’homme de main t’a repéré (la brute du quartier) et ne souhaite pas t’épargner")
 			inv.AddCraft(tissu)
 			perso.Gold += 500
 			if perso.CombatCounteur < 3 {

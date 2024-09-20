@@ -10,6 +10,7 @@ import (
 
 func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
 	game.ClearScreen()
+
 	Vendeur := character.Enemy{Name: "Vendeur", Hp: 100, Damage: 20}
 
 	fmt.Println("\nTu t’enfonce dans le quartier et fini par trouvé le Vendeur, il refuse de te vendre quoi que se soit et te manque de respect, Le Combat commence !")

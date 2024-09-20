@@ -5,6 +5,7 @@ import (
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
+	"projet-red/story"
 	"time"
 )
 
@@ -15,6 +16,7 @@ var Guetteur2 = character.Enemy{Name: "Guetteur 2", Hp: 100, Damage: 10}
 // Fonction principale pour gérer le combat entre le joueur et les ennemis.
 func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
 	game.ClearScreen()
+	story.AfterHomme()
 	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
 	fmt.Println("\nVous entrez dans un combat avec un Gérant !")
 	fmt.Println(`

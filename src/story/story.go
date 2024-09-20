@@ -56,3 +56,19 @@ func AfterGoFast() {
 		time.Sleep(40 * time.Millisecond)
 	}
 }
+
+func AfterHomme() {
+	str := "\nDéterminé à en finir avec ces histoires de trafiquants, tu décides de t’enfoncer dans un coin sombre et tombes enfin sur le gérant. Il a entendu parler de toi et s’est entouré de deux guetteurs pour sa sécurité. Le combat commence !"
+	for _, char := range str {
+		fmt.Printf("%c", char)
+		time.Sleep(40 * time.Millisecond)
+	}
+}
+
+func AfterGerant() {
+	str := "\nDéterminé à en finir avec les trafiquants, tu te rends à la planque du Caïd, le véritable chef des réseaux. Le lieu est sombre et menaçant, et le Caïd te défie avec ses lieutenants. Le combat le plus difficile de ta quête commence ici, où chaque erreur pourrait être fatale. Prépare-toi à affronter le sommet du réseau."
+	for _, char := range str {
+		fmt.Printf("%c", char)
+		time.Sleep(40 * time.Millisecond)
+	}
+}

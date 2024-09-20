@@ -5,12 +5,14 @@ import (
 	"projet-red/character"
 	"projet-red/game"
 	"projet-red/inventory"
+	"projet-red/story"
 	"time"
 )
 
 func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
 	Caid := character.Enemy{Name: "Le Caid", Hp: 1000, Damage: 35}
 	game.ClearScreen()
+	story.AfterGerant()
 	fmt.Println("\nVous entrez dans un combat avec le Caid !")
 	fmt.Println(`
 	   O                         O

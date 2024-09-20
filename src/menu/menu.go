@@ -91,7 +91,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 					fmt.Println("Veuillez combattre l'Homme de main d'abord")
 				}
 			case 5:
-				if perso.CombatCounteur == 5 {
+				if perso.CombatCounteur >= 4 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
 					fight.SixthFight(perso, inv)
@@ -272,8 +272,8 @@ func afficherMarché() {
 	fmt.Println("2 - MATRAQUE à 100€ : Inflige 80 dégâts")
 	fmt.Println("3 - MORTIER à 150€ : Inflige 200 dégâts")
 	fmt.Println("4 - TASER à 250€ : Inflige 100 dégâts et immobilise 1 tour")
-	fmt.Println("5 - RICARD à 5€ : Récupère 10 PV")
-	fmt.Println("6 - FLASH à 20€ : Récupère 25 PV")
+	fmt.Println("5 - RICARD à 5€ : Récupère 30 PV")
+	fmt.Println("6 - FLASH à 20€ : Récupère 75 PV")
 	fmt.Println("7 - REDBULL à 10€ : Augmente dégâts de 20% (3 attaques)")
 	fmt.Println("8 - ENSEMBLE NIKE TECH à 200€ : Augmente PV max de 20")
 	fmt.Println("9 - CASQUE ARAI à 500€ : Augmente PV max de 50")

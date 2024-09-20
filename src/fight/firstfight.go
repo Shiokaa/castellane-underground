@@ -7,14 +7,16 @@ import (
 	"projet-red/game"
 	"projet-red/inventory"
 	"projet-red/object"
+	"projet-red/story"
 	"time"
 )
 
 func Firstfight(perso *character.Personnage) inventory.Inventory {
+	story.Afterchoixperso()
 	inv := inventory.Inventory{Limite: 5}
 	briquet := object.ObjectStats{Name: "Briquet", Type: "Utilitaire", Damage: 10}
-	sandwitch := object.ObjectStats{Name: "Sandwitch", Type: "Soin", Damage: 10}
-	ricard := object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 10}
+	sandwitch := object.ObjectStats{Name: "Sandwitch", Type: "Soin", Damage: 45}
+	ricard := object.ObjectStats{Name: "Ricard", Type: "Soin", Damage: 30}
 	armeBaseDaron := object.ObjectStats{Name: "Ceinture", Type: "Arme", Damage: 20}
 	armeBaseDaronne := object.ObjectStats{Name: "Claquette", Type: "Arme", Damage: 35}
 	armeBaseTonton := object.ObjectStats{Name: "Boule", Type: "Arme", Damage: character.DegatTonton()}
@@ -23,10 +25,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 	guetteur := character.Enemy{Name: "Guetteur", Hp: 100, Damage: 10}
 
 	fmt.Println("\nVous entrez dans un combat avec un Guetteur !")
-	fmt.Println(`
-   O                         O
-  /|\                       /|\
-  / \                       / \`)
+
 	time.Sleep(2 * time.Second)
 
 	for guetteur.Hp > 0 && perso.Hp > 0 {
@@ -81,6 +80,7 @@ func Firstfight(perso *character.Personnage) inventory.Inventory {
 				os.Exit(0)
 			} else if guetteur.Hp <= 0 {
 				fmt.Println("\nVous avez vaincu le guetteur !")
+				story.Afterguetteur()
 				if perso.CombatCounteur < 1 {
 					perso.CombatCounteur += 1
 				}
