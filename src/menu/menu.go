@@ -33,7 +33,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Scan(&choix)
 			if choix >= 0 && choix <= 6 {
 				break
-			} else if choix != 0 && choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5 {
+			} else if choix != 0 && choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5 && choix != 6 {
 				fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
 			}
 		}
@@ -48,7 +48,15 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			fmt.Println("4 - Combat contre le gérant")
 			fmt.Println("5 - Combat contre le caïd")
 			fmt.Println("0 - Revenir au menu")
-			fmt.Scan(&choix2)
+			for {
+				fmt.Printf("Votre choix: ")
+				fmt.Scan(&choix2)
+				if choix2 >= 0 && choix2 < 6 {
+					break
+				} else if choix2 != 0 && choix2 != 1 && choix2 != 2 && choix2 != 3 && choix2 != 4 && choix2 != 5 {
+					fmt.Println("Choix invalide, veuillez entrer une valeur valide.")
+				}
+			}
 			switch choix2 {
 			case 1:
 				if perso.CombatCounteur >= 1 {
@@ -90,8 +98,6 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				} else {
 					fmt.Println("Veuillez combattre le Gérant d'abord")
 				}
-			case 6:
-				jeutel.PlayMorpion()
 			case 0:
 				break
 			}
@@ -108,6 +114,8 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			time.Sleep(10 * time.Second)
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
+		case 6:
+			jeutel.PlayMorpion()
 		case 0:
 			fmt.Println("Merci et à bientôt !")
 			time.Sleep(4 * time.Second)
