@@ -44,7 +44,7 @@ func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 			inv.AddCraft(tissu)
 			perso.Gold += 500
 			if perso.CombatCounteur < 3 {
-				perso.CombatCounteur += 1
+				perso.CombatCounteur = 3
 			}
 			break
 		} else if perso.Hp <= 0 {

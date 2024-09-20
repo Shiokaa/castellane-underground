@@ -43,7 +43,7 @@ func SecondFight(perso *character.Personnage, inv inventory.Inventory) inventory
 			fmt.Println("\nBravo, tu as hagar le revendeur ! , tu le dépouille et en tire 100€ Continue dans le quartier ")
 			perso.Gold += 100
 			if perso.CombatCounteur < 2 {
-				perso.CombatCounteur += 1
+				perso.CombatCounteur = 2
 			}
 			break
 		} else if perso.Hp <= 0 {

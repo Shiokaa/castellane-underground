@@ -95,7 +95,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				if perso.CombatCounteur == 5 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.ThirdFight(perso, &inv)
+					fight.SixthFight(perso, inv)
 				} else {
 					fmt.Println("Veuillez combattre le Gérant d'abord")
 				}
