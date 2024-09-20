@@ -59,7 +59,7 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 			}
 			// Ajoute 500 pièces d'or au joueur.
 			perso.Gold += 500
-			break
+			return inv
 		} else if perso.Hp <= 0 {
 			break
 		}

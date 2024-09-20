@@ -46,7 +46,7 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 			if perso.CombatCounteur < 6 {
 				perso.CombatCounteur = 6
 			}
-			break
+			return inv
 		} else if perso.Hp <= 0 {
 			break
 		}
