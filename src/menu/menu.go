@@ -151,12 +151,7 @@ func afficherInventaire(inv *inventory.Inventory) {
 
 	var choix int
 	for {
-		fmt.Printf("\nTapez 1 pour supprimer un objet sinon tapez 0. \n\n")
-		for _, obj := range inv.CraftInventory {
-			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
-				fmt.Printf("\nVous avez débloquer l'option de craft, tapez 2 si vous voulez craft le cocktail molotov \n\n")
-			}
-		}
+		fmt.Printf("\nTapez 1 pour supprimer un objet ou tapez 2 pour crafter un objet, sinon tapez 0. \n\n")
 		fmt.Scan(&choix)
 		if choix == 1 || choix == 0 || choix == 2 {
 			break
@@ -187,9 +182,9 @@ func afficherInventaire(inv *inventory.Inventory) {
 	case 2:
 		for _, obj := range inv.CraftInventory {
 			if obj.Name == "Briquet" && obj.Name == "Tissu" && obj.Name == "Bouteille d'alcool en verre" {
-				inv.RemoveObject(obj)
+				inv.CraftInventory = inv.CraftInventory[:]
+				inv.AddObject(cocktail)
 			}
-			inv.AddObject(cocktail)
 		}
 	case 0:
 		return
