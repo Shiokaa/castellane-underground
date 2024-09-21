@@ -124,10 +124,17 @@ func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Pers
 		enemy.Hp -= damage
 		fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, enemy.Name)
 	} else if item.Type == "Soin" {
-		inv.RemoveObject(item)
 		heal := item.Damage
-		perso.Hp += heal
-		fmt.Printf("Vous vous soignez de %d pv.\n", heal)
+		if perso.Hp == perso.Hpmax {
+			fmt.Println("Désolé mais vous ne pouvez pas vous soignez vos hp sont déjà au max")
+		} else if perso.Hp+heal > perso.Hpmax {
+			fmt.Printf("Vous vous soignez de %v pv\n", perso.Hpmax-perso.Hp)
+			inv.RemoveObject(item)
+		} else {
+			inv.RemoveObject(item)
+			perso.Hp += heal
+			fmt.Printf("Vous vous soignez de %d pv.\n", heal)
+		}
 	}
 	time.Sleep(2 * time.Second)
 }

@@ -14,7 +14,7 @@ var Guetteur = character.Enemy{Name: "Guetteur 1", Hp: 100, Damage: 10}
 var Guetteur2 = character.Enemy{Name: "Guetteur 2", Hp: 100, Damage: 10}
 
 // Fonction principale pour gérer le combat entre le joueur et les ennemis.
-func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+func FifthFight(perso *character.Personnage, inv *inventory.Inventory) inventory.Inventory {
 	game.ClearScreen()
 	story.AfterHomme()
 	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
@@ -47,10 +47,10 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		game.DisplayHealth(Guetteur2.Name, Guetteur2.Hp, 100)
 
 		// L'utilisateur sélectionne une action via la fonction chooseAction2.
-		attack := chooseAction2(len(inv.SacocheCp), inv)
+		attack := chooseAction2(len(inv.SacocheCp), *inv)
 
 		// Applique l'action choisie (attaque, soin, etc.) avec la fonction handleAction2.
-		handleAction2(attack, &Gérant, perso, &inv)
+		handleAction2(attack, &Gérant, perso, inv)
 
 		// Vérifie si le Gérant ou le personnage est mort pour arrêter le combat.
 		if Gérant.Hp <= 0 && Guetteur2.Hp <= 0 && Guetteur.Hp <= 0 {
@@ -61,7 +61,7 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 			}
 			// Ajoute 500 pièces d'or au joueur.
 			perso.Gold += 500
-			return inv
+			return *inv
 		} else if perso.Hp <= 0 {
 			break
 		}
@@ -75,7 +75,7 @@ func FifthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	perso.Hp = perso.Hpmax / 2
 	perso.Gold /= 2
 	time.Sleep(5 * time.Second) // Pause de 5 secondes avant de continuer.
-	return inv
+	return *inv
 }
 
 // Fonction pour choisir une action (attaque ou utilisation d'objet).
@@ -120,6 +120,12 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 	var attack2 int
 	item := inv.SacocheCp[attack]
 
+	if item.Name == "Mortier" {
+		fmt.Printf("Vous infligez %d points de dégât à %s.\n", item.Damage, enemy.Name)
+		enemy.Hp -= item.Damage
+		inv.RemoveObject(item)
+		return
+	}
 	if item.Name == "Redbull" {
 		// Gestion du Redbull qui augmente les dégâts pendant 3 tours
 		fmt.Println("Vous buvez un Redbull, vos dégâts sont augmentés pendant 3 tours !")
@@ -253,13 +259,16 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 
 	} else if item.Type == "Soin" {
 		heal := item.Damage
-		perso.Hp += heal
-		if perso.Hp > perso.Hpmax {
-			perso.Hp = perso.Hpmax
+		if perso.Hp == perso.Hpmax {
+			fmt.Println("Désolé mais vous ne pouvez pas vous soignez vos hp sont déjà au max")
+		} else if perso.Hp+heal > perso.Hpmax {
+			fmt.Printf("Vous vous soignez de %v pv\n", perso.Hpmax-perso.Hp)
+			inv.RemoveObject(item)
+		} else {
+			inv.RemoveObject(item)
+			perso.Hp += heal
+			fmt.Printf("Vous vous soignez de %d pv.\n", heal)
 		}
-		fmt.Printf("Vous vous soignez de %d PV.\n", heal)
-
-		inv.RemoveObject(item)
 	}
 
 	time.Sleep(2 * time.Second)

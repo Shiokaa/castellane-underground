@@ -62,7 +62,7 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				if perso.CombatCounteur >= 1 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.SecondFight(perso, inv)
+					fight.SecondFight(perso, &inv)
 				} else {
 					fmt.Println("Veuillez combattre le guetteur d'abord")
 				}
@@ -86,15 +86,15 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 				if perso.CombatCounteur >= 4 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.FifthFight(perso, inv)
+					fight.FifthFight(perso, &inv)
 				} else {
 					fmt.Println("Veuillez combattre l'Homme de main d'abord")
 				}
 			case 5:
-				if perso.CombatCounteur >= 4 {
+				if perso.CombatCounteur >= 5 {
 					fmt.Println("Vous vous préparez à entrer dans un combat...")
 					time.Sleep(3 * time.Second)
-					fight.SixthFight(perso, inv)
+					fight.SixthFight(perso, &inv)
 				} else {
 					fmt.Println("Veuillez combattre le Gérant d'abord")
 				}

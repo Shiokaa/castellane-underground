@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.Inventory {
+func SixthFight(perso *character.Personnage, inv *inventory.Inventory) inventory.Inventory {
 	Caid := character.Enemy{Name: "Le Caid", Hp: 1000, Damage: 35}
 	game.ClearScreen()
 	story.AfterGerant()
@@ -35,10 +35,10 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 		inv.AfficherInventaireEnCombat()
 
 		// Sélection de l'action par l'utilisateur
-		attack := chooseActionCaid(len(inv.SacocheCp), inv)
+		attack := chooseActionCaid(len(inv.SacocheCp), *inv)
 
 		// Appliquer l'action choisie
-		handleActionCaid(attack, &Caid, perso, &inv)
+		handleActionCaid(attack, &Caid, perso, inv)
 
 		// Vérifier si l'un des deux personnages est mort
 		if Caid.Hp <= 0 {
@@ -47,7 +47,7 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 			if perso.CombatCounteur < 6 {
 				perso.CombatCounteur = 6
 			}
-			return inv
+			return *inv
 		} else if perso.Hp <= 0 {
 			break
 		}
@@ -59,7 +59,7 @@ func SixthFight(perso *character.Personnage, inv inventory.Inventory) inventory.
 	perso.Hp = perso.Hpmax / 2
 	perso.Gold /= 2
 	time.Sleep(5 * time.Second)
-	return inv
+	return *inv
 }
 
 // Choisir une action valide
@@ -103,6 +103,12 @@ func chooseActionCaid(max int, inv inventory.Inventory) int {
 // Gérer l'action choisie par le joueur (attaque ou soin)
 func handleActionCaid(attack int, enemy *character.Enemy, perso *character.Personnage, inv *inventory.Inventory) {
 	item := inv.SacocheCp[attack]
+	if item.Name == "Mortier" {
+		fmt.Printf("Vous infligez %d points de dégât à %s.\n", item.Damage, enemy.Name)
+		enemy.Hp -= item.Damage
+		inv.RemoveObject(item)
+		return
+	}
 	if item.Name == "Redbull" {
 		// Gestion du Redbull qui augmente les dégâts pendant 3 tours
 		fmt.Println("Vous buvez un Redbull, vos dégâts sont augmentés pendant 3 tours !")
@@ -146,10 +152,17 @@ func handleActionCaid(attack int, enemy *character.Enemy, perso *character.Perso
 		fmt.Printf("Vous infligez %d points de dégât à %s.\n", damage, enemy.Name)
 
 	} else if item.Type == "Soin" {
-		inv.RemoveObject(item)
 		heal := item.Damage
-		perso.Hp += heal
-		fmt.Printf("Vous vous soignez de %d pv.\n", heal)
+		if perso.Hp == perso.Hpmax {
+			fmt.Println("Désolé mais vous ne pouvez pas vous soignez vos hp sont déjà au max")
+		} else if perso.Hp+heal > perso.Hpmax {
+			fmt.Printf("Vous vous soignez de %v pv\n", perso.Hpmax-perso.Hp)
+			inv.RemoveObject(item)
+		} else {
+			inv.RemoveObject(item)
+			perso.Hp += heal
+			fmt.Printf("Vous vous soignez de %d pv.\n", heal)
+		}
 	}
 	time.Sleep(2 * time.Second)
 }
