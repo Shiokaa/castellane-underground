@@ -13,6 +13,7 @@ func SixthFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 	Caid := character.Enemy{Name: "Le Caid", Hp: 1000, Damage: 35}
 	game.ClearScreen()
 	story.AfterGerant()
+	time.Sleep(3 * time.Second)
 	fmt.Println("\nVous entrez dans un combat avec le Caid !")
 	fmt.Println(`
 	   O                         O

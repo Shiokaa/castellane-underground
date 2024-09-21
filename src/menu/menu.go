@@ -9,6 +9,7 @@ import (
 	"projet-red/game"
 	"projet-red/inventory"
 	"projet-red/jeutel"
+	"projet-red/music"
 	"projet-red/object"
 	"time"
 )
@@ -111,10 +112,11 @@ func Menu(perso *character.Personnage, inv inventory.Inventory) {
 			game.ClearScreen()
 			Telegram(perso, &inv)
 		case 5:
+			go music.PlayMusic("music/secondary_music.mp3")
 			game.ClearScreen()
 			fmt.Println("Vous zonez dans le quartier !")
 			ascii.Jul()
-			time.Sleep(10 * time.Second)
+			time.Sleep(15 * time.Second)
 			fmt.Println("Vous avez gagner 25€")
 			perso.Gold += 25
 		case 6:

@@ -15,6 +15,7 @@ func ThirdFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 	tissu := object.ObjectStats{Name: "Tissu", Type: "Utilitaire", Damage: 10}
 	game.ClearScreen()
 	story.AfterVendeur()
+	time.Sleep(3 * time.Second)
 	fmt.Println("\nVous entrez dans un combat avec un Go fasteur !")
 	fmt.Println(`
 	   O                         O

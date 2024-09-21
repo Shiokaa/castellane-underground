@@ -17,6 +17,7 @@ var Guetteur2 = character.Enemy{Name: "Guetteur 2", Hp: 100, Damage: 10}
 func FifthFight(perso *character.Personnage, inv *inventory.Inventory) inventory.Inventory {
 	game.ClearScreen()
 	story.AfterHomme()
+	time.Sleep(3* time.Second)
 	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
 	fmt.Println("\nVous entrez dans un combat avec un Gérant !")
 	fmt.Println(`
