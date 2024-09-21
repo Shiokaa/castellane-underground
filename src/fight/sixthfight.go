@@ -16,9 +16,9 @@ func SixthFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 	time.Sleep(3 * time.Second)
 	fmt.Println("\nVous entrez dans un combat avec le Caid !")
 	fmt.Println(`
-	   O                         O
-	  /|\                       /|\
-	  / \                       / \`)
+	O                          O
+   /|\                      //|||\\
+   / \                       // \\  `)
 	time.Sleep(2 * time.Second)
 	for Caid.Hp > 0 && perso.Hp > 0 {
 		game.ClearScreen()
@@ -26,14 +26,12 @@ func SixthFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 			inv.SacocheCp[0].Damage = character.DegatTonton()
 		}
 		fmt.Println("\n--- Combat ---")
-		fmt.Println("\n--- Combat ---")
 		fmt.Println(`
  O                          O
 /|\                      //|||\\
 / \                       // \\  `)
 		game.DisplayHealth(perso.NameUser, perso.Hp, perso.Hpmax)
 		game.DisplayHealth(Caid.Name, Caid.Hp, 1000)
-		inv.AfficherInventaireEnCombat()
 
 		// Sélection de l'action par l'utilisateur
 		attack := chooseActionCaid(len(inv.SacocheCp), *inv)
