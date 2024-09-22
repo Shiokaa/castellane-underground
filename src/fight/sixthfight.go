@@ -135,7 +135,8 @@ func handleActionCaid(attack int, enemy *character.Enemy, perso *character.Perso
 		if item.Name == "Taser" {
 			enemy.Immobilized = true
 			enemy.ImmobilizedTurns = 2
-			fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", enemy.Name)
+			fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour ! Et vous lui infligez 100 dégâts !\n", enemy.Name)
+			enemy.Hp -= 100
 			inv.RemoveObject(item)
 			return
 		}
