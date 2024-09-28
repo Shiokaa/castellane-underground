@@ -17,7 +17,7 @@ var Guetteur2 = character.Enemy{Name: "Guetteur 2", Hp: 100, Damage: 10}
 func FifthFight(perso *character.Personnage, inv *inventory.Inventory) inventory.Inventory {
 	game.ClearScreen()
 	story.AfterHomme()
-	time.Sleep(3* time.Second)
+	time.Sleep(3 * time.Second)
 	// Affiche un message d'entrée dans le combat et un dessin ASCII du Gérant.
 	fmt.Println("\nVous entrez dans un combat avec un Gérant !")
 	fmt.Println(`
@@ -167,7 +167,8 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 				if item.Name == "Taser" {
 					enemy.Immobilized = true
 					enemy.ImmobilizedTurns = 2
-					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", enemy.Name)
+					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour ! Et vous lui infligez 100 dégâts !\n", enemy.Name)
+					enemy.Hp -= 100
 					inv.RemoveObject(item)
 					return
 				}
@@ -199,7 +200,8 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 				if item.Name == "Taser" {
 					Guetteur.Immobilized = true
 					Guetteur.ImmobilizedTurns = 2
-					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", Guetteur.Name)
+					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour ! Et vous lui infligez 100 dégâts !\n", enemy.Name)
+					enemy.Hp -= 100
 					inv.RemoveObject(item)
 					return
 				}
@@ -229,7 +231,8 @@ func handleAction2(attack int, enemy *character.Enemy, perso *character.Personna
 				if item.Name == "Taser" {
 					Guetteur2.Immobilized = true
 					Guetteur2.ImmobilizedTurns = 2
-					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", Guetteur2.Name)
+					fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour ! Et vous lui infligez 100 dégâts !\n", enemy.Name)
+					enemy.Hp -= 100
 					inv.RemoveObject(item)
 					return
 				}

@@ -98,6 +98,12 @@ func chooseActionHomme(max int, inv inventory.Inventory) int {
 // Gérer l'action choisie par le joueur (attaque ou soin)
 func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Personnage, inv *inventory.Inventory) {
 	item := inv.SacocheCp[attack]
+	if item.Name == "Mortier" {
+		fmt.Printf("Vous infligez %d points de dégât à %s.\n", item.Damage, enemy.Name)
+		enemy.Hp -= item.Damage
+		inv.RemoveObject(item)
+		return
+	}
 	if item.Name == "Redbull" {
 		// Gestion du Redbull qui augmente les dégâts pendant 3 tours
 		fmt.Println("Vous buvez un Redbull, vos dégâts sont augmentés pendant 3 tours !")
@@ -109,7 +115,8 @@ func handleActionHomme(attack int, enemy *character.Enemy, perso *character.Pers
 		if item.Name == "Taser" {
 			enemy.Immobilized = true
 			enemy.ImmobilizedTurns = 2
-			fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour !\n", enemy.Name)
+			fmt.Printf("Vous utilisez le Taser sur %s. Il est immobilisé pour 1 tour ! Et vous lui infligez 100 dégâts !\n", enemy.Name)
+			enemy.Hp -= 100
 			inv.RemoveObject(item)
 			return
 		}
