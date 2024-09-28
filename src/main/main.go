@@ -12,5 +12,4 @@ func main() {
 	perso := game.ChoixPersonnage()
 	inv := fight.Firstfight(&perso)
 	menu.Menu(&perso, inv)
-
 }

@@ -57,7 +57,7 @@ func FifthFight(perso *character.Personnage, inv *inventory.Inventory) inventory
 		if Gérant.Hp <= 0 && Guetteur2.Hp <= 0 && Guetteur.Hp <= 0 {
 			fmt.Println("\nFélicitations ! Tu es venu à bout du gérant et de ses deux guetteurs. Tu les dépouilles et en tires 500€, mais une fois vaincu, le gérant t'avoue qu'il n'est pas à la tête de tous les réseaux et te donne le nom et l'adresse du chef.")
 			// Si le joueur n'a pas encore atteint le 4ème combat, son compteur de combats est mis à jour.
-			if perso.CombatCounteur < 4 {
+			if perso.CombatCounteur < 5 {
 				perso.CombatCounteur = 5
 			}
 			// Ajoute 500 pièces d'or au joueur.
